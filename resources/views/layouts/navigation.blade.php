@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+{{-- <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -95,4 +95,103 @@
             </div>
         </div>
     </div>
-</nav>
+</nav> --}}
+
+<header class="header">
+    <a href="#" class="logo">Sfibras</a>
+    <nav class="navbar">
+        <a href="">Home</a>
+        <a href="">About</a>
+        <a href="">Services</a>
+        <a href="">Proyectos</a>
+        <a href="">Contacto</a>
+        <a href="">Galeria</a>
+    </nav>
+    <div class="icons">
+        <div id="menu-btn" class="fas fa-bars"></div>
+        <div id="info-btn" class="fa-solid fa-circle-info"></div>
+        <div id="search-btn" class="fas fa-search"></div>
+        <a href="{{route('login')}}" ><div id="login-btn" class="fas fa-user @if(request()->routeIs('login'))  header-icons-active @endif" ></div></a>
+    </div>
+    <form action="" class="search-form">
+        <input type="search" name="" placeholder="Busque aqui.." id="search-form">
+        <label for="search-box" class="fas fa-search"></label>
+    </form>
+
+    {{-- <div class="login-form">
+        <h3>Iniciar Sesión</h3>
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+
+        <!-- Validation Errors -->
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+
+            <!-- Email Address -->
+            <div>
+                <x-label for="email" :value="__('Email')" />
+
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+            </div>
+
+            <!-- Password -->
+            <div class="mt-4">
+                <x-label for="password" :value="__('Password')" />
+
+                <x-input id="password" class="block mt-1 w-full"
+                                type="password"
+                                name="password"
+                                required autocomplete="current-password" />
+            </div>
+
+            <!-- Remember Me -->
+            <div class="block mt-4">
+                <label for="remember_me" class="inline-flex items-center">
+                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
+                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                </label>
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                @if (Route::has('password.request'))
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                        {{ __('Forgot your password?') }}
+                    </a>
+                @endif
+
+                <x-button class="ml-3">
+                    {{ __('Log in') }}
+                </x-button>
+            </div>
+        </form>
+    </div> --}}
+</header>
+
+<div class="contact-info">
+    <div id="close-contact-info" class="fas fa-times"></div>
+    <div class="info">
+       <i class="fas fa-phone"></i>
+        <h3>phone number</h3>
+        <p>+51 956871799</p>
+        <p>+51 956871799</p>
+    </div>
+    <div class="info">
+        <i class="fas fa-envelope"></i>
+         <h3>email Address</h3>
+         <p>sfibras@gmail.com</p>
+         <p>sfibras32@gmail.com</p>
+     </div>
+     <div class="info">
+        <i class="fas fa-map-marker-alt"></i>
+         <h3>office Address</h3>
+         <p>numbai, india - 4000104</p>
+     </div>
+     <div class="share">
+         <a href="" class="fab fa-facebook-f"></a>
+         <a href="" class="fab fa-twitter"></a>
+         <a href="" class="fab fa-instagram"></a>
+     </div>
+</div>
+

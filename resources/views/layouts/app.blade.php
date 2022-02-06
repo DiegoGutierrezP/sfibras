@@ -12,25 +12,32 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/cliente.css') }}">
+
+        {{-- Font awesome --}}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-            <header class="bg-white shadow">
+            {{-- <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
-            </header>
+            </header> --}}
 
             <!-- Page Content -->
-            <main>
+            <main >
                 {{ $slot }}
             </main>
         </div>
+
+        <script src="{{ asset('js/cliente.js') }}" ></script>
     </body>
 </html>

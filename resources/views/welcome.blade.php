@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -129,4 +129,36 @@
             </div>
         </div>
     </body>
-</html>
+</html> --}}
+<x-app-layout>
+    <section class="home" id="home">
+        <div class="home-slider">
+            <div class="w">
+                <section class="slide" style="background: url(../storage/cliente/banner1.jpg) no-repeat;">
+                    <h3>Señalizacion Vial</h3>
+                    <p>Lorem ipsum dolor sit amet,
+                        consectetur adipisicing elit.
+                        Perferendis quas facere nesciunt,
+                         totam numquam soluta!</p>
+                    <a href="#">Saber mas</a>
+                </section>
+                <section class="slide" style="background: url(../storage/cliente/banner1.jpg) no-repeat;">
+                    <h3>Tachones</h3>
+                    <p>Lorem ipsum dolor sit amet,
+                        consectetur adipisicing elit.
+                        Perferendis quas facere nesciunt,
+                         totam numquam soluta!</p>
+                    <a href="#">Saber mas</a>
+                </section>
+                <section class="slide" style="background: url(../storage/cliente/banner1.jpg) no-repeat;">
+                    <h3>Hitos</h3>
+                    <p>Lorem ipsum dolor sit amet,
+                        consectetur adipisicing elit.
+                        Perferendis quas facere nesciunt,
+                         totam numquam soluta!</p>
+                    <a href="#">Saber mas</a>
+                </section>
+            </div>
+        </div>
+    </section>
+</x-app-layout>
