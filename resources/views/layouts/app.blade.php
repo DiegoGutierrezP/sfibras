@@ -8,7 +8,8 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap"> --}}
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -16,9 +17,12 @@
 
         {{-- Font awesome --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        {{-- SWIPER JS CSS --}}
+        <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+
 
     </head>
     <body class="font-sans antialiased">
@@ -38,6 +42,10 @@
             </main>
         </div>
 
+        {{-- Swiper JS --}}
+        <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
         <script src="{{ asset('js/cliente.js') }}" ></script>
+
     </body>
 </html>

@@ -132,33 +132,62 @@
 </html> --}}
 <x-app-layout>
     <section class="home" id="home">
-        <div class="home-slider">
-            <div class="w">
-                <section class="slide" style="background: url(../storage/cliente/banner1.jpg) no-repeat;">
-                    <h3>Señalizacion Vial</h3>
-                    <p>Lorem ipsum dolor sit amet,
+        <div class="swiper home-slider">
+            <div class="swiper-wrapper">
+                <section class="swiper-slide slide" style="background: url(../storage/cliente/banner1.png) no-repeat;">
+                    <div class="content">
+                        <h3>Señalizacion Vial</h3>
+                        <p>Lorem ipsum dolor sit amet,
                         consectetur adipisicing elit.
                         Perferendis quas facere nesciunt,
                          totam numquam soluta!</p>
-                    <a href="#">Saber mas</a>
+                        <x-button-redirect href="ga" class="text-xl px-6 py-4">Saber mas</x-button-redirect>
+                    </div>
                 </section>
-                <section class="slide" style="background: url(../storage/cliente/banner1.jpg) no-repeat;">
-                    <h3>Tachones</h3>
-                    <p>Lorem ipsum dolor sit amet,
+                <section class="swiper-slide slide" style="background: url(../storage/cliente/banner1.png) no-repeat;">
+                    <div class="content">
+                        <h3>Cotización Online</h3>
+                        <p>Lorem ipsum dolor sit amet,
                         consectetur adipisicing elit.
                         Perferendis quas facere nesciunt,
                          totam numquam soluta!</p>
-                    <a href="#">Saber mas</a>
+                         <x-button-redirect href="ga" class="text-xl px-6 py-4">Cotizar Aqui</x-button-redirect>
+                    </div>
                 </section>
-                <section class="slide" style="background: url(../storage/cliente/banner1.jpg) no-repeat;">
-                    <h3>Hitos</h3>
-                    <p>Lorem ipsum dolor sit amet,
+                <section class="swiper-slide slide" style="background: url(../storage/cliente/banner1.png) no-repeat;">
+                    <div class="content">
+                        <h3>Señalizacion Vial</h3>
+                        <p>Lorem ipsum dolor sit amet,
                         consectetur adipisicing elit.
                         Perferendis quas facere nesciunt,
                          totam numquam soluta!</p>
-                    <a href="#">Saber mas</a>
+                         <x-button-redirect href="ga" class="text-xl px-6 py-4">Saber mas</x-button-redirect>
+                    </div>
                 </section>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </section>
+
+    {{-- about section --}}
+
+    <section class="about" id="about">
+        <h1 class="heading">Nosotros</h1>
+        <div class="row">
+            <div class="img">
+                <img src="{{Storage::url('cliente/nosotros.jpg')}}" alt="nosotros">
+            </div>
+            <div class="content">
+                <h3>Lorem ipsum dolor sit amet.</h3>
+                <p>
+                   Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                   Reprehenderit nulla veritatis velit ipsam nemo perferendis quasi
+                   totam eligendi quisquam nostrum.
+                </p>
+                <x-button-redirect href="" class="text-xl px-6 py-4">Saber mas</x-button-redirect>
             </div>
         </div>
     </section>
+
 </x-app-layout>

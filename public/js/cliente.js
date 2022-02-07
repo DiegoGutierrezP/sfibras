@@ -6,13 +6,13 @@ let contactInfo = document.querySelector(".contact-info");
 document.querySelector("#menu-btn").onclick = ()=>{
     navbar.classList.toggle('active');
     searchForm.classList.remove('active');
-     loginForm.classList.remove('active');
+     //loginForm.classList.remove('active');
      contactInfo.classList.remove('active');
 };
 document.querySelector("#search-btn").onclick = ()=>{
     searchForm.classList.toggle('active');
     navbar.classList.remove('active');
-    loginForm.classList.remove('active');
+    //loginForm.classList.remove('active');
     contactInfo.classList.remove('active');
 };
 /* document.querySelector("#login-btn").onclick = ()=>{
@@ -25,7 +25,7 @@ document.querySelector("#info-btn").onclick = ()=>{
     contactInfo.classList.toggle('active');
     navbar.classList.remove('active');
     searchForm.classList.remove('active');
-     loginForm.classList.remove('active');
+     //loginForm.classList.remove('active');
 };
 document.querySelector(".contact-info #close-contact-info").onclick = ()=>{
     contactInfo.classList.remove('active');
@@ -33,6 +33,15 @@ document.querySelector(".contact-info #close-contact-info").onclick = ()=>{
 window.onscroll = () =>{
     navbar.classList.remove('active');
     searchForm.classList.remove('active');
-     loginForm.classList.remove('active');
+     //loginForm.classList.remove('active');
      contactInfo.classList.remove('active');
 }
+/* SWIPER JS */
+var swiper = new Swiper(".home-slider", {
+    loop:true,
+    grabCursor:true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
