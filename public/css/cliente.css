@@ -5,7 +5,7 @@
     outline: none;
     border: none;
     text-decoration: none;
-    transition: all .1s linear;
+   /*  transition: all .1s linear; */
 }
 
 :root{
@@ -13,7 +13,9 @@
     --black: #192a56;
     --white:#fff;
     --light-color: #666;
-    --light-bg:#eee;
+    /* --light-bg:#eee; */
+    /* --light-bg:#D6D6D6; */
+    --light-bg:#DADADA;
     --box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
     --border: .1rem solid rgba(0,0,0,.3);
 
@@ -48,7 +50,7 @@ html::-webkit-scrollbar-thumb{
     position: sticky;
     top: 0;left: 0;right: 0;
     box-shadow: var(--box-shadow);
-    padding: 1.5rem 20%;
+    padding: 1.5rem 15%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -306,8 +308,8 @@ section{
 .home .home-slider .swiper-button-prev{
     right: 7rem;
 }
-/* ABOUT ************ */
-.about .heading{
+/* heading secitons ************ */
+.heading{
     margin-bottom: 3rem;
     font-size: 3rem;
     font-weight: 700;
@@ -315,6 +317,7 @@ section{
     padding: 1rem;
     border-left: 1rem solid var(--yellow);
 }
+/* ABOUT ************ */
 .about .row{
     display: flex;
     align-items: center;
@@ -340,6 +343,227 @@ section{
     color: var(--light-color);
     line-height: 2;
     padding: 1rem 0;
+}
+.about .box-container{
+    margin-top: 3rem;
+    /* grid */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem,1fr));
+    gap: 2rem;
+    /*  */
+    align-items: flex-end;
+}
+.about .box-container .box{
+    text-align: center;
+    background: var(--light-bg);
+    padding: 3rem 2rem;
+    border: 1px solid var(--yellow);
+}
+.about .box-container .box h3{
+    font-size: 4rem;
+    font-weight: 700;
+}
+.about .box-container .box p{
+    font-size: 1.5rem;
+    color: var(--light-color);
+    line-height: 2;
+    padding-top: 1rem 0;
+}
+/* Services **************** */
+.services{
+    background:var(--black);
+    padding-top: 4rem;
+    padding-bottom: 6rem;
+}
+.services .heading{
+    color: var(--white);
+}
+.services .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(45rem,1fr));
+    gap: 2rem;
+}
+.services .box-container .box{
+     /* text-align: center; */
+    background: var(--white);
+    /* box-shadow: var(--box-shadow);
+    border: var(--border);
+    height: 40rem; */
+    transition:.2s linear;
+}
+.services .box-container .box .image{
+    height: 35rem;
+}
+.services .box-container .box .image img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.services .box-container .box .content{
+    display: flex;
+    /* gap: 5rem; */
+    justify-content: space-between;
+
+}
+.services .box-container .box .content .info{
+    /* padding: 1rem 1.5rem; */
+    width: 85%;
+    height: 100%;
+    padding: 1rem;
+
+}
+.services .box-container .box .content .info h3{
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.services .box-container .box .content .info p{
+    font-size: 1.3rem;
+    color: var(--light-color);
+}
+.services .box-container .box .content i{
+    width: 15%;
+    height: 100%;
+    font-size: 3rem;
+    background: var(--yellow);
+    color: var(--white);
+    cursor: pointer;
+    text-align: center;
+    line-height: 8rem;
+}
+/* Projects(trabajos) */
+.projects{
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+}
+.projects .heading{
+    display: flex;
+    justify-content: space-between;
+}
+.projects .heading span{
+    font-size: 2rem;
+    font-weight: 500;
+}
+.projects .heading span:hover{
+    color: var(--yellow);
+}
+.projects .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem,1fr));
+    gap: 2rem;
+}
+.projects .box-container .box{
+    background: var(--white);
+    height: 25rem;
+    overflow: hidden;
+    cursor: pointer;
+
+}
+.projects .box-container .box img{
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    transition:.2s linear;
+
+}
+.projects .box-container .box img:hover{
+    transform: scale(1.05);
+}
+.popup-image{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .9);
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+    display: none;
+}
+.popup-image img{
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    /* border:5px solid #fff; */
+    border-radius: 5px;
+    width: 750px;
+    object-fit: cover;
+    max-height: calc(100vh - 150px);
+}
+.popup-image .close-popup{
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 50px;
+    font-weight: bolder;
+    color: #fff;
+    cursor: pointer;
+    z-index: 100;
+}
+/* Contact ****************/
+.contact{
+    background: var(--black);
+}
+.contact .heading{
+    color: var(--white);
+}
+.contact .row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.contact .row .map{
+    flex: 1 1 41rem;
+    width: 100%;
+}
+.contact .row form{
+    flex: 1 1 41rem;
+    background: var(--white);
+    padding: 2rem;
+
+}
+.contact .row form h3{
+    font-size: 2.5rem;
+    text-transform: capitalize;
+    font-weight: 500;
+    padding-bottom: 1rem;
+}
+.contact .row form .box{
+    margin: .7rem 0;
+    width: 100%;
+    padding: 1.5rem 1rem;
+    border-bottom: var(--border);
+    font-size: 1.6rem;
+    background: var(--light-bg)
+}
+.contact .row form textarea{
+    height: 15rem;
+    resize: none;
+}
+/* Cliente Logos ****************** */
+.logo-container{
+   text-align: center;
+}
+
+.logo-container img{
+    height: 10rem;
+    pointer-events: none;
+    user-select: none;
+    margin: auto;
+}
+/* fOOTER ****** */
+.footer{
+    background: var(--white);
+    text-align: center;
+}
+.footer .row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+.footer .row img{
+    width: 20rem;
+
 }
 
 /* media queries */
@@ -368,6 +592,7 @@ section{
         border-top: var(--border);
         border-bottom: var(--border);
         clip-path: polygon(0 0, 100% 0, 100% 0,0 0);
+        transition:.2s linear;
     }
     .header .navbar.active{
         clip-path: polygon(0 0, 100% 0, 100% 100%,0 100%);
@@ -392,6 +617,9 @@ section{
     }
     .home .slide .content h3{
         font-size: 3rem;
+    }
+    .popup-image img{
+        width: 95%;
     }
 }
 @media (max-width:450px){

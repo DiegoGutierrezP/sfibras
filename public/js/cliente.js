@@ -45,3 +45,39 @@ var swiper = new Swiper(".home-slider", {
       prevEl: ".swiper-button-prev",
     },
   });
+
+var swiper = new Swiper(".logo-slider",{
+    loop:true,
+    grabCursor:true,
+    spaceBetween: 20,
+    breakpoints:{
+        450:{
+            slidesPerView:2
+        },
+        640:{
+            slidesPerView:3
+        },
+        768:{
+            slidesPerView:4
+        },
+        1000:{
+            slidesPerView:5
+        },
+    }
+})
+
+
+/* Popup image */
+const $popupimg =document.querySelector(".popup-image img");
+
+document.addEventListener("click", e =>{
+    if(e.target.matches("[data-img-trabajos]")){
+        //console.log(e.srcElement.src);
+        $popupimg.src = e.srcElement.src;
+        document.querySelector('.popup-image').style.display = 'block';
+   }
+})
+
+document.querySelector(".popup-image .close-popup").onclick = () => {
+     document.querySelector('.popup-image').style.display = 'none';
+}

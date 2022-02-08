@@ -125,20 +125,20 @@
     <div id="close-contact-info" class="fas fa-times"></div>
     <div class="info">
        <i class="fas fa-phone"></i>
-        <h3>phone number</h3>
+        <h3>Teléfono</h3>
         <p>+51 956871799</p>
         <p>+51 956871799</p>
     </div>
     <div class="info">
         <i class="fas fa-envelope"></i>
-         <h3>email Address</h3>
+         <h3>Correo</h3>
          <p>sfibras@gmail.com</p>
          <p>sfibras32@gmail.com</p>
      </div>
      <div class="info">
         <i class="fas fa-map-marker-alt"></i>
-         <h3>office Address</h3>
-         <p>numbai, india - 4000104</p>
+         <h3>Oficina</h3>
+         <p>av las flores 22 , San juan de Lurigancho</p>
      </div>
      <div class="share">
          <a href="" class="fab fa-facebook-f"></a>
