@@ -144,7 +144,7 @@
                         <x-button-redirect href="ga" class="text-xl px-6 py-4">Saber mas</x-button-redirect>
                     </div>
                 </section>
-                <section class="swiper-slide slide" style="background: url(../storage/cliente/banner1.png) no-repeat;">
+                <section class="swiper-slide slide" style="background: url(../storage/cliente/banner4.jpg) no-repeat;">
                     <div class="content">
                         <h3>Cotización Online</h3>
                         <p>Lorem ipsum dolor sit amet,

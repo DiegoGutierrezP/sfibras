@@ -158,9 +158,11 @@ html::-webkit-scrollbar-thumb{
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 20%;
 }
 .login-form{
-    margin-top: 10%;
+    margin-top: 8%;
+    top: 20%;
     width: 50rem;
     background: var(--white);
     box-shadow: var(--box-shadow);
@@ -189,6 +191,8 @@ html::-webkit-scrollbar-thumb{
     padding: 0 2rem;
     padding-top: 5rem;
     display: none;
+
+
 }
 .contact-info.active{
     box-shadow: 0 0 0 100vw rgba(0,0,0,.7);
@@ -206,7 +210,7 @@ html::-webkit-scrollbar-thumb{
     color: var(--black);
     cursor: pointer;
     text-align: center;
-    margin-bottom: .5rem;
+    margin-bottom: .3rem;
 }
 .contact-info .info h3{
     font-size: 2rem;
@@ -217,7 +221,7 @@ html::-webkit-scrollbar-thumb{
     /* graphtext */
     font-size: 1.5rem;
     color: var(--light-color);
-    line-height: 2;
+    line-height: 1.5;
 }
 .contact-info .share{
     padding-top: 1rem;
@@ -430,6 +434,11 @@ section{
     cursor: pointer;
     text-align: center;
     line-height: 8rem;
+    transition: .1s linear;
+}
+.services .box-container .box .content i:hover{
+    background: var(--light-bg);
+    color: var(--black)
 }
 /* Projects(trabajos) */
 .projects{
@@ -552,10 +561,23 @@ section{
 }
 /* fOOTER ****** */
 footer .footer1{
+    position: relative;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap: 1.5rem;
-    background: var(--white);
+    background: url('../storage/cliente/banner3.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+footer .footer1::before{
+    content: '';
+    position: absolute;
+    top: 0;left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(25,42,86,0.8);
+
 }
 footer .footer2{
     background: var(--light-bg);
@@ -569,7 +591,7 @@ footer .footer2 p{
 footer .footer1 .logo,
 footer .footer1 .menu-links,
 footer .footer1 .contacto{
-    background: red;
+    position: relative;
 }
 footer .footer1 .menu-links{
     padding-left: 40%;
@@ -583,22 +605,27 @@ footer .footer1 .menu-links h3{
    font-size: 2rem;
    font-weight: 600;
    padding-bottom: 1rem;
+   color: var(--white);
 }
 footer .footer1 .contacto li,
 footer .footer1 .menu-links li{
     font-size: 1.5rem;
     line-height: 2.5rem;
+    color: var(--white);
+}
+footer .footer1 .menu-links li:hover{
+    color: var(--yellow);
+    padding-left: .3rem;
 }
 
-
 footer .footer1 .logo img{
-    width: 180px;
+    width: 150px;
 }
 footer .footer1 .logo p{
     padding-top: 1.5rem;
     font-size: 1.3rem;
     text-align: justify;
-
+    color: var(--white);
 }
 
 /* media queries */
@@ -656,14 +683,19 @@ footer .footer1 .logo p{
     .popup-image img{
         width: 95%;
     }
+
+
+}
+@media (max-width:650px){
+
     footer .footer1{
         grid-template-columns: repeat(1,1fr);
     }
     footer .footer1 .menu-links,
     footer .footer1 .contacto{
-        padding-left: 20%;
+        padding: 0;
+        text-align: center;
     }
-
 }
 @media (max-width:450px){
     html{
@@ -676,4 +708,5 @@ footer .footer1 .logo p{
     .login-form{
        width: 90%;
     }
+
 }
