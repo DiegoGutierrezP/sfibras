@@ -13,8 +13,14 @@
                 </nav>
             </div>
             <div class="content-service">
-                <h3 class="heading2">Señales Verticales</h3>
-                {{$servicio}}
+                @if ($servicio === 'senVerticales')
+                    @include('servicios.svertical')
+                @elseif($servicio === 'senHorizontales')
+                    @include('servicios.shorizontal')
+                @elseif($servicio === 'hitos')
+                    @include('servicios.hitoskm')
+                @endif
+
             </div>
         </div>
 

@@ -71,14 +71,17 @@ main{
     text-transform: capitalize;
 } */
 .header .logo img{
-    width: 150px;
-    height: 50px;
+    width: 120px;
+    /* height: 50px; */
 }
 .header .navbar a{
     font-size: 1.7rem;
     text-transform: capitalize;
     font-weight: 500;
     margin: 0 1rem;
+}
+.active-navbar-link{
+    color: var(--yellow);
 }
 .header .navbar a:hover{
     color: var(--yellow);
@@ -187,8 +190,33 @@ main{
 .btn-bg{
     background: var(--black);
 }
-
+/* ---------------------  */
+.contact-info-content{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .7);
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+    display: none;
+}
 .contact-info{
+    position: absolute;
+    top: 0;right: 0;
+    width: 34rem;
+    background: var(--white);
+
+    height: 100%;
+    text-align: center;
+    padding: 0 2rem;
+    padding-top: 5rem;
+
+}
+.contact-info-content.active{
+    display: block;
+}
+/* .contact-info{
     position: fixed;
     top: 0;right: 0;
     width: 34rem;
@@ -206,7 +234,8 @@ main{
 .contact-info.active{
     box-shadow: 0 0 0 100vw rgba(0,0,0,.7);
     display: block;
-}
+} */
+/* ------------- */
 .contact-info .info{
     padding: 1rem 0;
 }
@@ -390,16 +419,22 @@ section{
     background: var(--light-bg);
     padding: 3rem 2rem;
     border: 1px solid var(--yellow);
+    height: 20rem;
 }
 .about .box-container .box h3{
     font-size: 4rem;
     font-weight: 700;
 }
+.about .box-container .box img{
+    /* width: 8rem; */
+    margin: auto;
+    height: 8rem;
+}
 .about .box-container .box p{
     font-size: 1.5rem;
     color: var(--light-color);
-    line-height: 2;
-    padding-top: 1rem 0;
+    line-height: 1.8;
+    padding-top: 1.8rem;
 }
 /* Services **************** */
 .services{
@@ -742,6 +777,9 @@ footer .footer1 .logo p{
     width: 80%;
     padding-left: 3rem;
 }
+.servicios-page .content .content-service p{
+    font-size: 1.5rem;
+}
 .servicios-page .content .menu nav{
     display: flex;
     flex-direction: column;
@@ -829,6 +867,9 @@ footer .footer1 .logo p{
         width: 100%;/* background: red; */
         padding: 1rem;
     }
+    .about .box-container .box img{
+        height: 6rem;
+    }
 
 }
 @media (max-width:650px){
@@ -848,7 +889,7 @@ footer .footer1 .logo p{
     }
     .header .logo img{
         width: 100px;
-        height: 40px;
+        /* height: 40px; */
     }
     .login-form{
        width: 90%;

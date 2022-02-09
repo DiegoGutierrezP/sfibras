@@ -102,8 +102,8 @@
         <img src="{{Storage::url('cliente/sfibraslogo.png')}}" alt="">
     </a>
     <nav class="navbar">
-        <a href="{{route('nosotros')}}">Nosotros</a>
-        <a href="{{route('servicios')}}">Servicios</a>
+        <a href="{{route('nosotros')}}" class="@if(request()->routeIs('nosotros'))  active-navbar-link @endif">Nosotros</a>
+        <a href="{{route('servicios')}}" class="@if(request()->routeIs('servicios'))  active-navbar-link @endif">Servicios</a>
         <a href="">Proyectos</a>
         <a href="">Cotizar</a>
         <a href="">Contacto</a>
@@ -120,8 +120,8 @@
     </form>
 
 </header>
-
-<div class="contact-info">
+<div class="contact-info-content">
+    <div class="contact-info">
     <div id="close-contact-info" class="fas fa-times"></div>
     <div class="info">
        <i class="fas fa-phone"></i>
@@ -146,4 +146,6 @@
          <a href="" class="fab fa-instagram"></a>
      </div>
 </div>
+</div>
+
 

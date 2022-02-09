@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class Servicios extends Component
 {
-    public $servicio;
+    public $servicio = 'senVerticales';
 
     public function render()
     {

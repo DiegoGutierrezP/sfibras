@@ -203,16 +203,19 @@
 
         <div class="box-container">
             <div class="box">
-                <h3>10+</h3>
-                <p>años de experiencia</p>
+                {{-- <h3>10+</h3> --}}
+                <img src="{{Storage::url('cliente/like-svgrepo-com.svg')}}" alt="">
+                <p>Mas de 10 años de experiencia</p>
             </div>
             <div class="box">
-                <h3>1100+</h3>
-                <p>proyectos completado</p>
+                {{-- <h3>1100+</h3> --}}
+                <img src="{{Storage::url('cliente/worker-svgrepo-com.svg')}}" alt="">
+                <p>Fabricación de acuerdo a los requerimientos</p>
             </div>
             <div class="box">
-                <h3>20+</h3>
-                <p>clientes satisfechos</p>
+                {{-- <h3>20+</h3> --}}
+                <img src="{{Storage::url('cliente/time-svgrepo-com.svg')}}" alt="">
+                <p>Puntualidad en las entregas</p>
             </div>
         </div>
 
