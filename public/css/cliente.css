@@ -754,6 +754,9 @@ footer .footer1 .logo p{
     border-bottom: 1px solid var(--light-color);
     /* border-left: .5rem solid var(--yellow); */
 }
+.activelinkServicio{
+    border-left: .5rem solid var(--yellow);
+}
 .servicios-page .content .menu nav a:hover{
     color: var(--yellow);
     /* padding-left: 1.5rem; */
