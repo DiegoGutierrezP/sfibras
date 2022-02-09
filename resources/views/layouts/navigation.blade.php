@@ -102,10 +102,10 @@
         <img src="{{Storage::url('cliente/sfibraslogo.png')}}" alt="">
     </a>
     <nav class="navbar">
-        <a href="">Nosotros</a>
-        <a href="">Servicios</a>
+        <a href="{{route('nosotros')}}">Nosotros</a>
+        <a href="{{route('servicios')}}">Servicios</a>
         <a href="">Proyectos</a>
-        <a href="">Galeria</a>
+        <a href="">Cotizar</a>
         <a href="">Contacto</a>
     </nav>
     <div class="icons">

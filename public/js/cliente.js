@@ -60,7 +60,7 @@ var swiper = new Swiper(".logo-slider",{
         768:{
             slidesPerView:4
         },
-        1000:{
+        1200:{
             slidesPerView:5
         },
     }

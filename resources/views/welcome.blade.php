@@ -223,28 +223,6 @@
     <section class="services" id="services">
         <h1 class="heading">Servicios</h1>
         <div class="box-container">
-
-            {{-- <div class="box">
-                <img src="{{Storage::url('cliente/paneles2.jpeg')}}" alt="">
-                <div class="content">
-                    <h3>Señales Verticales</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum hic aliquam alias asperiores tempora?</p>
-                </div>
-            </div>
-            <div class="box">
-                <img src="{{Storage::url('cliente/tachon1.jpeg')}}" alt="">
-                <div class="content">
-                    <h3>Señales Horizontales</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum hic aliquam alias asperiores tempora?</p>
-                </div>
-            </div>
-            <div class="box">
-                <img src="{{Storage::url('cliente/hitosk1.jpeg')}}" alt="">
-                <div class="content">
-                    <h3>Hitos Kilometricos</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum hic aliquam alias asperiores tempora?</p>
-                </div>
-            </div> --}}
             <div class="box">
                 <div class="image">
                     <img src="{{Storage::url('cliente/paneles2.jpeg')}}" alt="">
@@ -252,7 +230,7 @@
                 <div class="content">
                     <div class="info">
                         <h3>Señales Verticales</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum hic aliquam alias asperiores tempora?</p>
+                        {{-- <p>Señales informativas, preventivas y reglamentarias, auxiliares y otros</p> --}}
                     </div>
                     <i class="fas fa-plus"></i>
                 </div>
@@ -264,7 +242,7 @@
                 <div class="content">
                     <div class="info">
                         <h3>Señales Horizontales</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur </p>
+                        {{-- <p>Tachones viales reflectivas.</p> --}}
                     </div>
                     <i class="fas fa-plus"></i>
                 </div>
@@ -276,7 +254,7 @@
                 <div class="content">
                     <div class="info">
                         <h3>Hitos Kilometricos</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum hic aliquam alias asperiores tempora?</p>
+                        {{-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum hic aliquam alias asperiores tempora?</p> --}}
                     </div>
                     <i class="fas fa-plus"></i>
                 </div>
@@ -342,12 +320,13 @@
     <section class="logo-container">
         <div class="swiper logo-slider">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="{{Storage::url('cliente/client-logo-1.png')}}" alt=""></div>
-                <div class="swiper-slide"><img src="{{Storage::url('cliente/client-logo-2.png')}}" alt=""></div>
-                <div class="swiper-slide"><img src="{{Storage::url('cliente/client-logo-3.png')}}" alt=""></div>
-                <div class="swiper-slide"><img src="{{Storage::url('cliente/client-logo-4.png')}}" alt=""></div>
-                <div class="swiper-slide"><img src="{{Storage::url('cliente/client-logo-5.png')}}" alt=""></div>
-                <div class="swiper-slide"><img src="{{Storage::url('cliente/client-logo-6.png')}}" alt=""></div>
+                <div class="swiper-slide"><img src="{{Storage::url('cliente/clientelogo1.png')}}" alt=""></div>
+                <div class="swiper-slide"><img src="{{Storage::url('cliente/clientelogo2.jpg')}}" alt=""></div>
+                <div class="swiper-slide"><img src="{{Storage::url('cliente/clientelogo3.png')}}" alt=""></div>
+                <div class="swiper-slide"><img src="{{Storage::url('cliente/clientelogo4.jpg')}}" alt=""></div>
+                <div class="swiper-slide"><img src="{{Storage::url('cliente/clientelogo5.jpg')}}" alt=""></div>
+                <div class="swiper-slide"><img src="{{Storage::url('cliente/clientelogo6.jpg')}}" alt=""></div>
+                <div class="swiper-slide"><img src="{{Storage::url('cliente/clientelogo7.png')}}" alt=""></div>
             </div>
         </div>
     </section>

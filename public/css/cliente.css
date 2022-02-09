@@ -38,6 +38,14 @@ html::-webkit-scrollbar-track{
 html::-webkit-scrollbar-thumb{
     background:var(--black);
 }
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+main{
+    flex-grow: 1;/* footer simepre abajo */
+}
 
 @keyframes fadeIn {
     0%{
@@ -69,6 +77,7 @@ html::-webkit-scrollbar-thumb{
 .header .navbar a{
     font-size: 1.7rem;
     text-transform: capitalize;
+    font-weight: 500;
     margin: 0 1rem;
 }
 .header .navbar a:hover{
@@ -158,7 +167,7 @@ html::-webkit-scrollbar-thumb{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: 20%;
+    padding-bottom: 10%;
 }
 .login-form{
     margin-top: 8%;
@@ -252,13 +261,14 @@ html::-webkit-scrollbar-thumb{
 }
 /* Home***************+ */
 section{
-    padding: 5rem 10%;
+   padding: 5rem 15%;
 }
 .home{
     padding: 0;
 }
 .home .slide{
-    min-height: 60rem;
+    /* min-height: 60rem; */
+    min-height: 70rem;
     display: flex;
     align-items: center;
     position: relative;
@@ -271,7 +281,11 @@ section{
     top: 0;left: 0;
     height: 100%;
     width: 100%;
-    background: linear-gradient(90deg, var(--yellow),transparent);
+    /* background: linear-gradient(90deg, var(--yellow),transparent); */
+   /*  background: rgba(245,191,35,0.5); */
+  /*  background: rgba(102,102,102,0.7); */
+   /* background: linear-gradient(90deg, rgba(102,102,102,1),rgba(102,102,102,0.5)); */
+   background: linear-gradient(90deg, rgba(245,191,35,0.8),rgba(102,102,102,0.5));
 }
 .home .slide .content{
     width: 50rem;
@@ -283,10 +297,15 @@ section{
     text-transform: uppercase;
 }
 .home .slide .content p{
-    font-size: 1.6rem;
-    color: var(--light-color);
-    line-height: 2;
-    padding: 1rem 0;
+    /* font-size: 1.6rem; */
+    font-size: 1.8rem;
+    /* color: var(--light-color); */
+    color: var(--white);
+    /* line-height: 2; */
+    line-height: 1.8;
+    /* padding: 1rem 0; */
+    padding-top: 1rem;
+    padding-bottom: 2rem;
 }
 .home .home-slider .swiper-button-next,
 .home .home-slider .swiper-button-prev{
@@ -320,6 +339,15 @@ section{
     text-transform: capitalize;
     padding: 1rem;
     border-left: 1rem solid var(--yellow);
+    letter-spacing: .2rem;
+}
+.heading2{
+    margin-bottom: 3rem;
+    font-size: 3rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    padding: 1rem;
+    border-bottom: .4rem solid var(--yellow);
 }
 /* ABOUT ************ */
 .about .row{
@@ -417,13 +445,14 @@ section{
 
 }
 .services .box-container .box .content .info h3{
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 600;
 }
 
 .services .box-container .box .content .info p{
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     color: var(--light-color);
+    line-height: 1.2;
 }
 .services .box-container .box .content i{
     width: 15%;
@@ -551,6 +580,8 @@ section{
 /* Cliente Logos ****************** */
 .logo-container{
    text-align: center;
+   padding-top: 8rem;
+   padding-bottom: 8rem;
 }
 
 .logo-container img{
@@ -569,6 +600,7 @@ footer .footer1{
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    background-attachment: fixed;
 }
 footer .footer1::before{
     content: '';
@@ -602,15 +634,16 @@ footer .footer1 .contacto{
 }
 footer .footer1 .contacto h3,
 footer .footer1 .menu-links h3{
-   font-size: 2rem;
+   font-size: 2.3rem;
    font-weight: 600;
    padding-bottom: 1rem;
    color: var(--white);
+   letter-spacing: .5rem;
 }
 footer .footer1 .contacto li,
 footer .footer1 .menu-links li{
-    font-size: 1.5rem;
-    line-height: 2.5rem;
+    font-size: 1.8rem;
+    line-height: 2;
     color: var(--white);
 }
 footer .footer1 .menu-links li:hover{
@@ -623,9 +656,108 @@ footer .footer1 .logo img{
 }
 footer .footer1 .logo p{
     padding-top: 1.5rem;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     text-align: justify;
     color: var(--white);
+}
+
+/* Page Nostros */
+.nosotros-page{
+    padding-bottom: 5rem;
+}
+.nosotros-page .banner{
+    height: 50rem;
+}
+.nosotros-page .banner img{
+    width: 100%;height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.nosotros-page .content .info1,
+.nosotros-page .content .info2,
+.nosotros-page .content .info3{
+    display: flex;
+    gap: 2rem;
+
+}
+.nosotros-page .content .info1 .content,
+.nosotros-page .content .info2 .content,
+.nosotros-page .content .info3 .content{
+    width: 50%;/* background: red; */
+    padding: 1rem;
+}
+.nosotros-page .content .info1 .content p,
+.nosotros-page .content .info2 .content p,
+.nosotros-page .content .info3 .content p{
+    font-size: 1.8rem;
+    line-height: 1.8;
+}
+.nosotros-page .content .info1 .icon,
+.nosotros-page .content .info2 .icon,
+.nosotros-page .content .info3 .icon{
+   /*  background: green; */
+    width: 50%;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+}
+.nosotros-page .content .info1 .icon img,
+.nosotros-page .content .info2 .icon img,
+.nosotros-page .content .info3 .icon img{
+    width: 20rem;
+}
+.nosotros-page .heading{
+    margin-top: 1rem;
+}
+.nosotros-page .heading-right{
+    border: none;
+    border-right: 1rem solid var(--yellow);
+    text-align: end;
+}
+.nosotros-page .logo-container{
+    background: var(--white);
+}
+.nosotros-page .logo-container .heading{
+    border: none;
+    padding-bottom: 3rem;
+}
+/* Servicios Page ******************/
+.servicios-page .heading{
+    border: none;
+    text-align: center;
+}
+.servicios-page .heading2{
+    font-size: 2.5rem;
+}
+.servicios-page .content{
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.servicios-page .content .menu{
+    width: 20%;
+    padding: 1rem;
+}
+.servicios-page .content .content-service{
+    width: 80%;
+    padding-left: 3rem;
+}
+.servicios-page .content .menu nav{
+    display: flex;
+    flex-direction: column;
+}
+.servicios-page .content .menu nav a{
+    font-size: 1.5rem;
+    display: block;
+    padding: 2rem 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--light-color);
+    /* border-left: .5rem solid var(--yellow); */
+}
+.servicios-page .content .menu nav a:hover{
+    color: var(--yellow);
+    /* padding-left: 1.5rem; */
+    border-bottom: 1px solid var(--yellow)
 }
 
 /* media queries */
@@ -683,7 +815,17 @@ footer .footer1 .logo p{
     .popup-image img{
         width: 95%;
     }
-
+    .nosotros-page .content .info1 .icon,
+    .nosotros-page .content .info2 .icon,
+    .nosotros-page .content .info3 .icon{
+        display: none;
+    }
+    .nosotros-page .content .info1 .content,
+    .nosotros-page .content .info2 .content,
+    .nosotros-page .content .info3 .content{
+        width: 100%;/* background: red; */
+        padding: 1rem;
+    }
 
 }
 @media (max-width:650px){

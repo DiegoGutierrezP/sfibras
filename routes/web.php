@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::view('nosotros','nosotros')->name('nosotros');
+
+Route::view('servicios','servicios')->name('servicios');
+
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/dashboard', function () {
         return view('dashboard');
