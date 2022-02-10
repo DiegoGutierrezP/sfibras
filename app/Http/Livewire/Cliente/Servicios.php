@@ -6,7 +6,13 @@ use Livewire\Component;
 
 class Servicios extends Component
 {
-    public $servicio = 'senVerticales';
+    public $servicio;
+
+    public function mount($servicio = 'señales-verticales'){
+
+        $this->servicio=$servicio;
+
+    }
 
     public function render()
     {

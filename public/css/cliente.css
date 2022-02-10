@@ -45,6 +45,7 @@ body{
 }
 main{
     flex-grow: 1;/* footer simepre abajo */
+    position: relative;/* agregado por servicios page */
 }
 
 @keyframes fadeIn {
@@ -447,7 +448,7 @@ section{
 }
 .services .box-container{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(45rem,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(40rem,1fr));
     gap: 2rem;
 }
 .services .box-container .box{
@@ -489,7 +490,7 @@ section{
     color: var(--light-color);
     line-height: 1.2;
 }
-.services .box-container .box .content i{
+.services .box-container .box .content a{
     width: 15%;
     height: 100%;
     font-size: 3rem;
@@ -500,7 +501,7 @@ section{
     line-height: 8rem;
     transition: .1s linear;
 }
-.services .box-container .box .content i:hover{
+.services .box-container .box .content a:hover{
     background: var(--light-bg);
     color: var(--black)
 }
@@ -701,13 +702,48 @@ footer .footer1 .logo p{
     padding-bottom: 5rem;
 }
 .nosotros-page .banner{
+    position: relative;
+    background: url('../storage/cliente/nosotros-banner2.jpg');
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
     height: 50rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nosotros-page .banner::before{
+    content: '';
+    position: absolute;
+    top: 0;left: 0;
+    width: 100%;height: 100%;
+    background: rgba(25,42,86,0.5);
+}
+.nosotros-page .banner h1{
+    position: relative;
+    font-size: 6rem;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+}
+/* .nosotros-page .banner{
+    height: 50rem;
+    position: relative;
+    background-attachment: fixed;
+}
+.nosotros-page .banner::before{
+    content: '';
+    position: absolute;
+    width: 100%;height: 100%;
+    background: rgba(25,42,86,0.5);
 }
 .nosotros-page .banner img{
     width: 100%;height: 100%;
     background-size: cover;
     background-repeat: no-repeat;
-}
+
+} */
 .nosotros-page .content .info1,
 .nosotros-page .content .info2,
 .nosotros-page .content .info3{
@@ -761,6 +797,25 @@ footer .footer1 .logo p{
     border: none;
     text-align: center;
 }
+.servicios-page .head{
+    position: relative;
+
+}
+.servicios-page .head #menu-servicios-btn{
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    height: 5rem;
+    width: 5rem;
+    line-height: 5rem;
+    font-size: 2rem;
+    background: var(--light-bg);
+    color: var(--black);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
 .servicios-page .heading2{
     font-size: 2.5rem;
 }
@@ -800,6 +855,22 @@ footer .footer1 .logo p{
     /* padding-left: 1.5rem; */
     border-bottom: 1px solid var(--yellow)
 }
+.servicios-page .content .content-service .imgs-servicio{
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem,1fr));
+    gap: 2rem;
+}
+.servicios-page .content .content-service .imgs-servicio a{
+    max-height: 300px;
+}
+.servicios-page .content .content-service .imgs-servicio img{
+    width: 100%;
+    height: 100%;
+}
+
+
+
 
 /* media queries */
 @media (max-width:1200px){
@@ -836,6 +907,37 @@ footer .footer1 .logo p{
         display: block;
         margin:2rem;
     }
+    /* servicios page */
+    .servicios-page .head #menu-servicios-btn{
+        display: flex;
+    }
+    .servicios-page .content .menu{
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* background: rgba(0, 0, 0, .7); */
+        padding: 0;
+        transition: .3s all ease;
+        transform: translate(0%);
+        transform: translate(-100%);
+    }
+    .servicios-page .content .menu.active{
+
+        transform: translate(0%);
+    }
+    .servicios-page .content .menu nav{
+        margin: 0;
+        width: 30rem;
+        height: 100%;
+        background: var(--white);
+        padding-top: 10rem;
+    }
+    .servicios-page .content .content-service{
+        width: 100%;
+    }
+
 }
 @media (max-width:768px){
     .header .search-form{
@@ -870,6 +972,10 @@ footer .footer1 .logo p{
     .about .box-container .box img{
         height: 6rem;
     }
+    .nosotros-page .banner h1{
+        font-size: 4rem;
+        text-align: center;
+    }
 
 }
 @media (max-width:650px){
@@ -894,5 +1000,14 @@ footer .footer1 .logo p{
     .login-form{
        width: 90%;
     }
-
+    .servicios-page .heading{
+        text-align: right;
+    }
+    .servicios-page .head #menu-servicios-btn{
+        height: 4rem;
+        width: 4rem;
+        line-height: 4rem;
+        font-size: 1.8rem;
+        top: 20%;
+    }
 }

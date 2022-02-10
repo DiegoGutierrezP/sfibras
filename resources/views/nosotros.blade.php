@@ -2,7 +2,8 @@
 
     <div class="nosotros-page">
         <div class="banner">
-            <img src="{{ Storage::url('cliente/nosotros-banner2.jpg') }}" alt="">
+            {{-- <img src="{{ Storage::url('cliente/nosotros-banner2.jpg') }}" alt=""> --}}
+            <h1>¿Quienes Somos?</h1>
         </div>
         <section class="content">
             <h3 class="heading">Nosotros</h3>

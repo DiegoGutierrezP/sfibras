@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Livewire\Cliente\Servicios;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +22,7 @@ Route::get('/', function () {
 
 Route::view('nosotros','nosotros')->name('nosotros');
 
-Route::view('servicios','servicios')->name('servicios');
+Route::get('servicios/{servicio?}',Servicios::class)->name('servicios');
 
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/dashboard', function () {

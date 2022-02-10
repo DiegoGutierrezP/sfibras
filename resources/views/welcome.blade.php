@@ -235,7 +235,7 @@
                         <h3>Señales Verticales</h3>
                         {{-- <p>Señales informativas, preventivas y reglamentarias, auxiliares y otros</p> --}}
                     </div>
-                    <i class="fas fa-plus"></i>
+                    <a href="{{route('servicios','señales-verticales')}}"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
             <div class="box">
@@ -247,7 +247,7 @@
                         <h3>Señales Horizontales</h3>
                         {{-- <p>Tachones viales reflectivas.</p> --}}
                     </div>
-                    <i class="fas fa-plus"></i>
+                    <a href="{{route('servicios','señales-horizontales')}}"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
             <div class="box">
@@ -259,7 +259,7 @@
                         <h3>Hitos Kilometricos</h3>
                         {{-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus harum hic aliquam alias asperiores tempora?</p> --}}
                     </div>
-                    <i class="fas fa-plus"></i>
+                    <a href="{{route('servicios','hitos')}}"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         </div>
