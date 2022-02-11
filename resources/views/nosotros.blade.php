@@ -38,7 +38,7 @@
             <div class="info2">
 
                 <div class="icon">
-                    <img src="{{ Storage::url('cliente/mission.jpg') }}" alt="">
+                    <img src="{{ Storage::url('cliente/objective-svgrepo-com.svg') }}" alt="">
                 </div>
                 <div class="content">
                     <p>
@@ -67,7 +67,7 @@
                     </p>
                 </div>
                 <div class="icon">
-                    <img src="{{ Storage::url('cliente/vision.png') }}" alt="">
+                    <img src="{{ Storage::url('cliente/vision-svgrepo-com.svg') }}" alt="">
                 </div>
             </div>
 

@@ -102,17 +102,41 @@
         <img src="{{Storage::url('cliente/sfibraslogo.png')}}" alt="">
     </a>
     <nav class="navbar">
+        <a href="{{route('home')}}" class="@if(request()->routeIs('home'))  active-navbar-link @endif">Inicio</a>
         <a href="{{route('nosotros')}}" class="@if(request()->routeIs('nosotros'))  active-navbar-link @endif">Nosotros</a>
         <a href="{{route('servicios')}}" class="@if(request()->routeIs('servicios'))  active-navbar-link @endif">Servicios</a>
-        <a href="">Proyectos</a>
-        <a href="">Cotizar</a>
-        <a href="">Contacto</a>
+        <a href="">Trabajos</a>
+        <a href="{{route('home')}}#contact" >Contacto</a>
     </nav>
     <div class="icons">
-        <div id="menu-btn" class="fas fa-bars"></div>
-        <div id="info-btn" class="fa-solid fa-circle-info"></div>
-        <div id="search-btn" class="fas fa-search"></div>
-        <a href="{{route('login')}}" ><div id="login-btn" class="fas fa-user @if(request()->routeIs('login'))  header-icons-active @endif" ></div></a>
+        <div id="menu-btn" class="btn fas fa-bars"></div>
+        <div id="info-btn" class="btn fa-solid fa-circle-info"></div>
+        <div id="search-btn" class="btn fas fa-search"></div>
+
+        @auth
+        <div class="profile-content">
+            <div id="auth-btn" class="btn fas fa-user" ></div>
+            <div class="menu-profile">
+                {{-- <h3>{{ __('Manage Account') }}<br> <span>{{ Auth::user()->name }}</span></h3> --}}
+                <ul>
+                    <li><a href="{{ route('profile') }}">Perfil</a></li>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <a href="{{route('logout')}}"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                Salir
+                            </a>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        @else
+        <a href="{{route('login')}}" ><div id="login-btn" class="btn fas fa-user @if(request()->routeIs('login'))  header-icons-active @endif" ></div></a>
+        @endauth
+
     </div>
     <form action="" class="search-form">
         <input type="search" name="" placeholder="Busque aqui.." id="search-form">

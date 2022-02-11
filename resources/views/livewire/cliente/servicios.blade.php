@@ -1,4 +1,4 @@
-{{-- <x-app-layout> --}}
+
 <div>
     <section class="servicios-page">
         <div class="head">
@@ -30,16 +30,5 @@
 
     </section>
 
-
-    @push('js')
-
-    <script>
-        lightGallery(document.querySelector('.servicios-page .content .content-service .imgs-servicio'),{
-            download:false,
-        });
-    </script>
-
-    @endpush
-
 </div>
-{{-- </x-app-layout> --}}
+

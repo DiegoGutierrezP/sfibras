@@ -59,7 +59,8 @@ main{
     position: sticky;
     top: 0;left: 0;right: 0;
     box-shadow: var(--box-shadow);
-    padding: 1.5rem 10%;
+    /* padding: 1.5rem 10%; */
+    padding: 1.5rem 20%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -87,7 +88,7 @@ main{
 .header .navbar a:hover{
     color: var(--yellow);
 }
-.header .icons div{
+.header .icons .btn{
     height: 5rem;
     width: 5rem;
     line-height: 5rem;
@@ -97,7 +98,7 @@ main{
     cursor: pointer;
     text-align: center;
 }
-.header .icons div:hover{
+.header .icons .btn:hover{
     background-color: var(--black);
     color: var(--white);
     margin-left: .3rem;
@@ -291,7 +292,7 @@ main{
 }
 /* Home***************+ */
 section{
-   padding: 5rem 15%;
+   padding: 5rem 20%;
 }
 .home{
     padding: 0;
@@ -727,23 +728,7 @@ footer .footer1 .logo p{
     color: var(--white);
     text-transform: uppercase;
 }
-/* .nosotros-page .banner{
-    height: 50rem;
-    position: relative;
-    background-attachment: fixed;
-}
-.nosotros-page .banner::before{
-    content: '';
-    position: absolute;
-    width: 100%;height: 100%;
-    background: rgba(25,42,86,0.5);
-}
-.nosotros-page .banner img{
-    width: 100%;height: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
 
-} */
 .nosotros-page .content .info1,
 .nosotros-page .content .info2,
 .nosotros-page .content .info3{
@@ -793,6 +778,9 @@ footer .footer1 .logo p{
     padding-bottom: 3rem;
 }
 /* Servicios Page ******************/
+.servicios-page{
+    padding-bottom: 10%;
+}
 .servicios-page .heading{
     border: none;
     text-align: center;
@@ -822,7 +810,6 @@ footer .footer1 .logo p{
 .servicios-page .content{
     display: flex;
     flex-wrap: wrap;
-
 }
 .servicios-page .content .menu{
     width: 20%;
@@ -830,7 +817,8 @@ footer .footer1 .logo p{
 }
 .servicios-page .content .content-service{
     width: 80%;
-    padding-left: 3rem;
+    /* padding-left: 3rem; */
+    padding: 0 1.5rem;
 }
 .servicios-page .content .content-service p{
     font-size: 1.5rem;
@@ -868,11 +856,72 @@ footer .footer1 .logo p{
     width: 100%;
     height: 100%;
 }
+/* Profile COntent */
+/* .header .icons{
+    background: green;
+    position: relative;
+} */
+.profile-content{
+    position: relative;
+    display: inline-block;
+}
 
+.profile-content .menu-profile{
+    position: absolute;
+    top: 120%;
+    right: 0px;
+    padding: 10px 15px;
+    background: var(--light-bg);
+    width: 180px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    transition: 0.2s ease;
+    clip-path: polygon(0 0,100% 0,100% 0, 0 0);
+}
+.profile-content .menu-profile:before{
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background: var(--light-bg);
+    transform: rotate(45deg);
+ }
+.profile-content .menu-profile.active{
+     clip-path: polygon(0 0,100% 0,100% 100%, 0 100%);
+ }
 
-
-
+ .profile-content .menu-profile ul{
+    padding: 0;
+}
+.profile-content .menu-profile ul li{
+    list-style: none;
+    padding: 10px 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    direction: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profile-content .menu-profile ul li a{
+    font-size: 1.8rem;
+    display: inline-block;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: 0.3s;
+}
+.profile-content .menu-profile ul li a:hover{
+    color: var(--black);
+}
 /* media queries */
+@media (max-width:1491px){
+    .header{
+        padding: 1.5rem 5%;
+    }
+    section{
+        padding: 3rem 5%;
+    }
+}
 @media (max-width:1200px){
     .header{
         padding: 1.5rem 2rem;
@@ -931,8 +980,9 @@ footer .footer1 .logo p{
         margin: 0;
         width: 30rem;
         height: 100%;
-        background: var(--white);
+        background: var(--light-bg);
         padding-top: 10rem;
+        box-shadow: var(--box-shadow);
     }
     .servicios-page .content .content-service{
         width: 100%;

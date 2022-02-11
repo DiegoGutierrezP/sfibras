@@ -8,22 +8,13 @@
       dispositivo, siendo un modo muy efectivo de hacerlas legibles para los usuarios.
 </p>
 <div class="imgs-servicio">
-    <a href="{{Storage::url('cliente/hitosk1.jpeg')}}">
-        <img src="{{Storage::url('cliente/hitosk1.jpeg')}}" alt="">
+    <a href="{{Storage::url('cliente/tachas8.jpeg')}}">
+        <img src="{{Storage::url('cliente/tachas8.jpeg')}}" alt="">
     </a>
-    <a href="{{Storage::url('cliente/hitoskilometricos.jpeg')}}">
-        <img src="{{Storage::url('cliente/hitoskilometricos.jpeg')}}" alt="">
+    <a href="{{Storage::url('cliente/tachon1.jpeg')}}">
+        <img src="{{Storage::url('cliente/tachon1.jpeg')}}" alt="">
     </a>
-    <a href="{{Storage::url('cliente/postes1.jpeg')}}">
-        <img src="{{Storage::url('cliente/postes1.jpeg')}}" alt="">
-    </a>
-    <a href="{{Storage::url('cliente/nosotros.jpg')}}">
-        <img src="{{Storage::url('cliente/nosotros.jpg')}}" alt="">
-    </a>
-    <a href="{{Storage::url('cliente/img1.jpg')}}">
-        <img src="{{Storage::url('cliente/img1.jpg')}}" alt="">
-    </a>
-    <a href="{{Storage::url('cliente/paneles2.jpeg')}}">
-        <img src="{{Storage::url('cliente/paneles2.jpeg')}}" alt="">
+    <a href="{{Storage::url('cliente/tachas6.jpeg')}}">
+        <img src="{{Storage::url('cliente/tachas6.jpeg')}}" alt="">
     </a>
 </div>

@@ -4,8 +4,10 @@ let searchForm = document.querySelector(".header .search-form");
 //let contactInfo = document.querySelector(".contact-info");
 let contactInfo = document.querySelector(".contact-info-content");
 /* servicios page */
-/* let menuserviciospage = document.querySelector(".servicios-page .content .menu"); */
-let menuserviciospage = document.getElementById("menu-servicios-page");
+let menuserviciospage = document.querySelector(".servicios-page .content .menu");
+/* Profile content */
+let profileContent = document.querySelector(".header .profile-content .menu-profile");
+
 
 /* document.querySelector("#menu-btn").onclick = ()=>{
     navbar.classList.toggle('active');
@@ -62,6 +64,10 @@ document.addEventListener("click",e =>{
             menuserviciospage.classList.remove('active');
              console.log('removi');
         }
+    }
+    /* ProfileContent */
+    if(e.target.matches("#auth-btn")){
+        profileContent.classList.toggle('active');
     }
 })
 /* Servicios page */

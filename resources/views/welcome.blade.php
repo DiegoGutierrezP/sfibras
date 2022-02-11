@@ -131,7 +131,7 @@
     </body>
 </html> --}}
 <x-app-layout>
-    <section class="home" id="home">
+    <section class="home" >
         <div class="swiper home-slider">
             <div class="swiper-wrapper">
                 <section class="swiper-slide slide" style="background: url(../storage/cliente/banner2.jpg) no-repeat;">
@@ -172,7 +172,7 @@
 
     {{-- about section --}}
 
-    <section class="about" id="about">
+    <section class="about" >
         <h1 class="heading">Nosotros</h1>
         <div class="row">
             <div class="img">
@@ -223,12 +223,12 @@
 
     {{-- Section Services --}}
 
-    <section class="services" id="services">
+    <section class="services">
         <h1 class="heading">Servicios</h1>
         <div class="box-container">
             <div class="box">
                 <div class="image">
-                    <img src="{{Storage::url('cliente/paneles2.jpeg')}}" alt="">
+                    <img src="{{Storage::url('cliente/señales1.jpeg')}}" alt="">
                 </div>
                 <div class="content">
                     <div class="info">
@@ -266,7 +266,7 @@
     </section>
 
     {{-- Section projects --}}
-    <section class="projects" id="projects">
+    <section class="projects" >
         <h1 class="heading">Nuestros Trabajos <a href="" > <span>Ver Mas</span> </a> </h1>
 
         <div class="box-container">
@@ -298,7 +298,7 @@
     </div>
 
     {{-- Section contacto --}}
-    <section class="contact">
+    <section class="contact" id="contact">
         <h1 class="heading">Contacto</h1>
         <div class="row">
             <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11038.

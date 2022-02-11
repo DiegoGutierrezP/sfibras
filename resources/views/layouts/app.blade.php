@@ -28,6 +28,8 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
 
         @livewireStyles
+
+        @stack('css')
     </head>
     <body class="font-sans antialiased">
         {{-- <div class="min-h-screen bg-gray-100"> --}}
@@ -59,5 +61,11 @@
         @livewireScripts
 
         @stack('js')
+
+        <script>
+            lightGallery(document.querySelector('.servicios-page .content .content-service .imgs-servicio'),{
+                download:false,
+            });
+        </script>
     </body>
 </html>

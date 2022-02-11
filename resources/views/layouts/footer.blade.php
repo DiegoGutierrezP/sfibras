@@ -10,11 +10,10 @@
         </div>
         <ul class="menu-links">
             <h3>Menu</h3>
-            <li><a href="{{route('home')}}">Home</a></li>
+            <li><a href="{{route('home')}}">Inicio</a></li>
             <li><a href="{{route('nosotros')}}">Nosotros</a></li>
             <li><a href="{{route('servicios')}}">Servicios</a></li>
             <li><a href="">Proyectos</a></li>
-            <li><a href="">Cotizar</a></li>
             <li><a href="">Contacto</a></li>
         </ul>
         <ul class="contacto">
