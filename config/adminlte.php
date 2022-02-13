@@ -246,27 +246,28 @@ return [
             'text' => 'search',
         ], */
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text' => 'Dashboard',
+            'url'  => 'admin',
+            'icon'=>'fas fa-tachometer-alt fa-fw'
+            /* 'can'  => 'manage-blog', */
         ],
-        [
+        /* [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
+        ], */
+        ['header' => 'ADMINISTRADOR'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
+            'text' => 'Clientes',
+            'route'  => 'admin.clientes.index',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Productos',
+            'url'  => 'admin.productos.index',
+            'icon' => 'fas fa-box',
         ],
         [
             'text'    => 'multilevel',
@@ -306,7 +307,7 @@ return [
                 ],
             ],
         ],
-        ['header' => 'labels'],
+        /* ['header' => 'labels'],
         [
             'text'       => 'important',
             'icon_color' => 'red',
@@ -321,7 +322,7 @@ return [
             'text'       => 'information',
             'icon_color' => 'cyan',
             'url'        => '#',
-        ],
+        ], */
     ],
 
     /*
@@ -476,5 +477,5 @@ return [
     |
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];
