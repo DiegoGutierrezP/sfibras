@@ -23,10 +23,18 @@ class UpdateProfileRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name'=>'required',
             'email'=>'required|email',
-            'password'=>'min:6|confirmed'
+            //'password'=>'min:6|confirmed'
         ];
+
+        if(!empty($this->password)){
+            $rules = array_merge($rules,[
+                'password'=>'min:6|confirmed'
+            ]);
+        }
+
+        return $rules;
     }
 }

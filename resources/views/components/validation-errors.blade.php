@@ -14,10 +14,10 @@
             </span>
     </div>
     <div class="alert-content ml-4">
-        <div class="alert-title font-semibold text-lg text-red-800">
-            {{ __('Whoops, something went wrong') }}
+        <div class="alert-title font-semibold text-2xl text-red-800">
+            {{ __('Whoops, Algo salio mal') }}
         </div>
-        <div class="alert-description text-sm text-red-600">
+        <div class="alert-description text-xl text-red-600">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach

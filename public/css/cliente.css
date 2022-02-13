@@ -101,7 +101,7 @@ main{
 .header .icons .btn:hover{
     background-color: var(--black);
     color: var(--white);
-    margin-left: .3rem;
+    /* margin-left: .1rem; */
 }
 .header-icons-active{
     background-color: var(--black) !important;

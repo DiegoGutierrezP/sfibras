@@ -1,0 +1,16 @@
+:root{
+    --yellow: #f5bf23;
+    --black: #192a56;
+    --white:#fff;
+    --light-color: #666;
+    /* --light-bg:#eee; */
+    /* --light-bg:#D6D6D6; */
+    --light-bg:#DADADA;
+    --box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+    --border: .1rem solid rgba(0,0,0,.3);
+
+}
+
+.bg-sfibras-dark{
+    background: var(--black);
+}

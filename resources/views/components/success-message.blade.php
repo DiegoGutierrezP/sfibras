@@ -12,10 +12,10 @@
             </span>
     </div>
     <div class="alert-content ml-4">
-        <div class="alert-title font-semibold text-lg text-green-800">
-            {{ __('Success') }}
+        <div class="alert-title font-semibold text-2xl text-green-800">
+            {{ __('Exito') }}
         </div>
-        <div class="alert-description text-sm text-green-600">
+        <div class="alert-description text-xl text-green-600">
             {{ session('message') }}
         </div>
     </div>

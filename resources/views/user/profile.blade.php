@@ -5,8 +5,10 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="my-12 py-12 ">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <h3 class="pl-4 text-5xl font-bold py-8">Mi Perfil</h3>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
 
@@ -16,10 +18,10 @@
                     <form method="POST" action="{{route('profile.update')}}">
                         @method('PUT')
                         @csrf
-                        <div class="grid grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 gap-6">
                             <div class="grid grid-rows-2 gap-6">
                                 <div>
-                                    <x-label for="name" :value="__('Name')" />
+                                    <x-label for="name" :value="__('Nombre')" />
                                     <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ auth()->user()->name }}" autofocus />
                                 </div>
                                 <div>
@@ -44,9 +46,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center justify-end mt-4">
-                            <x-button class="ml-3">
-                                {{ __('Update') }}
+                        <div class="flex items-center justify-end mt-6">
+                            <x-button class="py-4 px-8 text-xl">
+                                {{ __('Actualizar') }}
                             </x-button>
                         </div>
                     </form>
