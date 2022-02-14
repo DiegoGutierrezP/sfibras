@@ -9,9 +9,11 @@
         </div>
     @endif
 
-   {{-- {{$search}} --}}
     <div class="card-header">
-        <input  wire:model="search" class="form-control" placeholder="Ingrese nombre o ruc del cliente">
+        <input  type="search"
+                wire:model="search"
+                placeholder="Ingrese nombre, dni o ruc del cliente"
+                class="form-control" >
     </div>
     <div class="card-body">
         <table class="table table-striped" >
