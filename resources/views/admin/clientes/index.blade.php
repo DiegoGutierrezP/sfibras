@@ -17,6 +17,27 @@
 @section('js')
     <script>
 
+        /* document.addEventListener("click", e =>{
+            if(e.target.matches(".btn-crear-cliente")){
+                e.preventDefault();
+                $('#createClienteModal').modal('show');
+            }
+            if(e.target.matches(".btn-editar-cliente")){
+                e.preventDefault();
+                //Livewire.emitTo('admin.cliente-index','edit',e.target.dataset.cliente);
+                //console.log(e.target.dataset.cliente)
+            }
+        })*/
+
+        Livewire.on('modalEdit',function(cliente){
+            $('#updateClienteModal').modal('show');
+            //console.log(cliente);
+        })
+        Livewire.on('modalCreate',function(cliente){
+            $('#createClienteModal').modal('show');
+            //console.log(cliente);
+        })
+
         Livewire.on('deleteCliente', function (cliente) {
                 Swal.fire({
                     title: 'Esta seguro?',

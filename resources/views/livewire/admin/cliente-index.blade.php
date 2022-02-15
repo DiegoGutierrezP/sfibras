@@ -1,5 +1,7 @@
 <div class="card">
-
+    @include('livewire.admin.cliente-create')
+    @include('livewire.admin.cliente-update')
+   {{--  @livewire('admin.cliente-modal') --}}
     @if (session('msginfo'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>{{session('msginfo')}}</strong>
@@ -10,6 +12,7 @@
     @endif
 
     <div class="card-header">
+        <a href="" class="btn-crear-cliente btn btn-secondary mb-3" wire:click.prevent="create()">Registrar Cliente</a>
         <input  type="search"
                 wire:model="search"
                 placeholder="Ingrese nombre, dni o ruc del cliente"
@@ -43,7 +46,7 @@
                             </td>
                         <td>{{$cliente->ruc}}</td>
                         <td>{{$cliente->direccion}}</td>
-                        <td width="10px"><a class="btn-editar-cliente btn btn-primary btn-sm">Editar</a></td>
+                        <td width="10px"><a class="btn-editar-cliente btn btn-primary btn-sm"   wire:click.prevent="edit({{ $cliente->id }})"  >Editar</a></td>
                         <td width="10px">
 
                             <a wire:click="$emit('deleteCliente',{{$cliente}})"  class="btn btn-danger btn-sm" >Eliminar</a>

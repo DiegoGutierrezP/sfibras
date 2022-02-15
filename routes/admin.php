@@ -9,3 +9,5 @@ Route::get('/',function(){
 });
 
 Route::resource('clientes',ClienteController::class)->names('admin.clientes');
+
+
