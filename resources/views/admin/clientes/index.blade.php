@@ -15,5 +15,28 @@
 @stop
 
 @section('js')
+    <script>
 
+        Livewire.on('deleteCliente', function (cliente) {
+                Swal.fire({
+                    title: 'Esta seguro?',
+                    text: "Se eliminara el cliente "+ cliente.nombre,
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    cancelButtonText:'Cancelar',
+                    confirmButtonText: 'Eliminar'
+                }).then((result) => {
+                    if(result.value) {
+                        /* Swal.fire(
+                        'Good job!',
+                        'You clicked the button!',
+                        'success'
+                        ) */
+                        console.log(cliente.id);
+                    }
+
+                })
+            })
+    </script>
 @stop

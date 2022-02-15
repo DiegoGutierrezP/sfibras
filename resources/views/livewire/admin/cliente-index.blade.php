@@ -16,49 +16,50 @@
                 class="form-control" >
     </div>
     <div class="card-body">
-        <table class="table table-striped" >
-
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>dni</th>
-                    <th>ruc</th>
-                    <th colspan="2"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @if ($clientes->count())
-                @foreach ($clientes as $cliente)
+        <div class="table-responsive-lg">
+            <table class="table table-striped" >
+                <thead>
                     <tr>
-                       <td>{{$cliente->id}}</td>
-                       <td>{{$cliente->nombre}}</td>
-                       <td>
-                        @if (is_null($cliente->dni))
-                            -
-                        @else
-                            {{$cliente->dni}}
-                        @endif
-                        </td>
-                       <td>{{$cliente->ruc}}</td>
-                       <td width="10px"><a class="btn btn-primary btn-sm" href="">Editar</a></td>
-                       <td width="10px">
-                           <form action="" method="post">
-                                @csrf
-                                @method('delete')
-                                <input type="submit" class="btn btn-danger btn-sm" value="Eliminar">
-                           </form>
-                       </td>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>dni</th>
+                        <th>ruc</th>
+                        <th>Dirección</th>
+                        <th colspan="2"></th>
                     </tr>
-                @endforeach
-                @else
-                    <tr><td colspan="4">No hay registros</td></tr>
-                @endif
+                </thead>
+                <tbody>
+                    @if ($clientes->count())
+                    @foreach ($clientes as $cliente)
+                        <tr>
+                        <td>{{$cliente->id}}</td>
+                        <td>{{$cliente->nombre}}</td>
+                        <td>
+                            @if (is_null($cliente->dni))
+                                -
+                            @else
+                                {{$cliente->dni}}
+                            @endif
+                            </td>
+                        <td>{{$cliente->ruc}}</td>
+                        <td>{{$cliente->direccion}}</td>
+                        <td width="10px"><a class="btn-editar-cliente btn btn-primary btn-sm">Editar</a></td>
+                        <td width="10px">
 
-            </tbody>
-        </table>
+                            <a wire:click="$emit('deleteCliente',{{$cliente}})"  class="btn btn-danger btn-sm" >Eliminar</a>
+                        </td>
+                        </tr>
+                    @endforeach
+                    @else
+                        <tr><td colspan="4">No hay registros</td></tr>
+                    @endif
+
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="card-footer">
         {{$clientes->links()}}
     </div>
+
 </div>
