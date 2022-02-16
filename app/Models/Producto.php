@@ -18,9 +18,5 @@ class Producto extends Model
         return $this->belongsTo('App\Models\OrdenDetalle');
     }
 
-    //relacion productos y medidas (muchos a muchos)
-    public function medidas(){
-        return $this->belongsToMany('App\Models\Medida');
-    }
 
 }

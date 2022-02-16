@@ -1,9 +1,9 @@
 <div class="card">
     @include('livewire.admin.cliente-create')
     @include('livewire.admin.cliente-update')
-   {{--  @livewire('admin.cliente-modal') --}}
+
     @if (session('msginfo'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show my-3 mx-2" role="alert">
             <strong>{{session('msginfo')}}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -37,14 +37,8 @@
                         <tr>
                         <td>{{$cliente->id}}</td>
                         <td>{{$cliente->nombre}}</td>
-                        <td>
-                            @if (is_null($cliente->dni))
-                                -
-                            @else
-                                {{$cliente->dni}}
-                            @endif
-                            </td>
-                        <td>{{$cliente->ruc}}</td>
+                        <td>{{is_null($cliente->dni)? '-' : $cliente->dni}}</td>
+                        <td>{{is_null($cliente->ruc)? '-' : $cliente->ruc}}</td>
                         <td>{{$cliente->direccion}}</td>
                         <td width="10px"><a class="btn-editar-cliente btn btn-primary btn-sm"   wire:click.prevent="edit({{ $cliente->id }})"  >Editar</a></td>
                         <td width="10px">

@@ -8,28 +8,40 @@
                 </button>
             </div>
            <div class="modal-body">
-                <form action="">
+                <form >
                     <div class="form-group mb-3">
                         <label >Nombre del Cliente</label>
                         <input type="text" class="form-control"  wire:model="nombre" placeholder="nombre del cliente">
+                        @error('nombre')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="form-group mb-3">
                         <label >Dni</label>
                         <input type="number" class="form-control" wire:model="dni" placeholder="dni del cliente">
+                        @error('dni')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="form-group mb-3">
                         <label >Ruc del Cliente</label>
                         <input type="number" class="form-control" wire:model="ruc" placeholder="ruc del cliente">
+                        @error('ruc')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="form-group mb-3">
                         <label >Dirección del Cliente</label>
                         <input type="text" class="form-control" wire:model="direccion" placeholder="ruc del cliente">
+                        @error('direccion')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Cerrar</button>
-                <button type="button" wire:loading.attr="disabled"  wire:click.prevent="update()" class="btn btn-primary close-modal">Guardar</button>
+                <button type="button" wire:loading.attr="disabled" wire:target="update"  wire:click.prevent="update()" class="btn btn-primary close-modal">Guardar</button>
             </div>
         </div>
     </div>

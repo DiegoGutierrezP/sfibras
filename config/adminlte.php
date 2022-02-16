@@ -251,6 +251,13 @@ return [
             'icon'=>'fas fa-tachometer-alt fa-fw'
             /* 'can'  => 'manage-blog', */
         ],
+        [
+            'text' => 'Mi Empresa',
+            'route'  => 'admin.miEmpresa.index',
+            'active'=>['admin/miEmpresa/*'],
+            'icon'=>'fas fa-building'
+            /* 'can'  => 'manage-blog', */
+        ],
         /* [
             'text'        => 'pages',
             'url'         => 'admin/pages',
@@ -268,6 +275,11 @@ return [
             'text' => 'Productos',
             'url'  => 'admin.productos.index',
             'icon' => 'fas fa-box',
+        ],
+        [
+            'text' => 'Hacer Cotización',
+            'route'  => 'admin.cotizacion.index',
+            'icon' => 'fas fa-scroll',
         ],
         [
             'text'    => 'multilevel',

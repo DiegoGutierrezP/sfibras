@@ -37,6 +37,10 @@
             $('#createClienteModal').modal('show');
             //console.log(cliente);
         })
+        Livewire.on('closeModalCliente',function(cliente){
+            $('#createClienteModal').modal('hide');
+            $('#updateClienteModal').modal('hide');
+        })
 
         Livewire.on('deleteCliente', function (cliente) {
                 Swal.fire({
@@ -49,12 +53,7 @@
                     confirmButtonText: 'Eliminar'
                 }).then((result) => {
                     if(result.value) {
-                        /* Swal.fire(
-                        'Good job!',
-                        'You clicked the button!',
-                        'success'
-                        ) */
-                        console.log(cliente.id);
+                        Livewire.emitTo('admin.cliente-index','delete',cliente);
                     }
 
                 })
