@@ -11,12 +11,12 @@
         <div class="card-header">
             <h4 class="float-left">{{$empresa->razon_social}}</h4>
             <div class="float-right">
-                <a href="" class="btn btn-secondary">Editar</a>
+                <a href="{{route('admin.miEmpresa.edit',$empresa)}}" class="btn btn-secondary">Editar</a>
             </div>
         </div>
         <div class="card-body">
-            <div class="my-4">
-                <img src="{{Storage::url($empresa->logo)}}" class="img-fluid" alt="">
+            <div class="img-miEmpresa">
+                <img src="{{Storage::url($empresa->logo)}}"  alt="">
             </div>
             <table class="table">
                 <tr>

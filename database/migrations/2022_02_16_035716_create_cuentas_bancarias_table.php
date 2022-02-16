@@ -16,6 +16,7 @@ class CreateCuentasBancariasTable extends Migration
         Schema::create('cuentas_bancarias', function (Blueprint $table) {
             $table->id();
 
+            $table->string('banco');
             $table->string('tipo_cuenta');
             $table->string('numero_cuenta');
 

@@ -17,13 +17,13 @@ class CreateEmpresasTable extends Migration
             $table->id();
 
             $table->string('razon_social');
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->string('ruc');
             $table->string('direccion');
-            $table->string('telefono');
+            $table->string('telefono')->nullable();
             $table->string('celular');
             $table->string('email');
-            $table->string('firma_titular');
+            $table->string('firma_titular')->nullable();
 
             $table->timestamps();
         });

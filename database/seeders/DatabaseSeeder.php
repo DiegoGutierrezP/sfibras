@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
 
         Cliente::factory(15)->create();
         $this->call(UserSeeder::class);
+        $this->call(EmpresaSeeder::class);
     }
 }

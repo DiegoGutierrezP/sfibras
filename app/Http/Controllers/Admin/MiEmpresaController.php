@@ -59,9 +59,11 @@ class MiEmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Empresa $miEmpresa)
     {
-        //
+        $empresa = new Empresa();
+        $empresa= $miEmpresa;
+        return view('admin.miEmpresa.edit',compact('empresa'));
     }
 
     /**
@@ -71,9 +73,19 @@ class MiEmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Empresa $miEmpresa)
     {
-        //
+
+        $request->validate([
+            'razon_social'=>'required',
+            'ruc'=>'required|digits:11',
+            'direccion'=>'required',
+            'celular'=>'required',
+            'email'=>'required|email',
+
+        ]);
+
+        dd($request);
     }
 
     /**
