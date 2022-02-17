@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Mi Empresa')
 
 @section('content_header')
     <h1>Mi Empresa</h1>
@@ -19,6 +19,7 @@
                         <th>Razon Social</th>
                         <th>Ruc</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,8 +28,11 @@
                         <td>{{$empresa->id}}</td>
                         <td>{{$empresa->razon_social}}</td>
                         <td>{{$empresa->ruc}}</td>
-                        <td width="20px">
+                        <td width="10px">
                             <a class="btn btn-light " href="{{route('admin.miEmpresa.show',$empresa)}}"><i class="fas fa-eye"></i></a>
+                        </td>
+                        <td width="10px">
+                            <a  class="btn-delete-empresa btn btn-danger" data-empresa="{{$empresa->id}}"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 @endforeach
@@ -43,5 +47,84 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        @if(Session::has('msg-sweet'))
+
+            let msg = "{{Session::get('msg-sweet')}}";
+            Swal.fire({
+                position: 'top-end',
+                type: 'success',
+                text: msg,
+                showConfirmButton: false,
+                timer: 2000
+            })
+        @endif
+
+        document.addEventListener("click" , e=>{
+            if(e.target.matches(['.btn-delete-empresa','.btn-delete-empresa *'])){
+                e.preventDefault();
+                const $btnDelete = document.querySelector('.btn-delete-empresa');
+                let empresa = $btnDelete.dataset.empresa;
+                //let url = "{{route('admin.miEmpresa.destroy'," + empresa + ")}}";
+                let url = '{{ route("admin.miEmpresa.destroy", ":empresa") }}';
+
+                url = url.replace(':empresa', empresa);
+
+                Swal.fire({
+                    title: 'Esta seguro?',
+                    text: "Se eliminara la empresa",
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    cancelButtonText:'Cancelar',
+                    confirmButtonText: 'Eliminar'
+                }).then((result) => {
+                    if(result.value) {
+                        console.log(url)
+
+                        let options ={
+                            method:"DELETE",
+                            headers:{
+                                "Content-type":"application/json; charset=utf-8",
+                                "X-CSRF-TOKEN":"{{csrf_token()}}"
+                            }
+                        }
+                        deleteEmpresa(url,options)
+                    }
+
+                })
+            }
+        })
+
+        async function deleteEmpresa(url,options){
+            try{
+                let res = await fetch(url,options),
+                 json = await res.json();
+
+                 if(!res.ok) throw {status:res.status, statusText: res.statusText}
+
+                if(json.response){
+                    Swal.fire({
+                        position: 'top-end',
+                        type: json.type,
+                        text: json.message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    location.reload();
+                }else{
+                    Swal.fire({
+                        position: 'top-end',
+                        type: json.type,
+                        text: json.message,
+                        showConfirmButton: false,
+                    });
+                    console.log(json);
+                }
+
+            }catch(err){
+                console.log(err)
+            }
+        }
+    </script>
 @stop

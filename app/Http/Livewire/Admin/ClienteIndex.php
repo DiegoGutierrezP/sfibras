@@ -72,10 +72,11 @@ class ClienteIndex extends Component
                 'direccion'=>$this->direccion
             ]);
 
-            session()->flash('msginfo', 'Cliente Updated Successfully.');
+            //session()->flash('msginfo', 'Cliente Updated Successfully.');
         }
 
         $this->emit('closeModalCliente');
+        $this->emit('msg-sweet','Cliente actualizado correctamente');
     }
 
      public function create()
@@ -89,14 +90,16 @@ class ClienteIndex extends Component
 
         Cliente::create($data);
 
-        session()->flash('msginfo', 'Cliente registrado correctamente.');
+        //session()->flash('msginfo', 'Cliente registrado correctamente.');
 
         $this->emit('closeModalCliente');
+        $this->emit('msg-sweet','Cliente registrado correctamente');
     }
 
     public function delete(Cliente $cliente){
         $cliente->delete();
 
-        session()->flash('msginfo', 'Cliente eliminado correctamente.');
+        //session()->flash('msginfo', 'Cliente eliminado correctamente.');
+        $this->emit('msg-sweet','Cliente eliminado correctamente');
     }
 }

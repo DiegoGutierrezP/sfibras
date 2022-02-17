@@ -12,12 +12,18 @@
             <h4 class="float-left">{{$empresa->razon_social}}</h4>
             <div class="float-right">
                 <a href="{{route('admin.miEmpresa.edit',$empresa)}}" class="btn btn-secondary"><i class="fas fa-pen"></i></a>
-                <a  class="btn-delete-empresa btn btn-danger" data-empresa="{{$empresa->id}}"><i class="fas fa-trash"></i></a>
+
+               {{--  <a  class="btn-delete-empresa btn btn-danger" data-empresa="{{$empresa->id}}"><i class="fas fa-trash"></i></a> --}}
             </div>
         </div>
         <div class="card-body">
             <div class="img-miEmpresa">
-                <img src="{{Storage::url($empresa->logo)}}"  alt="">
+                @if ($empresa->logo)
+                    <img src="{{Storage::url($empresa->logo)}}"  alt="">
+                @else
+                    <img src="{{Storage::url('admin/no_image.png')}}" alt="">
+                @endif
+
             </div>
             <table class="table">
                 <tr>
@@ -65,54 +71,20 @@
 
 @section('js')
     <script>
-        document.addEventListener("click" , e=>{
-            if(e.target.matches(['.btn-delete-empresa','.btn-delete-empresa *'])){
-                e.preventDefault();
-                let empresa = e.target.dataset.empresa;
-                //let url = "{{route('admin.miEmpresa.destroy'," + empresa + ")}}";
-                let url = '{{ route("admin.miEmpresa.destroy", ":empresa") }}';
 
-                url = url.replace(':empresa', empresa);
+        @if(Session::has('msg-sweet'))
 
-                Swal.fire({
-                    title: 'Esta seguro?',
-                    text: "Se eliminara la empresa",
-                    showCancelButton: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#6c757d',
-                    cancelButtonText:'Cancelar',
-                    confirmButtonText: 'Eliminar'
-                }).then((result) => {
-                    if(result.value) {
-                        //console.log(url)
-
-                        let options ={
-                            method:"DELETE",
-                            headers:{
-                                "Content-type":"application/json; charset=utf-8",
-                                "X-CSRF-TOKEN":"{{csrf_token()}}"
-                            }
-                        }
-
-                        deleteEmpresa(url,options)
-                        //console.log(options);
-                    }
-
-                })
-            }
+        let msg = "{{Session::get('msg-sweet')}}";
+        Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            text: msg,
+            showConfirmButton: false,
+            timer: 2000
         })
 
-        async function deleteEmpresa(url,options){
-            try{
-                let res = await fetch(url,options),
-                 json = await res.json();
+        @endif
 
-                 if(!res.ok) throw {status:res.status, statusText: res.statusText}
 
-                console.log(json);
-            }catch(err){
-                console.log(err)
-            }
-        }
     </script>
 @stop

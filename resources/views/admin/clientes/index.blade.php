@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+
     @livewire('admin.cliente-index')
 @stop
 
@@ -28,16 +29,25 @@
                 //console.log(e.target.dataset.cliente)
             }
         })*/
+        Livewire.on('msg-sweet',function(msg){
+            Swal.fire({
+                position: 'top-end',
+                type: 'success',
+                text: msg,
+                showConfirmButton: false,
+                timer: 2000
+            })
+        })
 
-        Livewire.on('modalEdit',function(cliente){
+        Livewire.on('modalEdit',function(){
             $('#updateClienteModal').modal('show');
             //console.log(cliente);
         })
-        Livewire.on('modalCreate',function(cliente){
+        Livewire.on('modalCreate',function(){
             $('#createClienteModal').modal('show');
             //console.log(cliente);
         })
-        Livewire.on('closeModalCliente',function(cliente){
+        Livewire.on('closeModalCliente',function(){
             $('#createClienteModal').modal('hide');
             $('#updateClienteModal').modal('hide');
         })

@@ -68,6 +68,8 @@ class MiEmpresaController extends Controller
         if(!empty($cuentas)){
             $emp->cuentas_bancarias()->createMany($cuentas);
         }
+
+        return redirect()->route('admin.miEmpresa.index')->with('msg-sweet','Se registro la empresa correctamente');
     }
 
     /**
@@ -150,6 +152,9 @@ class MiEmpresaController extends Controller
             $miEmpresa->cuentas_bancarias()->createMany($cuentas);
         }
 
+
+        return redirect()->route('admin.miEmpresa.show',$miEmpresa)->with('msg-sweet','Los datos se actualizaron correctamente');
+
     }
 
     /**
@@ -160,10 +165,30 @@ class MiEmpresaController extends Controller
      */
     public function destroy($id)
     {
-        $empresa = Empresa::find($id);
-        return response()->json([
-            'success' => true,
-             'message' => $empresa,
-         ]);
+        try{
+            $empresa = Empresa::find($id);
+            if($empresa->logo){
+                Storage::delete($empresa->logo);
+            }
+            if($empresa->firma_titular){
+                Storage::delete($empresa->firma_titular);
+            }
+            $empresa->delete();
+            return response()->json([
+                'response' => true,
+                'type'=>'success',
+                'message' => 'La empresa se elimino correctamente',
+            ]);
+
+        }catch(\Exception $e){
+            return response()->json([
+                'success' => false,
+                'type'=>'error',
+                'message' => 'Ocurrio un error : '. $e,
+            ]);
+        }
+
+
+
     }
 }

@@ -122,6 +122,8 @@
 @section('js')
 
     <script>
+
+        //-------------------------------------------------
         document.addEventListener("change", e=>{
             if(e.target.matches('#fileLogo')){
                 const $imgLogo = document.getElementById("imgLogo");
