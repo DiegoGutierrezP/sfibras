@@ -9,7 +9,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <a href="" class="btn btn-secondary">Registrar Empresa</a>
+            <a href="{{route('admin.miEmpresa.create')}}" class="btn btn-secondary">Registrar Empresa</a>
         </div>
         <div class="card-body">
             <table class="table">
@@ -28,7 +28,7 @@
                         <td>{{$empresa->razon_social}}</td>
                         <td>{{$empresa->ruc}}</td>
                         <td width="20px">
-                            <a class="btn btn-primary " href="{{route('admin.miEmpresa.show',$empresa)}}">Ver</a>
+                            <a class="btn btn-light " href="{{route('admin.miEmpresa.show',$empresa)}}"><i class="fas fa-eye"></i></a>
                         </td>
                     </tr>
                 @endforeach

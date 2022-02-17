@@ -13,10 +13,17 @@
 
     <div class="card-header">
         <a href="" class="btn-crear-cliente btn btn-secondary mb-3" wire:click.prevent="create()">Registrar Cliente</a>
-        <input  type="search"
+        {{-- <input  type="search"
                 wire:model="search"
                 placeholder="Ingrese nombre, dni o ruc del cliente"
-                class="form-control" >
+                class="form-control" > --}}
+                <div class="input-group">
+                    <input class="form-control py-2 border-right-0" type="search"  wire:model="search"
+                    placeholder="Ingrese nombre, dni o ruc del cliente">
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
+                    </span>
+                </div>
     </div>
     <div class="card-body">
         <div class="table-responsive-lg">
@@ -40,10 +47,9 @@
                         <td>{{is_null($cliente->dni)? '-' : $cliente->dni}}</td>
                         <td>{{is_null($cliente->ruc)? '-' : $cliente->ruc}}</td>
                         <td>{{$cliente->direccion}}</td>
-                        <td width="10px"><a class="btn-editar-cliente btn btn-primary btn-sm"   wire:click.prevent="edit({{ $cliente->id }})"  >Editar</a></td>
+                        <td width="10px"><a class="btn-editar-cliente btn btn-light btn-sm"   wire:click.prevent="edit({{ $cliente->id }})"><i class="fas fa-pen"></i></a></td>
                         <td width="10px">
-
-                            <a wire:click="$emit('deleteCliente',{{$cliente}})"  class="btn btn-danger btn-sm" >Eliminar</a>
+                            <a wire:click="$emit('deleteCliente',{{$cliente}})"  class="btn btn-danger btn-sm" ><i class="fas fa-trash"></i></a>
                         </td>
                         </tr>
                     @endforeach

@@ -9,6 +9,12 @@ class CuentasBancaria extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'banco',
+        'tipo_cuenta',
+        'numero_cuenta',
+    ];
+
     public function empresa(){
         return $this->belongsTo('App\Models\Empresa');
     }

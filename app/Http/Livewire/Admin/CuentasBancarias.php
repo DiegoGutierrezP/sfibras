@@ -8,12 +8,23 @@ class CuentasBancarias extends Component
 {
     public $cuentasBancas = [];
 
-    public function mount(){
-        $this->cuentasBancas[] = [
-            'banco'=>'',
-            'nro_cuenta'=>'',
-            'tipo_cuenta'=>'soles'
-        ];
+    public function mount($cuentas = null){
+        if(empty($cuentas[0])){
+            $this->cuentasBancas[] = [
+                'banco'=>'',
+                'nro_cuenta'=>'',
+                'tipo_cuenta'=>'soles'
+            ];
+        }else{
+            foreach($cuentas as $c){
+                $this->cuentasBancas[] = [
+                    'banco'=>$c->banco,
+                    'nro_cuenta'=>$c->numero_cuenta,
+                    'tipo_cuenta'=>$c->tipo_cuenta
+                ];
+            }
+        }
+
     }
 
     public function render()
