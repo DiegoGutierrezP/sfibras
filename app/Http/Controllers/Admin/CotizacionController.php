@@ -26,5 +26,13 @@ class CotizacionController extends Controller
             'productos'=>$productos
         ]);
     }
+    public function getProduct($id){
+        $producto = Producto::find($id);
+
+        return response()->json([
+            'res'=>true,
+            'producto'=>$producto
+        ]);
+    }
 
 }

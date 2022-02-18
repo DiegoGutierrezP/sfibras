@@ -110,6 +110,28 @@
 
             </div>
 
+            <hr>
+
+            <div class="table-responsive">
+                <table class="table-items table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Item</th>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Precio/u</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+            </div>
+
         </div>
 
 
@@ -126,9 +148,60 @@
             $selectCategory = d.getElementById("select-cates-prods"),
             $selectProds = d.getElementById("select-prods"),
             $contentMedidasSen = d.getElementById("content-medidas-señales"),
-            $btnAddItem = d.querySelector(".btn-agregar-item");
+            $btnAddItem = d.querySelector(".btn-agregar-item"),
+            $tableItems = d.querySelector(".table-items tbody");
+            var selectCategoriaValue = 0 ;
 
-            let selectCategoriaValue = 0 ;
+        d.addEventListener("keyup",e=>{
+            if(e.target.matches('.input-precio-prod')){
+                let prepro = e.target.value,
+                $inputPrecioTotal = e.target.parentNode.parentNode.childNodes[5].querySelector('.precio-total-item');
+
+                console.log($inputPrecioTotal.value);
+
+            }
+        })
+
+        d.addEventListener("click",e =>{
+            if(e.target.matches('.btn-agregar-item')){
+                //console.log($selectProds.value);
+
+                let uri = '{{ route('cotizacion.getProduct', ':id') }}';
+                    uri = uri.replace(':id', $selectProds.value);
+               //console.log(uri);
+                peticiones({
+                        url: uri,
+                        ops: {
+                            method: "GET",
+                            headers: {
+                                "Content-type": "application/json; charset=utf-8"
+                            }
+                        },
+                        success: (json) => {
+                            console.log(json.producto.precio);
+
+                            let row = $tableItems.insertRow($tableItems.rows.length);
+                            let cell1 = row.insertCell(0),
+                                cell2 = row.insertCell(1),
+                                cell3 = row.insertCell(2),
+                                cell4 = row.insertCell(3),
+                                cell5 = row.insertCell(4),
+                                cell6 = row.insertCell(5),
+                                cell7 = row.insertCell(6);
+                            cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
+                            cell2.innerHTML = `<input type='text' class='form-control' value='${json.producto.descripcion_producto}'>`;
+                            cell3.innerHTML = `<textarea rows="1" class='form-control' placeholder='descripcion (opcional)'></textarea>`;
+                            cell4.innerHTML = `<input type='number' class='input-precio-prod form-control' value='1'>`;
+                            cell5.innerHTML = `<input type='number' class='form-control' value='${json.producto.precio}'>`;
+                            cell6.innerHTML = `<input type='number' class='precio-total-item form-control' disabled value='${json.producto.precio}'>`;
+                            cell7.innerHTML = `<a class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></a>`;
+
+                        },
+                        error: err => console.log(err),
+                    })
+            }
+        })
+
 
         d.addEventListener("change", e => {
             if (e.target.matches('#select-cates-prods')) {
@@ -139,6 +212,7 @@
 
                     let uri = '{{ route('cotizacion.getProductsxCate', ':id') }}';
                     uri = uri.replace(':id', e.target.value);
+                   //console.log(uri);
                     peticiones({
                         url: uri,
                         ops: {
@@ -186,14 +260,8 @@
 
 
         async function peticiones(options) {
-            let {
-                url,
-                ops,
-                success,
-                error
-            } = options;
+            let {url,ops,success,error} = options;
             try {
-
                 let res = await fetch(url, ops),
                     json = await res.json();
 
@@ -201,10 +269,8 @@
                     status: res.status,
                     statusText: res.statusText
                 };
-
                 //console.log(json);
                 success(json);
-
             } catch (err) {
                 console.log(err);
                 error(err);

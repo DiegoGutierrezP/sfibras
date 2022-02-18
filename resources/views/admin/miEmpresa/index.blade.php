@@ -32,7 +32,7 @@
                             <a class="btn btn-light " href="{{route('admin.miEmpresa.show',$empresa)}}"><i class="fas fa-eye"></i></a>
                         </td>
                         <td width="10px">
-                            <a  class="btn-delete-empresa btn btn-danger" data-empresa="{{$empresa->id}}"><i class="fas fa-trash"></i></a>
+                            <a  class="btn-delete-empresa btn btn-danger" data-empresa="{{$empresa->id}}"><i data-empresa="{{$empresa->id}}" class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 @endforeach
@@ -64,13 +64,10 @@
         document.addEventListener("click" , e=>{
             if(e.target.matches(['.btn-delete-empresa','.btn-delete-empresa *'])){
                 e.preventDefault();
-                const $btnDelete = document.querySelector('.btn-delete-empresa');
-                let empresa = $btnDelete.dataset.empresa;
-                //let url = "{{route('admin.miEmpresa.destroy'," + empresa + ")}}";
                 let url = '{{ route("admin.miEmpresa.destroy", ":empresa") }}';
+                url = url.replace(':empresa', e.target.dataset.empresa);
 
-                url = url.replace(':empresa', empresa);
-
+                //console.log(e.target.dataset.empresa);
                 Swal.fire({
                     title: 'Esta seguro?',
                     text: "Se eliminara la empresa",
