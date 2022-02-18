@@ -11,9 +11,8 @@
         <div class="card-header">
             <h4 class="float-left">{{$empresa->razon_social}}</h4>
             <div class="float-right">
-                <a href="{{route('admin.miEmpresa.edit',$empresa)}}" class="btn btn-secondary"><i class="fas fa-pen"></i></a>
-
-               {{--  <a  class="btn-delete-empresa btn btn-danger" data-empresa="{{$empresa->id}}"><i class="fas fa-trash"></i></a> --}}
+                <a href="{{route('admin.miEmpresa.index')}}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                <a href="{{route('admin.miEmpresa.edit',$empresa)}}" class="btn btn-primary"><i class="fas fa-pen"></i></a>
             </div>
         </div>
         <div class="card-body">
@@ -51,6 +50,16 @@
                     <td>{{$empresa->email}}</td>
                 </tr>
                 <tr>
+                    <th>Firma:</th>
+                    <td>
+                        @if ($empresa->firma_titular)
+                            <img src="{{Storage::url($empresa->firma_titular)}}" style="max-width: 350px;" class="img-fluid" alt="">
+                        @else
+                            No hay imagen de firma
+                        @endif
+                    </td>
+                </tr>
+                <tr>
                     <th>Cuentas Bancarias:</th>
                     <td>
                         <ul >
@@ -73,16 +82,14 @@
     <script>
 
         @if(Session::has('msg-sweet'))
-
-        let msg = "{{Session::get('msg-sweet')}}";
-        Swal.fire({
-            position: 'top-end',
-            type: 'success',
-            text: msg,
-            showConfirmButton: false,
-            timer: 2000
-        })
-
+            let msg = "{{Session::get('msg-sweet')}}";
+            Swal.fire({
+                position: 'top-end',
+                type: 'success',
+                text: msg,
+                showConfirmButton: false,
+                timer: 2000
+            })
         @endif
 
 

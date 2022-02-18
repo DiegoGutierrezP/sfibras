@@ -60,6 +60,7 @@
             })
         @endif
 
+
         document.addEventListener("click" , e=>{
             if(e.target.matches(['.btn-delete-empresa','.btn-delete-empresa *'])){
                 e.preventDefault();
@@ -104,14 +105,14 @@
                  if(!res.ok) throw {status:res.status, statusText: res.statusText}
 
                 if(json.response){
-                    Swal.fire({
+                    location.reload();
+                    /* Swal.fire({
                         position: 'top-end',
                         type: json.type,
                         text: json.message,
                         showConfirmButton: false,
                         timer: 2000
-                    });
-                    location.reload();
+                    }); */
                 }else{
                     Swal.fire({
                         position: 'top-end',
