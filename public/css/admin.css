@@ -26,4 +26,15 @@
 
 }
 
+.table-items-cotizacion tbody tr td:nth-child(2),
+.table-items-cotizacion tbody tr td:nth-child(3){
+    width: 25%;
+}
+.table-cotizacion-totales{
+    width: 30%;
+    float: right;
+}
+.table-cotizacion-totales tr td{
+    width: 50%;
+}
 

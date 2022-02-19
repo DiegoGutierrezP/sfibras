@@ -113,7 +113,7 @@
             <hr>
 
             <div class="table-responsive">
-                <table class="table-items table table-sm table-bordered">
+                <table class="table-items-cotizacion table table-sm table-bordered">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -121,7 +121,7 @@
                             <th>Descripción</th>
                             <th>Cantidad</th>
                             <th>Precio/u</th>
-                            <th>Total</th>
+                            <th>Total S/.</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -129,8 +129,42 @@
 
                     </tbody>
                 </table>
+            </div>
+
+            <div class=" my-4">
+
+                    <table class="table-cotizacion-totales table table-sm table-bordered">
+                        <tr>
+                            <td>Sub Total</td>
+                            <td>S/ 0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Decuento</td>
+                            <td>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                    <div class="input-group-text">%</div>
+                                    </div>
+                                    <input type="number" class="input-descuento form-control" value="0">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>IGV</td>
+                            <td>S/ 0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Envio</td>
+                            <td>S/ 0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td>S/ 0.00</td>
+                        </tr>
+                    </table>
 
             </div>
+
 
         </div>
 
@@ -149,16 +183,43 @@
             $selectProds = d.getElementById("select-prods"),
             $contentMedidasSen = d.getElementById("content-medidas-señales"),
             $btnAddItem = d.querySelector(".btn-agregar-item"),
-            $tableItems = d.querySelector(".table-items tbody");
+            $tableItems = d.querySelector(".table-items-cotizacion tbody"),
+            $tableTotales = d.querySelector(".table-cotizacion-totales");
             var selectCategoriaValue = 0 ;
 
+        //evento para validar solo entrada de numeros enteros positivos
+        d.addEventListener("input",e=>{
+            if(e.target.matches(['.cantidad-item','.input-descuento'])){
+                let val = e.target.value;
+                e.target.value = val.replace(/\D|\-/,'');
+            }
+        })
+
         d.addEventListener("keyup",e=>{
-            if(e.target.matches('.input-precio-prod')){
-                let prepro = e.target.value,
-                $inputPrecioTotal = e.target.parentNode.parentNode.childNodes[5].querySelector('.precio-total-item');
+            if(e.target.matches('.cantidad-item')){
+                let cantidadItem = parseFloat(e.target.value),
+                $inputPrecioTotal = e.target.parentNode.parentNode.querySelector('.precio-total-item'),
+                $inputPrecioUnit = e.target.parentNode.parentNode.querySelector('.precio-unit-item');
+                if(e.target.value){
+                    $inputPrecioTotal.value = (parseFloat($inputPrecioUnit.value) * cantidadItem).toFixed(2);
+                }
+                if(e.target.value == ''){
+                    $inputPrecioTotal.value = 0;
+                }
+                calcularTotales();
+            }
+            if(e.target.matches('.precio-unit-item')){
+                let precioUnitItem = parseFloat(e.target.value),
+                $inputPrecioTotal = e.target.parentNode.parentNode.querySelector('.precio-total-item'),
+                $inputCantItem = e.target.parentNode.parentNode.querySelector('.cantidad-item');
 
-                console.log($inputPrecioTotal.value);
-
+                if(e.target.value){
+                    $inputPrecioTotal.value = (parseFloat($inputCantItem.value) * precioUnitItem).toFixed(2);
+                }
+                if(e.target.value == ''){
+                    $inputPrecioTotal.value = 0;
+                }
+                calcularTotales();
             }
         })
 
@@ -178,7 +239,6 @@
                             }
                         },
                         success: (json) => {
-                            console.log(json.producto.precio);
 
                             let row = $tableItems.insertRow($tableItems.rows.length);
                             let cell1 = row.insertCell(0),
@@ -191,17 +251,27 @@
                             cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
                             cell2.innerHTML = `<input type='text' class='form-control' value='${json.producto.descripcion_producto}'>`;
                             cell3.innerHTML = `<textarea rows="1" class='form-control' placeholder='descripcion (opcional)'></textarea>`;
-                            cell4.innerHTML = `<input type='number' class='input-precio-prod form-control' value='1'>`;
-                            cell5.innerHTML = `<input type='number' class='form-control' value='${json.producto.precio}'>`;
+                            cell4.innerHTML = `<input type='number' min='1' class='cantidad-item form-control' value='1'>`;
+                            cell5.innerHTML = `<input type='number' class='precio-unit-item form-control' value='${json.producto.precio}'>`;
                             cell6.innerHTML = `<input type='number' class='precio-total-item form-control' disabled value='${json.producto.precio}'>`;
-                            cell7.innerHTML = `<a class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></a>`;
+                            cell7.innerHTML = `<a class='btn-delete-item btn btn-sm btn-danger'>X</a>`;
 
+                            calcularTotales();
                         },
                         error: err => console.log(err),
                     })
             }
-        })
+            if(e.target.matches('.btn-delete-item')){
+                let row = e.target.parentNode.parentNode;
+                $tableItems.removeChild(row);
 
+                for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
+                    $tableItems.rows[i].childNodes[0].textContent = i+1;
+                }
+
+                calcularTotales();
+            }
+        })
 
         d.addEventListener("change", e => {
             if (e.target.matches('#select-cates-prods')) {
@@ -258,6 +328,19 @@
             }
         })
 
+        function calcularTotales(){
+            //para totales
+            let total=0;
+            for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
+
+                total +=  parseFloat($tableItems.rows[i].querySelector('.precio-total-item').value);
+            }
+            //console.log($tableTotales.rows[0].children[1]);
+            let igv = total * 0.18;
+            $tableTotales.rows[0].children[1].textContent = `S/. ${total.toFixed(2)}`;
+            $tableTotales.rows[2].children[1].textContent = `S/. ${igv.toFixed(2)}`;
+            $tableTotales.rows[4].children[1].textContent = `S/. ${(total + igv).toFixed(2)}`;
+        }
 
         async function peticiones(options) {
             let {url,ops,success,error} = options;
