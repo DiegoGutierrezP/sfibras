@@ -96,9 +96,9 @@
                             <label>Medidas</label>
                             <table>
                                 <tr>
-                                    <td ><input type="number" class="form-control"></td>
+                                    <td ><input type="number" disabled class="input-medidas form-control"></td>
                                     <td class="px-3">X</td>
-                                    <td ><input type="number" class="form-control"></td>
+                                    <td ><input type="number" disabled class="input-medidas form-control"></td>
                                 </tr>
                             </table>
                         </div>
@@ -135,7 +135,7 @@
 
                     <table class="table-cotizacion-totales table table-sm table-bordered">
                         <tr>
-                            <td>Sub Total</td>
+                            <td>Neto</td>
                             <td>S/ 0.00</td>
                         </tr>
                         <tr>
@@ -148,6 +148,10 @@
                                     <input type="number" class="input-descuento form-control" value="0">
                                 </div>
                             </td>
+                        </tr>
+                        <tr>
+                            <td>Sub Total</td>
+                            <td>S/ 0.00</td>
                         </tr>
                         <tr>
                             <td>IGV</td>
@@ -184,18 +188,17 @@
             $contentMedidasSen = d.getElementById("content-medidas-señales"),
             $btnAddItem = d.querySelector(".btn-agregar-item"),
             $tableItems = d.querySelector(".table-items-cotizacion tbody"),
-            $tableTotales = d.querySelector(".table-cotizacion-totales");
+            $tableTotales = d.querySelector(".table-cotizacion-totales"),
+            $inputDescuento = d.querySelector('.input-descuento');
             var selectCategoriaValue = 0 ;
 
         //evento para validar solo entrada de numeros enteros positivos
         d.addEventListener("input",e=>{
-            if(e.target.matches(['.cantidad-item','.input-descuento'])){
+            if(e.target.matches(['.cantidad-item','.input-descuento','.input-medidas'])){
                 let val = e.target.value;
                 e.target.value = val.replace(/\D|\-/,'');
             }
-        })
-
-        d.addEventListener("keyup",e=>{
+            //--------------------------------------------------------------
             if(e.target.matches('.cantidad-item')){
                 let cantidadItem = parseFloat(e.target.value),
                 $inputPrecioTotal = e.target.parentNode.parentNode.querySelector('.precio-total-item'),
@@ -206,7 +209,7 @@
                 if(e.target.value == ''){
                     $inputPrecioTotal.value = 0;
                 }
-                calcularTotales();
+                calcularTotales($inputDescuento.value);
             }
             if(e.target.matches('.precio-unit-item')){
                 let precioUnitItem = parseFloat(e.target.value),
@@ -219,8 +222,35 @@
                 if(e.target.value == ''){
                     $inputPrecioTotal.value = 0;
                 }
-                calcularTotales();
+                calcularTotales($inputDescuento.value);
             }
+            if(e.target.matches('.input-descuento')){
+                //console.clear()
+                //console.log(e.target.value);
+                if(e.target.value){
+                    calcularTotales(e.target.value);
+                }else{
+                    calcularTotales()
+                }
+            }
+            //-------------------------------------------------------------
+            if(e.target.matches('.input-medidas')){
+
+                let medida1 = parseFloat(d.getElementsByClassName('input-medidas')[0].value),
+                medida2 = parseFloat(d.getElementsByClassName('input-medidas')[1].value);
+
+                console.log(typeof(medida1),medida1,typeof(medida2),medida2);
+                if(medida1 && medida2){
+                    $btnAddItem.removeAttribute("disabled");
+                }else{
+                    $btnAddItem.setAttribute("disabled");
+                }
+            }
+        })
+
+        d.addEventListener("keyup",e=>{
+
+
         })
 
         d.addEventListener("click",e =>{
@@ -239,6 +269,20 @@
                             }
                         },
                         success: (json) => {
+                            let descrip = json.producto.descripcion_producto,
+                            precioUnit = json.producto.precio;
+
+                            if(selectCategoriaValue == 1){
+                                let precioMedida = 1;
+                                d.querySelectorAll('.input-medidas').forEach(el =>{
+                                    precioMedida *= parseFloat(el.value)/100;
+
+                                })
+                                console.log(precioMedida);
+                                precioUnit = (precioUnit * precioMedida).toFixed(2);
+                            }
+
+                            let precioTotal = precioUnit;
 
                             let row = $tableItems.insertRow($tableItems.rows.length);
                             let cell1 = row.insertCell(0),
@@ -249,14 +293,14 @@
                                 cell6 = row.insertCell(5),
                                 cell7 = row.insertCell(6);
                             cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
-                            cell2.innerHTML = `<input type='text' class='form-control' value='${json.producto.descripcion_producto}'>`;
+                            cell2.innerHTML = `<input type='text' class='form-control' value='${descrip}'>`;
                             cell3.innerHTML = `<textarea rows="1" class='form-control' placeholder='descripcion (opcional)'></textarea>`;
                             cell4.innerHTML = `<input type='number' min='1' class='cantidad-item form-control' value='1'>`;
-                            cell5.innerHTML = `<input type='number' class='precio-unit-item form-control' value='${json.producto.precio}'>`;
-                            cell6.innerHTML = `<input type='number' class='precio-total-item form-control' disabled value='${json.producto.precio}'>`;
+                            cell5.innerHTML = `<input type='number' class='precio-unit-item form-control' value='${precioUnit}'>`;
+                            cell6.innerHTML = `<input type='number' class='precio-total-item form-control' disabled value='${precioTotal}'>`;
                             cell7.innerHTML = `<a class='btn-delete-item btn btn-sm btn-danger'>X</a>`;
 
-                            calcularTotales();
+                            calcularTotales($inputDescuento.value);
                         },
                         error: err => console.log(err),
                     })
@@ -269,7 +313,7 @@
                     $tableItems.rows[i].childNodes[0].textContent = i+1;
                 }
 
-                calcularTotales();
+                calcularTotales($inputDescuento.value);
             }
         })
 
@@ -278,6 +322,10 @@
                 selectCategoriaValue = e.target.value;
                 $selectProds.innerHTML = "";
                 $btnAddItem.setAttribute("disabled");
+                d.querySelectorAll('.input-medidas').forEach(el =>{
+                    el.value = '';
+                    el.setAttribute("disabled");
+                })
                 if (e.target.value != 0) {
 
                     let uri = '{{ route('cotizacion.getProductsxCate', ':id') }}';
@@ -319,27 +367,42 @@
             if(e.target.matches("#select-prods")){
 
                if(e.target.value != 0){
+                   if(selectCategoriaValue == 1 && e.target.value != 0){
+                        d.querySelectorAll('.input-medidas').forEach(el =>{
+                            el.removeAttribute("disabled");
+                        })
+                   }
                    if(selectCategoriaValue != 1){
                        $btnAddItem.removeAttribute("disabled");
                    }
+
                }else{
                     $btnAddItem.setAttribute("disabled");
+                    d.querySelectorAll('.input-medidas').forEach(el =>{
+                        el.setAttribute("disabled");
+                        el.value = '';
+                    })
                }
             }
         })
 
-        function calcularTotales(){
+        function calcularTotales(descuento = 0){
+
             //para totales
-            let total=0;
+            let neto=0,total=0,igv;
             for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
 
-                total +=  parseFloat($tableItems.rows[i].querySelector('.precio-total-item').value);
+                neto +=  parseFloat($tableItems.rows[i].querySelector('.precio-total-item').value);
             }
-            //console.log($tableTotales.rows[0].children[1]);
-            let igv = total * 0.18;
-            $tableTotales.rows[0].children[1].textContent = `S/. ${total.toFixed(2)}`;
-            $tableTotales.rows[2].children[1].textContent = `S/. ${igv.toFixed(2)}`;
-            $tableTotales.rows[4].children[1].textContent = `S/. ${(total + igv).toFixed(2)}`;
+            total = neto;
+            if(descuento!= 0){
+                total =  neto - ((parseFloat(descuento) * neto)/100);
+            }
+            igv = total * 0.18;
+            $tableTotales.rows[0].children[1].textContent = `S/. ${neto.toFixed(2)}`;
+            $tableTotales.rows[2].children[1].textContent = `S/. ${total.toFixed(2)}`;
+            $tableTotales.rows[3].children[1].textContent = `S/. ${igv.toFixed(2)}`;
+            $tableTotales.rows[5].children[1].textContent = `S/. ${(total + igv).toFixed(2)}`;
         }
 
         async function peticiones(options) {
