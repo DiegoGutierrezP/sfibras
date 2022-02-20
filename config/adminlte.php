@@ -277,7 +277,7 @@ return [
             'icon' => 'fas fa-box',
         ],
         [
-            'text' => 'Hacer Cotización',
+            'text' => 'Crear Cotización',
             'route'  => 'admin.cotizacion.index',
             'icon' => 'fas fa-scroll',
         ],
@@ -393,7 +393,7 @@ return [
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

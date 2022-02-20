@@ -48,15 +48,31 @@
 
 @section('js')
     <script>
+        /* Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                background:'#E6F4EA',
+                title:'prueba dasdas das dasd adas',
+                toast:true,
+                color: '#333',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+
+            }) */
         @if(Session::has('msg-sweet'))
 
             let msg = "{{Session::get('msg-sweet')}}";
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
-                text: msg,
+                title: msg,
+                background:'#E6F4EA',
+                toast:true,
+                color: '#333',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 2000,
+                timerProgressBar: true,
             })
         @endif
 

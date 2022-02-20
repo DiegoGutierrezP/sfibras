@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <label>Cliente</label>
-                        <select name="" id="" class="form-control">
+                        <select name="" id="select-clientes" class="form-control">
                             @foreach ($clientes as $cli)
                                 <option value="">{{ $cli->nombre }}</option>
                             @endforeach
@@ -216,6 +216,9 @@
             if(dia<10) dia='0'+dia; //agrega cero si el menor de 10
             if(mes<10) mes='0'+mes //agrega cero si el menor de 10
             $inputFechaEmision.value = anio+"-"+mes+"-"+dia;
+
+            //select2 cdn
+            $('#select-clientes').select2();
 
         })
 

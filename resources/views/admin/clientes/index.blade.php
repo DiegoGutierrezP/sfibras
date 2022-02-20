@@ -33,9 +33,13 @@
             Swal.fire({
                 position: 'top-end',
                 icon: 'success',
-                text: msg,
+                title: msg,
+                background:'#E6F4EA',
+                toast:true,
+                color: '#333',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 2000,
+                timerProgressBar: true,
             })
         })
 
