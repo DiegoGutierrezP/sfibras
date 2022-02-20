@@ -32,7 +32,7 @@
         Livewire.on('msg-sweet',function(msg){
             Swal.fire({
                 position: 'top-end',
-                type: 'success',
+                icon: 'success',
                 text: msg,
                 showConfirmButton: false,
                 timer: 2000

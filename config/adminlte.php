@@ -393,7 +393,7 @@ return [
             ],
         ],
         'Select2' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'js',
@@ -420,10 +420,21 @@ return [
         'Sweetalert2' => [
             'active' => true,
             'files' => [
-                [
+                /* [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                ], */
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    //'location' => 'vendor/sweetalert2-theme-bootstrap-4/bootstrap-4.css',
+                    'location' => 'vendor/sweetalert2/sweetalert2.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/sweetalert2/sweetalert2.all.js',
                 ],
             ],
         ],

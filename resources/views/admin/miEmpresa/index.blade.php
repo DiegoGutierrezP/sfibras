@@ -53,7 +53,7 @@
             let msg = "{{Session::get('msg-sweet')}}";
             Swal.fire({
                 position: 'top-end',
-                type: 'success',
+                icon: 'success',
                 text: msg,
                 showConfirmButton: false,
                 timer: 2000
@@ -113,7 +113,7 @@
                 }else{
                     Swal.fire({
                         position: 'top-end',
-                        type: json.type,
+                        icon: json.type,
                         text: json.message,
                         showConfirmButton: false,
                     });
