@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategoriaProducto;
+use App\Models\Cliente;
 use App\Models\Empresa;
 use App\Models\Producto;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class CotizacionController extends Controller
 
         $empresas = Empresa::all();
         $catesprod = CategoriaProducto::all();
-        return view('admin.cotizacion.index',compact('empresas','catesprod'));
+        $clientes = Cliente::all();
+        return view('admin.cotizacion.index',compact('empresas','catesprod','clientes'));
     }
 
 

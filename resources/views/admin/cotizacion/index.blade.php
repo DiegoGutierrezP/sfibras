@@ -13,7 +13,7 @@
                 <div class="col-7">
                     <div class="form-group">
                         <label>Empresa</label>
-                        <select name="" id="" class="form-control">
+                        <select  class="form-control">
                             @foreach ($empresas as $emp)
                                 <option value="">{{ $emp->razon_social }}</option>
                             @endforeach
@@ -22,8 +22,8 @@
                     <div class="form-group">
                         <label>Cliente</label>
                         <select name="" id="" class="form-control">
-                            @foreach ($empresas as $emp)
-                                <option value="">{{ $emp->razon_social }}</option>
+                            @foreach ($clientes as $cli)
+                                <option value="">{{ $cli->nombre }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -33,7 +33,7 @@
                         <tr>
                             <th>Fecha Emision</th>
                             <td>
-                                <input type="date" class="form-control ">
+                                <input type="date" class="input-fecha-emision form-control ">
                             </td>
                         </tr>
                         <tr>
@@ -54,14 +54,16 @@
                         <tr>
                             <td colspan="2" style="padding-top: 0">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                        value="option1">
-                                    <label class="form-check-label" for="inlineRadio1">Contado</label>
+                                    <label class="form-check-label">
+                                        <input type="radio" name="formaPago" checked class="form-check-input">
+                                        <span>Contado</span>
+                                    </label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                        value="option2">
-                                    <label class="form-check-label" for="inlineRadio2">Adelanto 50%</label>
+                                    <label class="form-check-label">
+                                        <input type="radio" name="formaPago" class="form-check-input">
+                                        <span>Adelanto 50%</span>
+                                    </label>
                                 </div>
                             </td>
                         </tr>
@@ -76,7 +78,8 @@
             </div>
             <div class="form-group">
                 <label>Introducción</label>
-                <textarea cols="30" rows="5" class="form-control"></textarea>
+                <textarea rows="4" class="form-control">La presente es para saludarlo y a su vez enviarle la cotización solicitada
+                </textarea>
             </div>
             <hr>
             <div class="form-group">
@@ -131,8 +134,8 @@
                 </table>
             </div>
 
-            <div class=" my-4">
-
+            <div class="row position-relative my-4 ">
+                    <div class="w-100">
                     <table class="table-cotizacion-totales table table-sm table-bordered">
                         <tr>
                             <td>Neto</td>
@@ -166,10 +169,21 @@
                             <td>S/ 0.00</td>
                         </tr>
                     </table>
-
+                    </div>
             </div>
 
+            <div class="position relative">
+                <label >Conclusión</label>
+                <textarea  rows="4" class="form-control">Sin otro particular, quedamos de Ustedes.</textarea>
+            </div>
 
+            <div class="mt-5">
+                <div class="float-right">
+                    <button class="btn btn-secondary">Cancelar</button>
+                    <button class="btn btn-success">Generar PDF</button>
+                    <button class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
         </div>
 
 
@@ -189,8 +203,21 @@
             $btnAddItem = d.querySelector(".btn-agregar-item"),
             $tableItems = d.querySelector(".table-items-cotizacion tbody"),
             $tableTotales = d.querySelector(".table-cotizacion-totales"),
-            $inputDescuento = d.querySelector('.input-descuento');
-            var selectCategoriaValue = 0 ;
+            $inputDescuento = d.querySelector('.input-descuento'),
+            $inputFechaEmision = d.querySelector('.input-fecha-emision');
+
+        var selectCategoriaValue = 0 ;
+
+        d.addEventListener("DOMContentLoaded", e=>{
+            let today = new Date(),
+            mes = today.getMonth()+1,
+            dia = today.getDate(),
+            anio = today.getFullYear();
+            if(dia<10) dia='0'+dia; //agrega cero si el menor de 10
+            if(mes<10) mes='0'+mes //agrega cero si el menor de 10
+            $inputFechaEmision.value = anio+"-"+mes+"-"+dia;
+
+        })
 
         //evento para validar solo entrada de numeros enteros positivos
         d.addEventListener("input",e=>{

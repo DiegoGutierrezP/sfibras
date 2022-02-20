@@ -25,7 +25,6 @@
     height: 100%;
 
 }
-
 .table-items-cotizacion tbody tr td:nth-child(2),
 .table-items-cotizacion tbody tr td:nth-child(3){
     width: 25%;
