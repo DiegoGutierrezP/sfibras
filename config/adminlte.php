@@ -269,6 +269,7 @@ return [
         [
             'text' => 'Clientes',
             'route'  => 'admin.clientes.index',
+            'active'=>['admin/clientes/*'],
             'icon' => 'fas fa-fw fa-user',
         ],
         [

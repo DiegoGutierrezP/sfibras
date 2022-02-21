@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-7">
+                <div class="col-lg-7 col-md-7 col-sm-12">
                     <div class="form-group">
                         <label>Empresa</label>
                         <select  class="form-control">
@@ -20,16 +20,47 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Cliente</label>
-                        <select name="" id="select-clientes" class="form-control">
-                            @foreach ($clientes as $cli)
-                                <option value="">{{ $cli->nombre }}</option>
-                            @endforeach
-                        </select>
+                        <div class="content-select-clientes">
+                            <label>Cliente</label>
+
+                            <select name="" id="select-clientes" class="form-control">
+                                @foreach ($clientes as $cli)
+                                    <option value="">{{ $cli->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="content-form-nuevo-cliente d-none">
+                        <label>Nuevo Cliente</label>
+                        <div class="form-group">
+                            <label class="form-check-label">Nombre</label>
+                            <input type="text" class="form-control" placeholder="Nombre del Cliente">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-check-label">Dni</label>
+                            <input type="text" class="form-control" placeholder="Dni del cliente">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-check-label">Ruc</label>
+                            <input type="text" class="form-control" placeholder="Ruc del cliente">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-check-label">Telefono</label>
+                            <input type="text" class="form-control" placeholder="Telefono del cliente">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-check-label">Email</label>
+                            <input type="text" class="form-control" placeholder="Email del cliente">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-check-label">Dirección</label>
+                            <input type="text" class="form-control" placeholder="Direccion del cliente">
+                        </div>
                     </div>
                 </div>
-                <div class="col-5">
-                    <table class="table table-borderless">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <table class="table table-borderless mb-0">
                         <tr>
                             <th>Fecha Emision</th>
                             <td>
@@ -49,10 +80,39 @@
                             </td>
                         </tr>
                         <tr>
+                            <th colspan="2">Opcionales</th>
+                        </tr>
+                        <tr>
+                            <td  colspan="2" class="py-0">
+                                <div class="d-flex flex-column">
+                                    <label class="form-check-label mb-1">
+                                        <input type="checkbox" id="check-cliente-nuevo">
+                                    <span>Cliente nuevo</span>
+                                    </label>
+                                    <label class="form-check-label mb-1">
+                                        <input type="checkbox" id="check-sin-igv">
+                                        <span>Sin IGV</span>
+                                    </label>
+                                    <label class="form-check-label mb-1">
+                                        <input type="checkbox" id="">
+                                        <span>Envio</span>
+                                    </label>
+                                </div>
+                                <div class="content-envio-precio d-none">
+                                    <table class="table p-0 m-0">
+                                        <tr>
+                                            <td width="50%"><label>Envio:</label></td>
+                                            <td width="50%"><input type="numer" class="form-control" placeholder="precio"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
                             <th colspan="2">Forma de Pago</th>
                         </tr>
                         <tr>
-                            <td colspan="2" style="padding-top: 0">
+                            <td colspan="2" class="pt-0">
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
                                         <input type="radio" name="formaPago" checked class="form-check-input">
@@ -67,8 +127,9 @@
                                 </div>
                             </td>
                         </tr>
+
                     </table>
-                    <div class="form-group">
+                    <div class="form-group mt-4">
                         <label>Referencia</label>
                         <input type="text" class="form-control" placeholder="referencia de busqueda(opcional)">
                     </div>
@@ -204,7 +265,9 @@
             $tableItems = d.querySelector(".table-items-cotizacion tbody"),
             $tableTotales = d.querySelector(".table-cotizacion-totales"),
             $inputDescuento = d.querySelector('.input-descuento'),
-            $inputFechaEmision = d.querySelector('.input-fecha-emision');
+            $inputFechaEmision = d.querySelector('.input-fecha-emision'),
+            $checkClientNew = d.getElementById('check-cliente-nuevo'),
+            $checkSinIgv = d.getElementById('check-sin-igv');
 
         var selectCategoriaValue = 0 ;
 
@@ -219,6 +282,7 @@
 
             //select2 cdn
             $('#select-clientes').select2();
+
 
         })
 
@@ -414,12 +478,28 @@
                     })
                }
             }
+            if(e.target.matches('#check-cliente-nuevo')){
+                //console.log(e.target.checked);
+                const $formNewClient = d.querySelector('.content-form-nuevo-cliente'),
+                $selectClienteContent = d.querySelector('.content-select-clientes');
+                if(e.target.checked){
+                    $formNewClient.classList.remove('d-none');
+                    $selectClienteContent.classList.add('d-none');
+
+                }else{
+                    $formNewClient.classList.add('d-none');
+                    $selectClienteContent.classList.remove('d-none');
+
+                }
+            }
+            if(e.target.matches('#check-sin-igv')){
+                calcularTotales($inputDescuento.value);
+            }
         })
 
         function calcularTotales(descuento = 0){
-
             //para totales
-            let neto=0,total=0,igv;
+            let neto=0,total=0,igv=0;
             for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
 
                 neto +=  parseFloat($tableItems.rows[i].querySelector('.precio-total-item').value);
@@ -428,7 +508,11 @@
             if(descuento!= 0){
                 total =  neto - ((parseFloat(descuento) * neto)/100);
             }
-            igv = total * 0.18;
+            //para igv
+            if(!$checkSinIgv.checked){
+                igv = total * 0.18;
+            }
+
             $tableTotales.rows[0].children[1].textContent = `S/. ${neto.toFixed(2)}`;
             $tableTotales.rows[2].children[1].textContent = `S/. ${total.toFixed(2)}`;
             $tableTotales.rows[3].children[1].textContent = `S/. ${igv.toFixed(2)}`;

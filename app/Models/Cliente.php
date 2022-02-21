@@ -13,7 +13,9 @@ class Cliente extends Model
         'nombre',
         'dni',
         'ruc',
-        'direccion'
+        'direccion',
+        'telefono',
+        'email'
     ];
 
     public function ordenes_compras(){

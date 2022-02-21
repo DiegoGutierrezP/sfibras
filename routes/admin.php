@@ -11,6 +11,7 @@ Route::get('/',function(){
 });
 
 Route::get('clientes',[ClienteController::class,'index'])->name('admin.clientes.index');
+Route::get('clientes/{cliente}',[ClienteController::class,'show'])->name('admin.clientes.show');
 
 Route::get('cotizacion',[CotizacionController::class,'index'])->name('admin.cotizacion.index');
 Route::get('cotizacion/categoria/{id}/products',[CotizacionController::class,'getProductosxCategoria'])->name('cotizacion.getProductsxCate');

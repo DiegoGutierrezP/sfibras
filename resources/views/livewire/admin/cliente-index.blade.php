@@ -26,7 +26,7 @@
                 </div>
     </div>
     <div class="card-body">
-        <div class="table-responsive-lg">
+        <div class="table-responsive">
             <table class="table table-striped" >
                 <thead>
                     <tr>
@@ -34,8 +34,9 @@
                         <th>Nombre</th>
                         <th>dni</th>
                         <th>ruc</th>
-                        <th>Dirección</th>
-                        <th colspan="2"></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,9 +47,11 @@
                         <td>{{$cliente->nombre}}</td>
                         <td>{{is_null($cliente->dni)? '-' : $cliente->dni}}</td>
                         <td>{{is_null($cliente->ruc)? '-' : $cliente->ruc}}</td>
-                        <td>{{$cliente->direccion}}</td>
-                        <td width="10px"><a class="btn-editar-cliente btn btn-light btn-sm"   wire:click.prevent="edit({{ $cliente->id }})"><i class="fas fa-pen"></i></a></td>
-                        <td width="10px">
+                        <td width='10px' class="pl-0">
+                            <a class="btn btn-light btn-sm" href="{{route('admin.clientes.show',$cliente)}}"><i class="fas fa-eye"></i></a>
+                        </td>
+                        <td width='10px' class="pl-0"><a class="btn-editar-cliente btn btn-light btn-sm"   wire:click.prevent="edit({{ $cliente->id }})"><i class="fas fa-pen"></i></a></td>
+                        <td width='10px' class="pl-0">
                             <a wire:click="$emit('deleteCliente',{{$cliente}})"  class="btn btn-danger btn-sm" ><i class="fas fa-trash"></i></a>
                         </td>
                         </tr>

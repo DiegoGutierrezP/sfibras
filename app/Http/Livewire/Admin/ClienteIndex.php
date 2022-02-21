@@ -14,7 +14,7 @@ class ClienteIndex extends Component
     protected $paginationTheme = "bootstrap";/* los estilos de la paginacion cambian estilo de tailwind a boostrap */
 
     public $search;
-    public $nombre, $ruc,$dni,$direccion,$cliente_id;
+    public $nombre, $ruc,$dni,$direccion,$cliente_id,$telefono,$email;
 
     protected $listeners = ['delete'];
 
@@ -37,11 +37,13 @@ class ClienteIndex extends Component
         'nombre'=>'required',
         'ruc' => 'nullable|digits:11',
         'dni'=>'nullable|digits:8',
-        'direccion'=>'required'
+        'direccion'=>'required',
+        'telefono'=>'nullable|integer|min:7',
+        'email'=>'nullable|email'
     ];
 
     public function resetValues(){
-        $this->reset(['nombre','ruc','dni','direccion','cliente_id']);
+        $this->reset(['nombre','ruc','dni','direccion','cliente_id','telefono','email']);
         $this->resetValidation();//reseteamos las validaciones
     }
 
@@ -55,7 +57,8 @@ class ClienteIndex extends Component
         $this->ruc = $cliente->ruc;
         $this->dni = $cliente->dni;
         $this->direccion = $cliente->direccion;
-
+        $this->telefono=$cliente->telefono;
+        $this->email=$cliente->email;
 
         $this->emit('modalEdit');
 
@@ -69,7 +72,9 @@ class ClienteIndex extends Component
                 'nombre'=>$this->nombre,
                 'dni'=>$this->dni ? $this->dni : null,
                 'ruc'=>$this->ruc? $this->ruc : null,
-                'direccion'=>$this->direccion
+                'direccion'=>$this->direccion,
+                'telefono' => $this->telefono? $this->telefono : null,
+                'email'=>$this->email? $this->email : null
             ]);
 
             //session()->flash('msginfo', 'Cliente Updated Successfully.');

@@ -18,17 +18,6 @@
 @section('js')
     <script>
 
-        /* document.addEventListener("click", e =>{
-            if(e.target.matches(".btn-crear-cliente")){
-                e.preventDefault();
-                $('#createClienteModal').modal('show');
-            }
-            if(e.target.matches(".btn-editar-cliente")){
-                e.preventDefault();
-                //Livewire.emitTo('admin.cliente-index','edit',e.target.dataset.cliente);
-                //console.log(e.target.dataset.cliente)
-            }
-        })*/
         Livewire.on('msg-sweet',function(msg){
             Swal.fire({
                 position: 'top-end',

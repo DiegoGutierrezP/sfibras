@@ -31,6 +31,20 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
+                        <label >Telefono del Cliente</label>
+                        <input type="number" class="form-control" wire:model="telefono" placeholder="telefono del cliente">
+                        @error('telefono')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3">
+                        <label >Email del Cliente</label>
+                        <input type="text" class="form-control" wire:model="email" placeholder="email del cliente">
+                        @error('email')
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3">
                         <label >Dirección del Cliente</label>
                         <input type="text" class="form-control" wire:model="direccion" placeholder="ruc del cliente">
                         @error('direccion')
