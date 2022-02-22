@@ -8,12 +8,14 @@
 
 @section('content')
     <div class="card">
+        <form action="{{route('cotizacion.generar')}}" id="form-cotizacion" method="POST">
+            @csrf
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-lg-7 col-md-7 col-sm-12">
                     <div class="form-group">
                         <label>Empresa</label>
-                        <select  class="select-miEmpresa form-control">
+                        <select name="empresa_id" class="select-miEmpresa form-control">
                             @foreach ($empresas as $emp)
                                 <option value="{{ $emp->id }}">{{ $emp->razon_social }}</option>
                             @endforeach
@@ -22,7 +24,7 @@
                     <div class="form-group">
                         <div class="content-select-clientes ">
                             <label>Cliente</label>
-                            <select name="" id="select-clientes" class="form-control">
+                            <select name="cliente_id" id="select-clientes" class="form-control">
                                 @foreach ($clientes as $cli)
                                     <option value="{{ $cli->id }}">{{ $cli->nombre }}</option>
                                 @endforeach
@@ -33,33 +35,33 @@
                     <div class="content-form-nuevo-cliente d-none">
                         <label>Nuevo Cliente</label>
 
-                        <form id="form-nuevo-cliente">
+                        <div id="form-nuevo-cliente">
                             <div class="form-group">
                                 <label class="form-check-label">Nombre</label>
-                                <input type="text" class="form-control" name="nombre" value="mrda"  placeholder="Nombre del Cliente">
+                                <input type="text" class="form-control" name="nombreCliente" value="mrda"  placeholder="Nombre del Cliente">
                                 <small class="error-nombre text-danger"></small>
                             </div>
                             <div class="form-group">
                                 <label class="form-check-label">Dni</label>
-                                <input type="text" class="form-control" name="dni" placeholder="Dni del cliente">
+                                <input type="text" class="form-control" name="dniCliente" placeholder="Dni del cliente">
                             </div>
                             <div class="form-group">
                                 <label class="form-check-label">Ruc</label>
-                                <input type="text" class="form-control" name="ruc" placeholder="Ruc del cliente">
+                                <input type="text" class="form-control" name="rucCliente" placeholder="Ruc del cliente">
                             </div>
                             <div class="form-group">
                                 <label class="form-check-label">Telefono</label>
-                                <input type="text" class="form-control" name="telefono" placeholder="Telefono del cliente">
+                                <input type="text" class="form-control" name="telefonoCliente" placeholder="Telefono del cliente">
                             </div>
                             <div class="form-group">
                                 <label class="form-check-label">Email</label>
-                                <input type="text" class="form-control" name="email" placeholder="Email del cliente">
+                                <input type="text" class="form-control" name="emailCliente" placeholder="Email del cliente">
                             </div>
                             <div class="form-group">
                                 <label class="form-check-label">Dirección</label>
-                                <input type="text" class="form-control" name="direccion" placeholder="Direccion del cliente">
+                                <input type="text" class="form-control" name="direccionCliente" placeholder="Direccion del cliente">
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-5 col-sm-12">
@@ -67,19 +69,19 @@
                         <tr>
                             <th>Fecha Emision</th>
                             <td>
-                                <input type="date" class="input-fecha-emision form-control ">
+                                <input type="date" name="fecha_emision" class="input-fecha-emision form-control ">
                             </td>
                         </tr>
                         <tr>
                             <th>Expiración</th>
                             <td>
-                                <input type="number" class="dias-expiracion form-control" value="10">
+                                <input type="number" name="dias_expiracion" class="dias-expiracion form-control" value="10">
                             </td>
                         </tr>
                         <tr>
                             <th>Tiempo entrega</th>
                             <td>
-                                <input type="number" class="tiempo-entrega form-control" value="5">
+                                <input type="number" name="tiempo_entrega" class="tiempo-entrega form-control" value="5">
                             </td>
                         </tr>
                         <tr>
@@ -89,7 +91,7 @@
                             <td  colspan="2" class="py-0">
                                 <div class="d-flex flex-column">
                                     <label class="form-check-label mb-1">
-                                        <input type="checkbox" id="check-cliente-nuevo">
+                                        <input type="checkbox" name="cliente_nuevo" id="check-cliente-nuevo">
                                     <span>Cliente nuevo</span>
                                     </label>
                                     <label class="form-check-label mb-1">
@@ -134,7 +136,7 @@
                     </table>
                     <div class="form-group mt-4">
                         <label>Referencia</label>
-                        <input type="text" class="referencia-cotizacion form-control" placeholder="referencia de busqueda(opcional)">
+                        <input type="text" name="referencia-cotizacion" class="referencia-cotizacion form-control" placeholder="referencia de busqueda(opcional)">
                     </div>
 
 
@@ -142,7 +144,7 @@
             </div>
             <div class="form-group">
                 <label>Introducción</label>
-                <textarea rows="4" class="intro-cotizacion form-control">La presente es para saludarlo y a su vez enviarle la cotización solicitada
+                <textarea rows="4" name="intro-cotizacion" class="intro-cotizacion form-control">La presente es para saludarlo y a su vez enviarle la cotización solicitada
                 </textarea>
             </div>
             <hr>
@@ -204,10 +206,13 @@
                     <table class="table-cotizacion-totales table table-sm table-bordered">
                         <tr>
                             <td>Neto</td>
-                            <td>S/ 0.00</td>
+                            <td>
+                                <input type="hidden" name="coti-precio-neto" value="">
+                                <span>S/ 0.00</span>
+                            </td>
                         </tr>
                         <tr>
-                            <td>Decuento</td>
+                            <td>Descuento</td>
                             <td>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -219,19 +224,31 @@
                         </tr>
                         <tr>
                             <td>Sub Total</td>
-                            <td>S/ 0.00</td>
+                            <td>
+                                <input type="hidden" name="coti-precio-subtotal" value="">
+                                <span>S/ 0.00</span>
+                            </td>
                         </tr>
                         <tr>
                             <td>IGV</td>
-                            <td>S/ 0.00</td>
+                            <td>
+                                <input type="hidden" name="coti-precio-igv" value="">
+                                <span>S/ 0.00</span>
+                            </td>
                         </tr>
                         <tr>
                             <td>Envio</td>
-                            <td>S/ 0.00</td>
+                            <td>
+                                <input type="hidden" name="coti-precio-envio" value="">
+                                <span>S/ 0.00</span>
+                            </td>
                         </tr>
                         <tr>
                             <td>Total</td>
-                            <td>S/ 0.00</td>
+                            <td>
+                                <input type="hidden" name="coti-precio-total" value="">
+                                <span>S/ 0.00</span>
+                            </td>
                         </tr>
                     </table>
                     </div>
@@ -239,7 +256,7 @@
 
             <div class="position relative">
                 <label >Conclusión</label>
-                <textarea  rows="4" class="conclusion-cotizacion form-control">Sin otro particular, quedamos de Ustedes.</textarea>
+                <textarea  rows="4" name="conclusion-cotizacion" class="conclusion-cotizacion form-control">Sin otro particular, quedamos de Ustedes.</textarea>
             </div>
 
             <div class="mt-5">
@@ -250,7 +267,7 @@
                 </div>
             </div>
         </div>
-
+        </form>
 
     </div>
 @stop
@@ -356,7 +373,7 @@
         d.addEventListener("click",e =>{
             if(e.target.matches('.btn-agregar-item')){
                 //console.log($selectProds.value);
-
+                e.preventDefault();
                 let uri = '{{ route('cotizacion.getProduct', ':id') }}';
                     uri = uri.replace(':id', $selectProds.value);
                //console.log(uri);
@@ -384,7 +401,9 @@
 
                             let precioTotal = precioUnit;
 
-                            let row = $tableItems.insertRow($tableItems.rows.length);
+                            let index = $tableItems.rows.length,
+                            row = $tableItems.insertRow($tableItems.rows.length);
+
                             let cell1 = row.insertCell(0),
                                 cell2 = row.insertCell(1),
                                 cell3 = row.insertCell(2),
@@ -393,11 +412,11 @@
                                 cell6 = row.insertCell(5),
                                 cell7 = row.insertCell(6);
                             cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
-                            cell2.innerHTML = `<input type='text' class='form-control' value='${descrip}'>`;
-                            cell3.innerHTML = `<textarea rows="1" class='form-control' placeholder='descripcion (opcional)'></textarea>`;
-                            cell4.innerHTML = `<input type='number' min='1' class='cantidad-item form-control' value='1'>`;
-                            cell5.innerHTML = `<input type='number' class='precio-unit-item form-control' value='${precioUnit}'>`;
-                            cell6.innerHTML = `<input type='number' class='precio-total-item form-control' disabled value='${precioTotal}'>`;
+                            cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='form-control' value='${descrip}'>`;
+                            cell3.innerHTML = `<textarea rows="1" name='items[${index}][descrip]' class='form-control' placeholder='descripcion (opcional)'></textarea>`;
+                            cell4.innerHTML = `<input type='number' name='items[${index}][cantidad]' min='1' class='cantidad-item form-control' value='1'>`;
+                            cell5.innerHTML = `<input type='number' name='items[${index}][precioUnit]' class='precio-unit-item form-control' value='${precioUnit}'>`;
+                            cell6.innerHTML = `<input type='number' name='items[${index}][precioTotal]' class='precio-total-item form-control' readonly value='${precioTotal}'>`;
                             cell7.innerHTML = `<a class='btn-delete-item btn btn-sm btn-danger'>X</a>`;
 
                             calcularTotales($inputDescuento.value);
@@ -407,7 +426,8 @@
             }
             if(e.target.matches('.btn-agregar-fila-vacia')){
                 e.preventDefault();
-                let row = $tableItems.insertRow($tableItems.rows.length);
+                let index = $tableItems.rows.length,
+                row = $tableItems.insertRow($tableItems.rows.length);
                             let cell1 = row.insertCell(0),
                                 cell2 = row.insertCell(1),
                                 cell3 = row.insertCell(2),
@@ -416,11 +436,11 @@
                                 cell6 = row.insertCell(5),
                                 cell7 = row.insertCell(6);
                             cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
-                            cell2.innerHTML = `<input type='text' class='form-control' value=''>`;
-                            cell3.innerHTML = `<textarea rows="1" class='form-control' placeholder='descripcion (opcional)'></textarea>`;
-                            cell4.innerHTML = `<input type='number' min='1' class='cantidad-item form-control' value='1'>`;
-                            cell5.innerHTML = `<input type='number' class='precio-unit-item form-control' value='0.00'>`;
-                            cell6.innerHTML = `<input type='number' class='precio-total-item form-control' disabled value='0.00'>`;
+                            cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='form-control' value=''>`;
+                            cell3.innerHTML = `<textarea rows="1" name='items[${index}][descrip]' class='form-control' placeholder='descripcion (opcional)'></textarea>`;
+                            cell4.innerHTML = `<input type='number' name='items[${index}][cantidad]' min='1' class='cantidad-item form-control' value='1'>`;
+                            cell5.innerHTML = `<input type='number' name='items[${index}][precioUnit]' class='precio-unit-item form-control' value='0.00'>`;
+                            cell6.innerHTML = `<input type='number' name='items[${index}][precioTotal]' class='precio-total-item form-control' readonly value='0.00'>`;
                             cell7.innerHTML = `<a class='btn-delete-item btn btn-sm btn-danger'>X</a>`;
             }
             if(e.target.matches('.btn-delete-item')){
@@ -429,15 +449,22 @@
 
                 for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
                     $tableItems.rows[i].childNodes[0].textContent = i+1;
+                    $tableItems.rows[i].childNodes[1].childNodes[0].setAttribute("name",`items[${i}][nombre]`);
+                    $tableItems.rows[i].childNodes[2].childNodes[0].setAttribute("name",`items[${i}][descrip]`);
+                    $tableItems.rows[i].childNodes[3].childNodes[0].setAttribute("name",`items[${i}][cantidad]`);
+                    $tableItems.rows[i].childNodes[4].childNodes[0].setAttribute("name",`items[${i}][precioUnit]`);
+                    $tableItems.rows[i].childNodes[5].childNodes[0].setAttribute("name",`items[${i}][precioTotal]`);
                 }
 
                 calcularTotales($inputDescuento.value);
             }
             //Para botones generar
             if(e.target.matches('.btn-cotizacion-pdf')){
+                e.preventDefault();
                 validacionCotizacion();
             }
             if(e.target.matches('.btn-cotizacion-guardar')){
+                e.preventDefault();
                 validacionCotizacion();
             }
         })
@@ -544,10 +571,14 @@
                 igv = total * 0.18;
             }
 
-            $tableTotales.rows[0].children[1].textContent = `S/. ${neto.toFixed(2)}`;
-            $tableTotales.rows[2].children[1].textContent = `S/. ${total.toFixed(2)}`;
-            $tableTotales.rows[3].children[1].textContent = `S/. ${igv.toFixed(2)}`;
-            $tableTotales.rows[5].children[1].textContent = `S/. ${(total + igv).toFixed(2)}`;
+            $tableTotales.rows[0].children[1].querySelector('span').textContent = `S/. ${neto.toFixed(2)}`;
+            $tableTotales.rows[0].children[1].querySelector('input[name="coti-precio-neto"]').value = `S/. ${neto.toFixed(2)}`;
+            $tableTotales.rows[2].children[1].querySelector('span').textContent = `S/. ${total.toFixed(2)}`;
+            $tableTotales.rows[2].children[1].querySelector('input[name="coti-precio-subtotal"]').value = `S/. ${total.toFixed(2)}`;
+            $tableTotales.rows[3].children[1].querySelector('span').textContent = `S/. ${igv.toFixed(2)}`;
+            $tableTotales.rows[3].children[1].querySelector('input[name="coti-precio-igv"]').value = `S/. ${igv.toFixed(2)}`;
+            $tableTotales.rows[5].children[1].querySelector('span').textContent = `S/. ${(total + igv).toFixed(2)}`;
+            $tableTotales.rows[5].children[1].querySelector('input[name="coti-precio-total"]').value = `S/. ${(total + igv).toFixed(2)}`;
         }
 
         function validacionCotizacion(){
@@ -555,8 +586,9 @@
 
             if($checkClientNew.checked){//si el checked cliente esta marcado
                 const $formCliente = d.getElementById("form-nuevo-cliente");
-                if(!$formCliente.nombre.value){
-                    console.log($formCliente.nombre.value);
+                let nombreCliente = $formCliente.querySelector('input[name="nombreCliente"]').value;
+                if(!nombreCliente){
+
                     $formCliente.querySelector('.error-nombre').textContent = 'El campo nombre es obligatorio';
                     errorFormCliente = "Ingrese el nombre del cliente";
                 }
@@ -595,14 +627,14 @@
                             title:'Errores',
                             html:listaErrors,
                             toast:true,
-                            color: '#333',
+                            color: '#9f6000',
                             showConfirmButton: false,
                             timer: 5000,
                             timerProgressBar: true,
 
                     })
             }else if(!errorFormCliente && !errorTablaItems){
-                let empresa_id = d.querySelector(".select-miEmpresa").value,
+                /* let empresa_id = d.querySelector(".select-miEmpresa").value,
                 fecha_emision = $inputFechaEmision.value,
                 dias_expiracion =  d.querySelector(".dias-expiracion").value,
                 tiempo_entrega = d.querySelector(".tiempo-entrega").value,
@@ -615,12 +647,12 @@
                 if($checkClientNew.checked){
                      const $formCliente = d.getElementById("form-nuevo-cliente");
                      clienteNuevo = {
-                         nombre: $formCliente.nombre.value,
-                         dni:$formCliente.dni.value,
-                         ruc:$formCliente.ruc.value,
-                         telefono:$formCliente.telefono.value,
-                         email:$formCliente.email.value,
-                         direc:$formCliente.direccion.value,
+                         nombre: $formCliente.querySelector('input[name="nombreCliente"]').value,
+                         dni:$formCliente.querySelector('input[name="dniCliente"]').value,
+                         ruc:$formCliente.querySelector('input[name="rucCliente"]').value,
+                         telefono:$formCliente.querySelector('input[name="telefonoCliente"]').value,
+                         email:$formCliente.querySelector('input[name="emailCliente"]').value,
+                         direc:$formCliente.querySelector('input[name="direccionCliente"]').value,
                      }
                     //console.log(clienteNuevo);
                 }else{
@@ -668,9 +700,9 @@
                 }
                 //console.log(JSON.stringify(datosCotizacion));
 
-                //let uri = '{{ route('cotizacion.guardarCotizacion') }}';
+                //let uri = '{{ route('cotizacion.generar') }}';
                 peticiones({
-                    url: '{{ route('cotizacion.guardarCotizacion') }}',
+                    url: '{{ route('cotizacion.generar') }}',
                     ops:{
                         method:'POST',
                         headers: {
@@ -681,7 +713,9 @@
                     },
                     success: json => console.log(json),
                     error: err => console.log(err),
-                })
+                }) */
+                console.log('todo ok');
+                d.getElementById('form-cotizacion').submit();
             }
         }
 
