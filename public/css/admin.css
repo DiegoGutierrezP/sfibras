@@ -36,4 +36,14 @@
 .table-cotizacion-totales tr td{
     width: 50%;
 }
-
+.btn-sfibras{
+    background-color: var(--black);
+    color: var(--white);
+}
+.btn-sfibras:hover:enabled{
+    opacity: .9;
+    color: var(--white);
+}
+.btn-sfibras:hover{
+    color: var(--white);
+}

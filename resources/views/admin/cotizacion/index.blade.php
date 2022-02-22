@@ -9,23 +9,22 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-lg-7 col-md-7 col-sm-12">
                     <div class="form-group">
                         <label>Empresa</label>
-                        <select  class="form-control">
+                        <select  class="select-miEmpresa form-control">
                             @foreach ($empresas as $emp)
-                                <option value="">{{ $emp->razon_social }}</option>
+                                <option value="{{ $emp->id }}">{{ $emp->razon_social }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <div class="content-select-clientes">
+                        <div class="content-select-clientes ">
                             <label>Cliente</label>
-
                             <select name="" id="select-clientes" class="form-control">
                                 @foreach ($clientes as $cli)
-                                    <option value="">{{ $cli->nombre }}</option>
+                                    <option value="{{ $cli->id }}">{{ $cli->nombre }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -33,30 +32,34 @@
                     </div>
                     <div class="content-form-nuevo-cliente d-none">
                         <label>Nuevo Cliente</label>
-                        <div class="form-group">
-                            <label class="form-check-label">Nombre</label>
-                            <input type="text" class="form-control" placeholder="Nombre del Cliente">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-check-label">Dni</label>
-                            <input type="text" class="form-control" placeholder="Dni del cliente">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-check-label">Ruc</label>
-                            <input type="text" class="form-control" placeholder="Ruc del cliente">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-check-label">Telefono</label>
-                            <input type="text" class="form-control" placeholder="Telefono del cliente">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-check-label">Email</label>
-                            <input type="text" class="form-control" placeholder="Email del cliente">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-check-label">Dirección</label>
-                            <input type="text" class="form-control" placeholder="Direccion del cliente">
-                        </div>
+
+                        <form id="form-nuevo-cliente">
+                            <div class="form-group">
+                                <label class="form-check-label">Nombre</label>
+                                <input type="text" class="form-control" name="nombre" value="mrda"  placeholder="Nombre del Cliente">
+                                <small class="error-nombre text-danger"></small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label">Dni</label>
+                                <input type="text" class="form-control" name="dni" placeholder="Dni del cliente">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label">Ruc</label>
+                                <input type="text" class="form-control" name="ruc" placeholder="Ruc del cliente">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label">Telefono</label>
+                                <input type="text" class="form-control" name="telefono" placeholder="Telefono del cliente">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label">Email</label>
+                                <input type="text" class="form-control" name="email" placeholder="Email del cliente">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label">Dirección</label>
+                                <input type="text" class="form-control" name="direccion" placeholder="Direccion del cliente">
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-5 col-sm-12">
@@ -70,13 +73,13 @@
                         <tr>
                             <th>Expiración</th>
                             <td>
-                                <input type="number" class="form-control" value="10">
+                                <input type="number" class="dias-expiracion form-control" value="10">
                             </td>
                         </tr>
                         <tr>
                             <th>Tiempo entrega</th>
                             <td>
-                                <input type="number" class="form-control" value="5">
+                                <input type="number" class="tiempo-entrega form-control" value="5">
                             </td>
                         </tr>
                         <tr>
@@ -115,13 +118,13 @@
                             <td colspan="2" class="pt-0">
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" name="formaPago" checked class="form-check-input">
+                                        <input type="radio" name="formaPago" value="contado" checked class="form-check-input">
                                         <span>Contado</span>
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" name="formaPago" class="form-check-input">
+                                        <input type="radio" name="formaPago" value="50adelanto" class="form-check-input">
                                         <span>Adelanto 50%</span>
                                     </label>
                                 </div>
@@ -131,7 +134,7 @@
                     </table>
                     <div class="form-group mt-4">
                         <label>Referencia</label>
-                        <input type="text" class="form-control" placeholder="referencia de busqueda(opcional)">
+                        <input type="text" class="referencia-cotizacion form-control" placeholder="referencia de busqueda(opcional)">
                     </div>
 
 
@@ -139,7 +142,7 @@
             </div>
             <div class="form-group">
                 <label>Introducción</label>
-                <textarea rows="4" class="form-control">La presente es para saludarlo y a su vez enviarle la cotización solicitada
+                <textarea rows="4" class="intro-cotizacion form-control">La presente es para saludarlo y a su vez enviarle la cotización solicitada
                 </textarea>
             </div>
             <hr>
@@ -167,8 +170,9 @@
                             </table>
                         </div>
                     </div>
-                    <div class="d-flex align-items-center justify-content-center col-4">
-                        <button class="btn-agregar-item btn btn-secondary" disabled>Agregar Item</button>
+                    <div class="d-flex flex-column align-items-center justify-content-center col-4">
+                        <button class="btn-agregar-item btn btn-sfibras mb-3" disabled>Agregar Item</button>
+                        <a href="" class="btn-agregar-fila-vacia">Agregar Fila Vacia</a>
                     </div>
                 </div>
 
@@ -235,14 +239,14 @@
 
             <div class="position relative">
                 <label >Conclusión</label>
-                <textarea  rows="4" class="form-control">Sin otro particular, quedamos de Ustedes.</textarea>
+                <textarea  rows="4" class="conclusion-cotizacion form-control">Sin otro particular, quedamos de Ustedes.</textarea>
             </div>
 
             <div class="mt-5">
                 <div class="float-right">
                     <button class="btn btn-secondary">Cancelar</button>
-                    <button class="btn btn-success">Generar PDF</button>
-                    <button class="btn btn-primary">Guardar</button>
+                    <button class="btn-cotizacion-pdf btn btn-success">Generar PDF</button>
+                    <button class="btn-cotizacion-guardar btn btn-primary">Guardar</button>
                 </div>
             </div>
         </div>
@@ -262,6 +266,7 @@
             $selectProds = d.getElementById("select-prods"),
             $contentMedidasSen = d.getElementById("content-medidas-señales"),
             $btnAddItem = d.querySelector(".btn-agregar-item"),
+            $btnAddFilaVacia = d.querySelector(".btn-agregar-fila-vacia"),
             $tableItems = d.querySelector(".table-items-cotizacion tbody"),
             $tableTotales = d.querySelector(".table-cotizacion-totales"),
             $inputDescuento = d.querySelector('.input-descuento'),
@@ -297,6 +302,7 @@
                 let cantidadItem = parseFloat(e.target.value),
                 $inputPrecioTotal = e.target.parentNode.parentNode.querySelector('.precio-total-item'),
                 $inputPrecioUnit = e.target.parentNode.parentNode.querySelector('.precio-unit-item');
+
                 if(e.target.value){
                     $inputPrecioTotal.value = (parseFloat($inputPrecioUnit.value) * cantidadItem).toFixed(2);
                 }
@@ -399,6 +405,24 @@
                         error: err => console.log(err),
                     })
             }
+            if(e.target.matches('.btn-agregar-fila-vacia')){
+                e.preventDefault();
+                let row = $tableItems.insertRow($tableItems.rows.length);
+                            let cell1 = row.insertCell(0),
+                                cell2 = row.insertCell(1),
+                                cell3 = row.insertCell(2),
+                                cell4 = row.insertCell(3),
+                                cell5 = row.insertCell(4),
+                                cell6 = row.insertCell(5),
+                                cell7 = row.insertCell(6);
+                            cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
+                            cell2.innerHTML = `<input type='text' class='form-control' value=''>`;
+                            cell3.innerHTML = `<textarea rows="1" class='form-control' placeholder='descripcion (opcional)'></textarea>`;
+                            cell4.innerHTML = `<input type='number' min='1' class='cantidad-item form-control' value='1'>`;
+                            cell5.innerHTML = `<input type='number' class='precio-unit-item form-control' value='0.00'>`;
+                            cell6.innerHTML = `<input type='number' class='precio-total-item form-control' disabled value='0.00'>`;
+                            cell7.innerHTML = `<a class='btn-delete-item btn btn-sm btn-danger'>X</a>`;
+            }
             if(e.target.matches('.btn-delete-item')){
                 let row = e.target.parentNode.parentNode;
                 $tableItems.removeChild(row);
@@ -408,6 +432,13 @@
                 }
 
                 calcularTotales($inputDescuento.value);
+            }
+            //Para botones generar
+            if(e.target.matches('.btn-cotizacion-pdf')){
+                validacionCotizacion();
+            }
+            if(e.target.matches('.btn-cotizacion-guardar')){
+                validacionCotizacion();
             }
         })
 
@@ -517,6 +548,141 @@
             $tableTotales.rows[2].children[1].textContent = `S/. ${total.toFixed(2)}`;
             $tableTotales.rows[3].children[1].textContent = `S/. ${igv.toFixed(2)}`;
             $tableTotales.rows[5].children[1].textContent = `S/. ${(total + igv).toFixed(2)}`;
+        }
+
+        function validacionCotizacion(){
+            let errorFormCliente,errorTablaItems;
+
+            if($checkClientNew.checked){//si el checked cliente esta marcado
+                const $formCliente = d.getElementById("form-nuevo-cliente");
+                if(!$formCliente.nombre.value){
+                    console.log($formCliente.nombre.value);
+                    $formCliente.querySelector('.error-nombre').textContent = 'El campo nombre es obligatorio';
+                    errorFormCliente = "Ingrese el nombre del cliente";
+                }
+            }
+
+            if(!$tableItems.rows.length){//si la tabla de items no tiene filas
+                errorTablaItems="Debe agregar almenos un item";
+            }else{
+                let contEmptyNomItem=0,contEmptyCantItem=0,contPreItem=0;
+                for(let i=0; i<$tableItems.rows.length; i++){
+                    $tableItems.rows[i].childNodes[1].childNodes[0].value? false :contEmptyNomItem++;
+                    $tableItems.rows[i].childNodes[3].childNodes[0].value? false :contEmptyCantItem++;
+                    $tableItems.rows[i].childNodes[4].childNodes[0].value? false :contPreItem++;
+                }
+                //console.log(contEmptyNomItem,contEmptyCantItem,contPreItem);
+                if(contEmptyNomItem!=0 || contEmptyCantItem!=0 || contPreItem!=0){
+                    errorTablaItems = "Algunos campos de la tabla items estan vacios";
+                }
+            }
+
+            if(errorFormCliente || errorTablaItems){
+                let listaErrors = '<ul>';
+                listaErrors += errorFormCliente? `<li>${errorFormCliente}</li>`:'' ;
+                listaErrors += errorTablaItems? `<li>${errorTablaItems}</li>`: '';
+                listaErrors += '</ul>';
+                if(errorFormCliente){
+                    window.scrollTo({
+                        behavior:"smooth",
+                        top:0,
+                    })
+                }
+                Swal.fire({
+                            position: 'top-end',
+                            icon: 'warning',
+                            background:'#FEEFB3',
+                            title:'Errores',
+                            html:listaErrors,
+                            toast:true,
+                            color: '#333',
+                            showConfirmButton: false,
+                            timer: 5000,
+                            timerProgressBar: true,
+
+                    })
+            }else if(!errorFormCliente && !errorTablaItems){
+                let empresa_id = d.querySelector(".select-miEmpresa").value,
+                fecha_emision = $inputFechaEmision.value,
+                dias_expiracion =  d.querySelector(".dias-expiracion").value,
+                tiempo_entrega = d.querySelector(".tiempo-entrega").value,
+                forma_pago =  d.querySelector('input[name="formaPago"]:checked').value,
+                referencia = d.querySelector('.referencia-cotizacion').value? d.querySelector('.referencia-cotizacion').value : '',
+                introduccion = d.querySelector('.intro-cotizacion').value,
+                conclusion = d.querySelector('.conclusion-cotizacion').value;
+
+                let clienteNuevo,cliente_id;
+                if($checkClientNew.checked){
+                     const $formCliente = d.getElementById("form-nuevo-cliente");
+                     clienteNuevo = {
+                         nombre: $formCliente.nombre.value,
+                         dni:$formCliente.dni.value,
+                         ruc:$formCliente.ruc.value,
+                         telefono:$formCliente.telefono.value,
+                         email:$formCliente.email.value,
+                         direc:$formCliente.direccion.value,
+                     }
+                    //console.log(clienteNuevo);
+                }else{
+                    cliente_id = d.getElementById('select-clientes').value;
+                    //console.log(cliente_id)
+                }
+                let items = [];
+                for(let i=0; i<$tableItems.rows.length; i++){
+                    let objItem = {
+                        item: $tableItems.rows[i].childNodes[0].textContent,
+                        nombre: $tableItems.rows[i].childNodes[1].childNodes[0].value,
+                        descrip: $tableItems.rows[i].childNodes[2].childNodes[0].value,
+                        cantidad:$tableItems.rows[i].childNodes[3].childNodes[0].value,
+                        precioUnit:$tableItems.rows[i].childNodes[4].childNodes[0].value,
+                        total: $tableItems.rows[i].childNodes[5].childNodes[0].value
+                    }
+                    items.push(objItem);
+                }
+
+                let cotizacionTotales = {
+                    neto:$tableTotales.rows[0].children[1].textContent ,
+                    subTotal:$tableTotales.rows[2].children[1].textContent ,
+                    igv:$tableTotales.rows[3].children[1].textContent ,
+                    envio:$tableTotales.rows[4].children[1].textContent ,
+                    total:$tableTotales.rows[5].children[1].textContent ,
+                }
+
+
+                //console.log(fecha_emision,dias_expiracion,tiempo_entrega,forma_pago,referencia);
+                //console.log(items,cotizacionTotales);
+
+                let datosCotizacion = {
+                    empresa_id,
+                    fecha_emision,
+                    dias_expiracion ,
+                    tiempo_entrega ,
+                    forma_pago ,
+                    referencia ,
+                    introduccion,
+                    conclusion ,
+                    clienteNuevo,
+                    cliente_id,
+                    items,
+                    cotizacionTotales,
+                }
+                //console.log(JSON.stringify(datosCotizacion));
+
+                //let uri = '{{ route('cotizacion.guardarCotizacion') }}';
+                peticiones({
+                    url: '{{ route('cotizacion.guardarCotizacion') }}',
+                    ops:{
+                        method:'POST',
+                        headers: {
+                            "Content-type": "application/json; charset=utf-8",
+                            "X-CSRF-TOKEN":"{{csrf_token()}}"
+                        },
+                        body:JSON.stringify(datosCotizacion),
+                    },
+                    success: json => console.log(json),
+                    error: err => console.log(err),
+                })
+            }
         }
 
         async function peticiones(options) {

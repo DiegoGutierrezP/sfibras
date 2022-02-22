@@ -37,4 +37,16 @@ class CotizacionController extends Controller
         ]);
     }
 
+    public function guardarCotizacion(Request $request){
+
+        //dd($request);
+
+        return response()->json([
+            'res'=>true,
+            'dataCoti'=>json_decode($request->getContent())
+        ]);
+
+
+    }
+
 }
