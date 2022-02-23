@@ -22,4 +22,8 @@ class Cliente extends Model
         return $this->hasMany('App\Models\OrdenCompra');
     }
 
+    public function cotizaciones(){
+        return $this->hasMany('App\Models\Cotizacion');
+    }
+
 }

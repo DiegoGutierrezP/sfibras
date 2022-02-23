@@ -2,15 +2,6 @@
     @include('livewire.admin.cliente-create')
     @include('livewire.admin.cliente-update')
 
-    {{-- @if (session('msginfo'))
-        <div class="alert alert-success alert-dismissible fade show my-3 mx-2" role="alert">
-            <strong>{{session('msginfo')}}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif --}}
-
     <div class="card-header">
         <a href="" class="btn-crear-cliente btn btn-secondary mb-3" wire:click.prevent="create()">Registrar Cliente</a>
         {{-- <input  type="search"
