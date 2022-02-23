@@ -20,6 +20,8 @@ class CreateCotizacionesTable extends Migration
             $table->string('diasExpiracion');
             $table->string('tiempoEntrega');
             $table->string('formaPago');
+            $table->string('tipoMoneda');
+            $table->decimal('valorDolar',10,3)->nullable();
             $table->string('referenciaCoti')->nullable();
             $table->text('introCoti')->nullable();
             $table->text('conclusionCoti')->nullable();

@@ -8,6 +8,18 @@
 
 @section('content')
     <div class="card">
+        <div class="card-header">
+            <div class="content-valor-dolar float-right d-flex align-items-center ">
+                <h5 class="pr-2" >Valor del dolar hoy:</h5>
+                <div class="input-group" style="width: 120px">
+                    <div class="input-group-prepend">
+                    <div class="input-group-text">$</div>
+                    </div>
+                    <input type="number" name="valor_dolar"  class="form-control" readonly value="0">
+                </div>
+            </div>
+
+        </div>
         <form action="{{route('cotizacion.generar')}}" id="form-cotizacion" method="POST">
             @csrf
         <div class="card-body">
@@ -82,6 +94,25 @@
                             <th>Tiempo entrega</th>
                             <td>
                                 <input type="number" name="tiempo_entrega" class="tiempo-entrega form-control" value="5">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Tipo de moneda</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="py-0">
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" name="tipo_moneda" value="soles" checked class="tipo-moneda form-check-input">
+                                        <span>Soles</span>
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" name="tipo_moneda" value="dolares" class="tipo-moneda radio-dolar form-check-input">
+                                        <span>Dolares</span>
+                                    </label>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -190,7 +221,7 @@
                             <th>Descripción</th>
                             <th>Cantidad</th>
                             <th>Precio/u</th>
-                            <th>Total S/.</th>
+                            <th>Total</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -314,8 +345,18 @@
                     },
                     //mode:"cors"
                 },
-                success: json => console.log(json.Cotizacion),
-                error: err=> console.log(err)
+                success: json => {
+                    d.querySelector('.content-valor-dolar')
+                    .querySelector('input[name="valor_dolar"]')
+                    .value=(json.Cotizacion[0].Venta);
+                    //console.log(Math.round(json.Cotizacion[0].Venta*100)/100,json.Cotizacion[0].Venta)
+                },
+                error: err=> {
+                    d.querySelector('.content-valor-dolar')
+                    .querySelector('input[name="valor_dolar"]')
+                    .value='0';
+                    d.querySelector('.radio-dolar').setAttribute("disabled");
+                }
             })
 
         })
@@ -409,6 +450,13 @@
                                 })
                                 console.log(precioMedida);
                                 precioUnit = (precioUnit * precioMedida).toFixed(2);
+                            }
+                            //TIPO MONEDA
+                            let tipoMoneda = d.querySelector('input[name="tipo_moneda"]:checked').value;
+                            if(tipoMoneda == 'dolares'){
+                                let dolar = d.querySelector('input[name="valor_dolar"]').value;
+                               //console.log((precioUnit / dolar).toFixed(2)) ;
+                               precioUnit = (precioUnit / dolar).toFixed(2);
                             }
 
                             let precioTotal = precioUnit;
@@ -565,11 +613,35 @@
             if(e.target.matches('#check-sin-igv')){
                 calcularTotales($inputDescuento.value);
             }
+            if(e.target.matches('.tipo-moneda')){
+                //console.log(e.target.value,d.querySelector('input[name="valor_dolar"]').value);
+                let dolar = d.querySelector('input[name="valor_dolar"]').value;
+                if(e.target.value == 'dolares'){
+
+                    for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
+                        let precioUnitSoles = $tableItems.rows[i].childNodes[4].childNodes[0].value;
+                        let precioTotalSoles = $tableItems.rows[i].childNodes[5].childNodes[0].value;
+                        $tableItems.rows[i].childNodes[4].childNodes[0].value = (precioUnitSoles/dolar).toFixed(2);
+                        $tableItems.rows[i].childNodes[5].childNodes[0].value = (precioTotalSoles/dolar).toFixed(2);
+                    }
+                    calcularTotales($inputDescuento.value);
+                }else if(e.target.value == 'soles'){
+                    for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
+                        let precioUnitSoles = $tableItems.rows[i].childNodes[4].childNodes[0].value;
+                        let precioTotalSoles = $tableItems.rows[i].childNodes[5].childNodes[0].value;
+                        $tableItems.rows[i].childNodes[4].childNodes[0].value = (precioUnitSoles*dolar).toFixed(2);
+                        $tableItems.rows[i].childNodes[5].childNodes[0].value = (precioTotalSoles*dolar).toFixed(2);
+                    }
+                    calcularTotales($inputDescuento.value);
+                }
+
+            }
+
         })
 
         function calcularTotales(descuento = 0){
             //para totales
-            let neto=0,total=0,igv=0;
+            let neto=0,total=0,igv=0,moneda = 'S/';
             for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
 
                 neto +=  parseFloat($tableItems.rows[i].querySelector('.precio-total-item').value);
@@ -582,14 +654,18 @@
             if(!$checkSinIgv.checked){
                 igv = total * 0.18;
             }
+            let tipoMoneda = d.querySelector('input[name="tipo_moneda"]:checked').value;
+            if(tipoMoneda == 'dolares'){
+                moneda = '$';
+            }
 
-            $tableTotales.rows[0].children[1].querySelector('span').textContent = `S/. ${neto.toFixed(2)}`;
+            $tableTotales.rows[0].children[1].querySelector('span').textContent = `${moneda}. ${neto.toFixed(2)}`;
             $tableTotales.rows[0].children[1].querySelector('input[name="coti_precio_neto"]').value = `${neto.toFixed(2)}`;
-            $tableTotales.rows[2].children[1].querySelector('span').textContent = `S/. ${total.toFixed(2)}`;
+            $tableTotales.rows[2].children[1].querySelector('span').textContent = `${moneda}. ${total.toFixed(2)}`;
             $tableTotales.rows[2].children[1].querySelector('input[name="coti_precio_subtotal"]').value = `${total.toFixed(2)}`;
-            $tableTotales.rows[3].children[1].querySelector('span').textContent = `S/. ${igv.toFixed(2)}`;
+            $tableTotales.rows[3].children[1].querySelector('span').textContent = `${moneda}. ${igv.toFixed(2)}`;
             $tableTotales.rows[3].children[1].querySelector('input[name="coti_precio_igv"]').value = `${igv.toFixed(2)}`;
-            $tableTotales.rows[5].children[1].querySelector('span').textContent = `S/. ${(total + igv).toFixed(2)}`;
+            $tableTotales.rows[5].children[1].querySelector('span').textContent = `${moneda}. ${(total + igv).toFixed(2)}`;
             $tableTotales.rows[5].children[1].querySelector('input[name="coti_precio_total"]').value = `${(total + igv).toFixed(2)}`;
         }
 

@@ -16,6 +16,8 @@ class Cotizacion extends Model
         'diasExpiracion',
         'tiempoEntrega',
         'formaPago',
+        'tipoMoneda',
+        'valoDolar',
         'referenciaCoti',
         'introCoti',
         'conclusionCoti',

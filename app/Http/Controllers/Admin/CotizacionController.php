@@ -47,7 +47,7 @@ class CotizacionController extends Controller
     }
 
     public function generarCotizacion(Request $request){
-
+        //dd($request);
         try{
             if($request->cliente_nuevo){//si el cliente es nuevo lo creamos
                 $cliente = Cliente::create([
@@ -70,6 +70,8 @@ class CotizacionController extends Controller
                 'diasExpiracion'=>$request->dias_expiracion?$request->dias_expiracion.' dias':'10 dias',
                 'tiempoEntrega'=>$request->tiempo_entrega?$request->tiempo_entrega.' dias':'5 dias',
                 'formaPago'=>$request->formaPago == "contado"? "Al contado": "50 % de adelanto 50 % contra entrega",
+                'tipoMoneda'=>$request->tipo_moneda == "soles"? "soles":"dolares",
+                'valorDolar'=>$request->valor_dolar?$request->valor_dolar :null,
                 'referenciaCoti'=>$request->referencia_cotizacion,
                 'introCoti'=>$request->intro_cotizacion,
                 'conclusionCoti'=>$request->conclusion_cotizacion,
