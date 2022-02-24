@@ -8,10 +8,9 @@ use App\Models\Cliente;
 use App\Models\Cotizacion;
 use App\Models\Empresa;
 use App\Models\Producto;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use PDF;
 
 class CotizacionController extends Controller
 {
@@ -30,7 +29,9 @@ class CotizacionController extends Controller
 
     public function pdfCotizacion($id){
         $coti = Cotizacion::find($id);
-        return view('admin.cotizacion.pdf',compact('coti'));
+        $pdf = PDF::loadView('admin.cotizacion.pdf',['coti'=>$coti]);
+        return $pdf->stream();
+        //return view('admin.cotizacion.pdf',compact('coti'));
     }
 
 
