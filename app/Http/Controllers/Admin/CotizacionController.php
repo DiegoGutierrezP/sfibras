@@ -29,9 +29,11 @@ class CotizacionController extends Controller
 
     public function pdfCotizacion($id){
         $coti = Cotizacion::find($id);
-        $pdf = PDF::loadView('admin.cotizacion.pdf',['coti'=>$coti]);
-        return $pdf->stream();
-        //return view('admin.cotizacion.pdf',compact('coti'));
+        $miEmp = Empresa::find(1);
+        /* $pdf = PDF::loadView('admin.cotizacion.pdf',['coti'=>$coti,"miEmp"=>$miEmp]);
+        $pdf->setPaper('A4');
+        return $pdf->stream(); */
+        return view('admin.cotizacion.pdf',compact('coti','miEmp'));
     }
 
 
