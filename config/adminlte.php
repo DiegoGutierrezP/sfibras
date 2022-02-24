@@ -233,7 +233,7 @@ return [
         [
             'type'         => 'navbar-search',
             'text'         => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
             'type'         => 'fullscreen-widget',
@@ -280,6 +280,7 @@ return [
         [
             'text' => 'Cotizaciones',
             'route'  => 'admin.cotizacion.index',
+            'active'=>['admin/cotizacion',],
             'icon' => 'fas fa-scroll',
         ],
         [

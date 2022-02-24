@@ -12,6 +12,7 @@ class Cotizacion extends Model
     protected $table = 'cotizaciones';
 
     protected $fillable = [
+        'codigoCoti',
         'fechaEmision',
         'diasExpiracion',
         'tiempoEntrega',
@@ -28,6 +29,9 @@ class Cotizacion extends Model
         'precioEnvioCoti',
         'precioTotalCoti',
         'clienteNombre',
+        'clienteDni',
+        'clienteRuc',
+        'clienteTelefono',
         'cliente_id'
     ];
 

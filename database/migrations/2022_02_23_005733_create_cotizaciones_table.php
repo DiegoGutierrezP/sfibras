@@ -16,6 +16,7 @@ class CreateCotizacionesTable extends Migration
         Schema::create('cotizaciones', function (Blueprint $table) {
             $table->id();
 
+            $table->string('codigoCoti')->nullable();
             $table->date('fechaEmision');
             $table->string('diasExpiracion');
             $table->string('tiempoEntrega');
@@ -33,6 +34,9 @@ class CreateCotizacionesTable extends Migration
             $table->decimal('precioTotalCoti',10,2);
 
             $table->string('clienteNombre')->nullable();
+            $table->string('clienteDni')->nullable();
+            $table->string('clienteRuc')->nullable();
+            $table->string('clienteTelefono')->nullable();
 
             $table->unsignedBigInteger('cliente_id')->nullable();
             $table->foreign('cliente_id')->references('id')->on('clientes');

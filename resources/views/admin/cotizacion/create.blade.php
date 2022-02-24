@@ -291,9 +291,9 @@
 
             <div class="mt-5">
                 <div class="float-right">
-                    <button class="btn btn-secondary">Cancelar</button>
-                    <button class="btn-cotizacion-pdf btn btn-success">Generar PDF</button>
-                    <button class="btn-cotizacion-guardar btn btn-primary">Guardar</button>
+                    <a href="{{route('admin.cotizacion.index')}}" class="btn btn-secondary">Cancelar</a>
+                   {{--  <button class="btn-cotizacion-pdf btn btn-success">Generar</button> --}}
+                    <button class="btn-cotizacion-guardar btn btn-primary">Generar</button>
                 </div>
             </div>
         </div>

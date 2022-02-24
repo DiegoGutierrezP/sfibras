@@ -28,6 +28,11 @@ class CotizacionController extends Controller
         return view('admin.cotizacion.create',compact('empresas','catesprod','clientes'));
     }
 
+    public function pdfCotizacion($id){
+        $coti = Cotizacion::find($id);
+        return view('admin.cotizacion.pdf',compact('coti'));
+    }
+
 
     public function getProductosxCategoria($id){
         $productos = Producto::where('categoria_producto_id',$id)->get();
@@ -81,8 +86,21 @@ class CotizacionController extends Controller
                 'precioIgvCoti'=>$request->coti_precio_igv? $request->coti_precio_igv: 0,
                 'precioEnvioCoti'=>$request->coti_precio_envio? $request->coti_precio_envio: 0,
                 'precioTotalCoti'=>$request->coti_precio_total,
+
+                'clienteNombre'=>$cliente->nombre,
+                'clienteDni'=>$cliente->dni,
+                'clienteRuc'=>$cliente->ruc,
+                'clienteTelefono'=>$cliente->telefono,
+
                 'cliente_id'=>$cliente->id,
             ]);
+
+            //codigo de cotizacion
+            $codigoCoti  = str_pad($cotizacion->id,4,'0',STR_PAD_LEFT);
+            $cotizacion->update([
+                'codigoCoti'=>'SG-'.$codigoCoti,
+            ]);
+
 
             $items = [];
            foreach($request->items as $item){
@@ -99,14 +117,18 @@ class CotizacionController extends Controller
             $cotizacion->items()->createMany($items);
             }
 
-            return "correcto";
+            return redirect()->route('admin.cotizacion.show',$cotizacion->id)->with('msg-sweet','La cotizacion se genero correctamente');
 
         }catch(Exception $err){
             return "error ".$err;
         }
 
-     /*    $codigo = Carbon::now()->toDateString();
-        dd($codigo); */
+    }
+
+    public function show($id){
+        $cotizacion = Cotizacion::find($id);
+        $moneda = $cotizacion->tipoMoneda=='soles'? 'S/. ':'$. ';
+        return view('admin.cotizacion.show',compact('cotizacion','moneda'));
     }
 
 }

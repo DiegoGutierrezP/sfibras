@@ -15,6 +15,7 @@ class ClienteIndex extends Component
 
     public $search;
     public $nombre, $ruc,$dni,$direccion,$cliente_id,$telefono,$email;
+    public $readyToLoad = false;
 
     protected $listeners = ['delete'];
 
@@ -24,13 +25,20 @@ class ClienteIndex extends Component
 
     public function render()
     {
-
-        $clientes = Cliente::where('nombre','like','%'.$this->search.'%')
-        ->orWhere('dni','like','%'.$this->search.'%')
-        ->orWhere('ruc','like','%'.$this->search.'%')
-        ->paginate(10);
+        if($this->readyToLoad){
+            $clientes = Cliente::where('nombre','like','%'.$this->search.'%')
+            ->orWhere('dni','like','%'.$this->search.'%')
+            ->orWhere('ruc','like','%'.$this->search.'%')
+            ->paginate(10);
+        }else{
+            $clientes = [];
+        }
 
         return view('livewire.admin.cliente-index',compact('clientes'));
+    }
+
+    public function loadClients(){
+        $this->readyToLoad = true;
     }
 
     protected $rules = [

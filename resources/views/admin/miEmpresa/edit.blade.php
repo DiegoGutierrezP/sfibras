@@ -107,7 +107,7 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <a href="{{route('admin.miEmpresa.show',$empresa)}}" class="btn btn-secondary ">Cancelar</a>
+                    <a href="{{route('admin.miEmpresa.index')}}" class="btn btn-secondary ">Cancelar</a>
                     <button type="submit" class="btn btn-primary ">Guardar</button>
                 </div>
             </form>

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Mi Empresa')
+@section('title', 'Dashboard')
 
 @section('content_header')
     <h1>Mi Empresa</h1>
@@ -9,34 +9,65 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <a href="{{route('admin.miEmpresa.create')}}" class="btn btn-secondary">Registrar Empresa</a>
+            <h4 class="float-left">{{$empresa->razon_social}}</h4>
+            <div class="float-right">
+                <a href="{{route('admin.miEmpresa.edit',$empresa)}}" class="btn btn-sfibras"><i class="fas fa-pen"></i></a>
+            </div>
         </div>
         <div class="card-body">
+            <div class="img-miEmpresa">
+                @if ($empresa->logo)
+                    <img src="{{Storage::url($empresa->logo)}}"  alt="">
+                @else
+                    <img src="{{Storage::url('admin/no_image.png')}}" alt="">
+                @endif
+
+            </div>
             <table class="table">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Razon Social</th>
-                        <th>Ruc</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach ($empresas as $empresa)
-                    <tr>
-                        <td>{{$empresa->id}}</td>
-                        <td>{{$empresa->razon_social}}</td>
-                        <td>{{$empresa->ruc}}</td>
-                        <td width="10px">
-                            <a class="btn btn-light " href="{{route('admin.miEmpresa.show',$empresa)}}"><i class="fas fa-eye"></i></a>
-                        </td>
-                        <td width="10px">
-                            <a  class="btn-delete-empresa btn btn-danger" data-empresa="{{$empresa->id}}"><i data-empresa="{{$empresa->id}}" class="fas fa-trash"></i></a>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
+                <tr>
+                    <th>Razon Social:</th>
+                    <td>{{$empresa->razon_social}}</td>
+                </tr>
+                <tr>
+                    <th>Ruc:</th>
+                    <td>{{$empresa->ruc}}</td>
+                </tr>
+                <tr>
+                    <th>Dirección:</th>
+                    <td>{{$empresa->direccion}}</td>
+                </tr>
+                <tr>
+                    <th>Telefono:</th>
+                    <td>{{$empresa->telefono}}</td>
+                </tr>
+                <tr>
+                    <th>Celular:</th>
+                    <td>{{$empresa->celular}}</td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td>{{$empresa->email}}</td>
+                </tr>
+                <tr>
+                    <th>Firma:</th>
+                    <td>
+                        @if ($empresa->firma_titular)
+                            <img src="{{Storage::url($empresa->firma_titular)}}" style="max-width: 350px;" class="img-fluid" alt="">
+                        @else
+                            No hay imagen de firma
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th>Cuentas Bancarias:</th>
+                    <td>
+                        <ul >
+                        @foreach ($empresa->cuentas_bancarias as $cuenta)
+                        <li>{{$cuenta->banco .' '. $cuenta->tipo_cuenta .': '. $cuenta->numero_cuenta}}</li>
+                        @endforeach
+                        </ul>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
@@ -48,8 +79,8 @@
 
 @section('js')
     <script>
-        @if(Session::has('msg-sweet'))
 
+        @if(Session::has('msg-sweet'))
             let msg = "{{Session::get('msg-sweet')}}";
             Swal.fire({
                 position: 'top-end',
@@ -59,74 +90,11 @@
                 toast:true,
                 color: '#333',
                 showConfirmButton: false,
-                timer: 2000,
+                timer: 3000,
                 timerProgressBar: true,
             })
         @endif
 
 
-        document.addEventListener("click" , e=>{
-            if(e.target.matches(['.btn-delete-empresa','.btn-delete-empresa *'])){
-                e.preventDefault();
-                let url = '{{ route("admin.miEmpresa.destroy", ":empresa") }}';
-                url = url.replace(':empresa', e.target.dataset.empresa);
-
-                //console.log(e.target.dataset.empresa);
-                Swal.fire({
-                    title: 'Esta seguro?',
-                    text: "Se eliminara la empresa",
-                    showCancelButton: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#6c757d',
-                    cancelButtonText:'Cancelar',
-                    confirmButtonText: 'Eliminar'
-                }).then((result) => {
-                    if(result.value) {
-                        console.log(url)
-
-                        let options ={
-                            method:"DELETE",
-                            headers:{
-                                "Content-type":"application/json; charset=utf-8",
-                                "X-CSRF-TOKEN":"{{csrf_token()}}"
-                            }
-                        }
-                        deleteEmpresa(url,options)
-                    }
-
-                })
-            }
-        })
-
-        async function deleteEmpresa(url,options){
-            try{
-                let res = await fetch(url,options),
-                 json = await res.json();
-
-                 if(!res.ok) throw {status:res.status, statusText: res.statusText}
-
-                if(json.response){
-                    location.reload();
-                    /* Swal.fire({
-                        position: 'top-end',
-                        type: json.type,
-                        text: json.message,
-                        showConfirmButton: false,
-                        timer: 2000
-                    }); */
-                }else{
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: json.type,
-                        text: json.message,
-                        showConfirmButton: false,
-                    });
-                    console.log(json);
-                }
-
-            }catch(err){
-                console.log(err)
-            }
-        }
     </script>
 @stop
