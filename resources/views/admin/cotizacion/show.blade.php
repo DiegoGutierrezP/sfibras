@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-body">
             <div class="mb-3">
-               <h6><b>Fecha de Emisión: </b>&nbsp; {{ $cotizacion->fechaEmision}}</h6>
+               <h6><b>Fecha de Emisión: </b>&nbsp; {{ $fechaEmision}}</h6>
             </div>
             <div class="row">
                 <div class="col-6 p-2">

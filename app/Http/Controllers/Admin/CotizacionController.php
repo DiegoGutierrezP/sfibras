@@ -10,6 +10,8 @@ use App\Models\Empresa;
 use App\Models\Producto;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Carbon\Carbon;
 use PDF;
 
 class CotizacionController extends Controller
@@ -30,10 +32,15 @@ class CotizacionController extends Controller
     public function pdfCotizacion($id){
         $coti = Cotizacion::find($id);
         $miEmp = Empresa::find(1);
-        /* $pdf = PDF::loadView('admin.cotizacion.pdf',['coti'=>$coti,"miEmp"=>$miEmp]);
+        $moneda = $coti->tipoMoneda=='soles'? 'S/. ':'$. ';
+        //$fechaTrans = date('jS F, Y',strtotime($coti->fechaEmision));
+
+        $fechaTrans = Carbon::createFromFormat('Y-m-d',$coti->fechaEmision)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
+
+        $pdf = PDF::loadView('admin.cotizacion.pdf',['coti'=>$coti,"miEmp"=>$miEmp,'fechaEmision'=>$fechaTrans,'moneda'=>$moneda]);
         $pdf->setPaper('A4');
-        return $pdf->stream(); */
-        return view('admin.cotizacion.pdf',compact('coti','miEmp'));
+        return $pdf->stream();
+        //return view('admin.cotizacion.pdf',compact('coti','miEmp','fechaTrans'));
     }
 
 
@@ -55,7 +62,7 @@ class CotizacionController extends Controller
     }
 
     public function generarCotizacion(Request $request){
-        //dd($request);
+        //dd($request->tipo_moneda == "dolares"?$request->valor_dolar:"gaa");
         try{
             if($request->cliente_nuevo){//si el cliente es nuevo lo creamos
                 $cliente = Cliente::create([
@@ -73,13 +80,12 @@ class CotizacionController extends Controller
 
 
             $cotizacion = Cotizacion::create([
-                //'codigoCoti'=>,
                 'fechaEmision'=>$request->fecha_emision,
                 'diasExpiracion'=>$request->dias_expiracion?$request->dias_expiracion.' dias':'10 dias',
                 'tiempoEntrega'=>$request->tiempo_entrega?$request->tiempo_entrega.' dias':'5 dias',
-                'formaPago'=>$request->formaPago == "contado"? "Al contado": "50 % de adelanto 50 % contra entrega",
+                'formaPago'=>$request->formaPago == "contado"? "Al contado": "adelanto 50%",
                 'tipoMoneda'=>$request->tipo_moneda == "soles"? "soles":"dolares",
-                'valorDolar'=>$request->valor_dolar?$request->valor_dolar :null,
+                'valorDolar'=>$request->tipo_moneda == "dolares"?$request->valor_dolar:0,
                 'referenciaCoti'=>$request->referencia_cotizacion,
                 'introCoti'=>$request->intro_cotizacion,
                 'conclusionCoti'=>$request->conclusion_cotizacion,
@@ -131,7 +137,8 @@ class CotizacionController extends Controller
     public function show($id){
         $cotizacion = Cotizacion::find($id);
         $moneda = $cotizacion->tipoMoneda=='soles'? 'S/. ':'$. ';
-        return view('admin.cotizacion.show',compact('cotizacion','moneda'));
+        $fechaEmision = Carbon::createFromFormat('Y-m-d',$cotizacion->fechaEmision)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
+        return view('admin.cotizacion.show',compact('cotizacion','moneda','fechaEmision'));
     }
 
 }

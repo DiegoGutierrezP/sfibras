@@ -8,6 +8,8 @@
 
 @section('content')
     <div class="card">
+        <form action="{{route('cotizacion.generar')}}" id="form-cotizacion" method="POST">
+            @csrf
         <div class="card-header">
             <div class="content-valor-dolar float-right d-flex align-items-center ">
                 <h5 class="pr-2" >Valor del dolar hoy:</h5>
@@ -20,8 +22,6 @@
             </div>
 
         </div>
-        <form action="{{route('cotizacion.generar')}}" id="form-cotizacion" method="POST">
-            @csrf
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-lg-7 col-md-7 col-sm-12">
