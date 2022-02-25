@@ -46,11 +46,12 @@
                                 <td>{{ $coti->fechaEmision }}</td>
                                 <td>{{ $coti->tipoMoneda == 'soles' ? 'S/. ' . $coti->precioTotalCoti : '$. ' . $coti->precioTotalCoti }}
                                 </td>
-                                <td>
+                                <td >
                                     <a href="{{ route('admin.cotizacion.show', $coti->id) }}"
-                                        class="btn btn-sm btn-sfibras"><i class="fas fa-eye"></i></a>
-                                    <a href="" class="btn btn-sm btn-sfibras"><i class="fas fa-file-pdf"></i></a>
-                                    <a href="" class="btn btn-sm btn-sfibras"><i class="fas fa-trash"></i></a>
+                                        class="btn btn-sm btn-sfibras2"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('admin.cotizacion.pdf', $coti->id) }}" class="btn btn-sm btn-sfibras2"><i class="fas fa-file-pdf"></i></a>
+                                    <a href="{{ route('admin.cotizacion.clonar') }}" class="btn btn-sm btn-sfibras2"><i class="fas fa-copy"></i></a>
+                                    <a href="" class="btn btn-sm btn-sfibras2"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                         @endforeach

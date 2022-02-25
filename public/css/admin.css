@@ -25,10 +25,15 @@
     height: 100%;
 
 }
+.table-items-cotizacion input{
+    min-width: 60px;
+    padding: .5rem;
+}
 .table-items-cotizacion tbody tr td:nth-child(2),
 .table-items-cotizacion tbody tr td:nth-child(3){
     width: 25%;
 }
+
 .table-cotizacion-totales{
     width: 300px;
     float: right;
@@ -46,4 +51,19 @@
 }
 .btn-sfibras:hover{
     color: var(--white);
+}
+
+.btn-sfibras2{
+    background-color: var(--black);
+    color: var(--white);
+}
+.btn-sfibras2:hover{
+    opacity: .9;
+    color: var(--white);
+}
+@media (max-width:500px){
+    .table-items-cotizacion tbody tr td:nth-child(2) input,
+    .table-items-cotizacion tbody tr td:nth-child(3) input{
+        width: 120px;
+    }
 }

@@ -11,7 +11,7 @@
         <div class="card-header">
             <h4 class="float-left">{{$empresa->razon_social}}</h4>
             <div class="float-right">
-                <a href="{{route('admin.miEmpresa.edit',$empresa)}}" class="btn btn-sfibras"><i class="fas fa-pen"></i></a>
+                <a href="{{route('admin.miEmpresa.edit',$empresa)}}" class="btn btn-sfibras2"><i class="fas fa-pen"></i></a>
             </div>
         </div>
         <div class="card-body">
@@ -23,6 +23,7 @@
                 @endif
 
             </div>
+            <div class="table-responsive">
             <table class="table">
                 <tr>
                     <th>Razon Social:</th>
@@ -69,6 +70,7 @@
                     </td>
                 </tr>
             </table>
+        </div>
         </div>
     </div>
 @stop

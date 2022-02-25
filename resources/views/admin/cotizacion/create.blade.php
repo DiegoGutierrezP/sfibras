@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="card">
-        <form action="{{route('cotizacion.generar')}}" id="form-cotizacion" method="POST">
+        <form action="{{route('admin.cotizacion.generar')}}" id="form-cotizacion" method="POST">
             @csrf
         <div class="card-header">
             <div class="content-valor-dolar float-right d-flex align-items-center ">

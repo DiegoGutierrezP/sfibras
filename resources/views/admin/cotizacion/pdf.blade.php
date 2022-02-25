@@ -172,9 +172,12 @@
         }
         .footer{
             /* padding: 0 1.5rem; */
-            background: hotpink;
+            padding-top: .4rem;
+            width: 100%;
+            box-sizing: border-box;
+            border-top: 1px solid #000;
         }
-        .content-medios-pagos{
+        /* .content-medios-pagos{
             padding: 0 1.5rem;
             margin-bottom: .8rem;
         }
@@ -182,13 +185,13 @@
             width: 100%;
             box-sizing: border-box;
             padding: 0;
-            background: aquamarine;
+
             margin: 0;
         }
         .content-contact-firma .content-contact{
             float: left;
             width: 47%;
-            border: 1px solid #000;
+
             padding: 10px;
         }
         .content-contact-firma .content-contact table th,
@@ -198,10 +201,62 @@
         .content-contact-firma .content-firma{
             float: right;
             width: 47%;
-            border: 1px solid #000;
+
+            height: auto;
+        }
+        .content-contact-firma .content-firma .firma{
+
+            margin: auto;
+            max-width: 200px;
+            text-align: center;
+        }
+        .content-contact-firma .content-firma .firma p{
+            margin-top: 1rem;
+            padding-top: .5rem;
+            border-top: 1px solid #000;
+            font-style: italic;
+
         }
         .content-contact-firma .content-firma img{
-            max-width: 120px;
+            margin: auto;
+            width: 90%;
+            max-height: 120px;
+        } */
+        .footer .content-1{
+            float: left;
+            width: 47%;
+            padding: .6rem;
+        }
+        .footer .content-1 .content-medios-pagos{
+            margin-bottom: .5rem;
+        }
+        .footer .content-1 .content-medios-pagos ul{
+            padding-left: 1rem;
+        }
+        .footer .content-1 .content-contact table th,
+        .footer .content-1 .content-contact table td{
+            text-align: left;
+            font-size: .9rem;
+        }
+        .footer .content-2{
+            float: right;
+            width: 47%;
+            padding-top: 1rem;
+        }
+        .footer .content-2 .content-firma{
+            max-width: 200px;
+            margin: auto;
+            text-align: center;
+        }
+        .footer .content-2 .content-firma p{
+            margin-top: .2rem;
+            padding-top: .3rem;
+            border-top: 1px solid #000;
+            font-style: italic;
+        }
+        .footer .content-2 .content-firma img{
+            width: 95%;
+            max-height: 120px;
         }
 
     </style>
@@ -343,30 +398,30 @@
             </div>
         </section>
         <section class="footer">
-            <div class="content-medios-pagos">
-                <h5>MEDIOS DE PAGO</h5>
-                <ul>
-                    @foreach ($miEmp->cuentas_bancarias as $cuenta)
-                        <li>{{$cuenta->banco .' '. $cuenta->tipo_cuenta.': '.$cuenta->numero_cuenta}}</li>
+            <div class="content-1">
+                <div class="content-medios-pagos">
+                    <h5>MEDIOS DE PAGO</h5>
+                    <ul>
+                        @foreach ($miEmp->cuentas_bancarias as $cuenta)
+                            <li>{{$cuenta->banco .' '. $cuenta->tipo_cuenta.': '.$cuenta->numero_cuenta}}</li>
 
-                    @endforeach
-                </ul>
-            </div>
-            <div class="content-contact-firma">
+                        @endforeach
+                    </ul>
+                </div>
                 <div class="content-contact">
                     <h5>CONTACTO</h5>
                     <table>
                         <tr>
                             <th>Telefono</th>
-                            <td>:</td>
+                            <td>:&nbsp;{{$miEmp->telefono}}</td>
                         </tr>
                         <tr>
                             <th>Celular</th>
-                            <td>:</td>
+                            <td>:&nbsp;{{$miEmp->celular}}</td>
                         </tr>
                         <tr>
                             <th>Email</th>
-                            <td>:</td>
+                            <td>:&nbsp;{{$miEmp->email}}</td>
                         </tr>
                         <tr>
                             <th>Web</th>
@@ -374,11 +429,19 @@
                         </tr>
                     </table>
                 </div>
+            </div>
+
+            <div class="content-2">
+
                 <div class="content-firma">
                     <img src="{{Storage::url($miEmp->firma_titular)}}">
+                    <p>
+                     Firma de la empresa.
+                    </p>
                 </div>
-                <div style="clear: both"></div>
+
             </div>
+            <div style="clear: both"></div>
         </section>
     </div>
 </body>

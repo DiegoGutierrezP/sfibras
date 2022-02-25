@@ -38,6 +38,8 @@ class CreateCotizacionesTable extends Migration
             $table->string('clienteRuc')->nullable();
             $table->string('clienteTelefono')->nullable();
 
+
+
             $table->unsignedBigInteger('cliente_id')->nullable();
             $table->foreign('cliente_id')->references('id')->on('clientes');
 

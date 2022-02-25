@@ -13,7 +13,7 @@
                <h6><b>Fecha de Emisión: </b>&nbsp; {{ $fechaEmision}}</h6>
             </div>
             <div class="row">
-                <div class="col-6 p-2">
+                <div class="col-lg-6 col-md-6 col-12 p-2">
                     <h5 >Datos del Cliente</h5>
                     <table class="table">
                         <tr>
@@ -34,7 +34,7 @@
                         </tr>
                     </table>
                 </div>
-                <div class="col-6 p-2">
+                <div class="col-lg-6 col-md-6 col-12 p-2">
                     <h5 >Condiciones Generales</h5>
                     <table class="table">
                         <tr>
@@ -57,6 +57,13 @@
                             <th>Moneda:</th>
                             <td>{{$cotizacion->tipoMoneda}}</td>
                         </tr>
+                        @if ($cotizacion->tipoMoneda == "dolares")
+                            <tr>
+                                <th>Valor Dolar:</th>
+                                <td>{{$cotizacion->valorDolar}}</td>
+                            </tr>
+                        @endif
+
                     </table>
                 </div>
             </div>

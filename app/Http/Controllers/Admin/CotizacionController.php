@@ -29,6 +29,10 @@ class CotizacionController extends Controller
         return view('admin.cotizacion.create',compact('empresas','catesprod','clientes'));
     }
 
+    public function clonar(){
+        return view('admin.cotizacion.clonar');
+    }
+
     public function pdfCotizacion($id){
         $coti = Cotizacion::find($id);
         $miEmp = Empresa::find(1);
@@ -39,8 +43,8 @@ class CotizacionController extends Controller
 
         $pdf = PDF::loadView('admin.cotizacion.pdf',['coti'=>$coti,"miEmp"=>$miEmp,'fechaEmision'=>$fechaTrans,'moneda'=>$moneda]);
         $pdf->setPaper('A4');
-        return $pdf->stream();
-        //return view('admin.cotizacion.pdf',compact('coti','miEmp','fechaTrans'));
+        //return $pdf->stream('admin.cotizacion.pdf');
+        return $pdf->download($coti->codigoCoti.'.pdf');
     }
 
 
