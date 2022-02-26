@@ -61,6 +61,12 @@
     opacity: .9;
     color: var(--white);
 }
+/* Cotizacion content-Envio */
+.content-envio-precio{
+    background: #DADADA;
+    border-radius: 5px;
+}
+
 @media (max-width:500px){
     .table-items-cotizacion tbody tr td:nth-child(2) input,
     .table-items-cotizacion tbody tr td:nth-child(3) input{

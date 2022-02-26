@@ -29,8 +29,34 @@ class CotizacionController extends Controller
         return view('admin.cotizacion.create',compact('empresas','catesprod','clientes'));
     }
 
-    public function clonar(){
-        return view('admin.cotizacion.clonar');
+    public function clonar($id){
+        $cotizacion = Cotizacion::find($id);
+        $clientes = Cliente::all();
+        $moneda = $cotizacion->tipoMoneda=='soles'? 'S/. ':'$. ';
+        return view('admin.cotizacion.clonar',compact('cotizacion','moneda','clientes'));
+    }
+
+    public function storeClonar(Request $request){
+        //dd($request);
+        /* if($request->check_cliente_nuevo){//si el cliente es nuevo lo creamos
+            $cliente = Cliente::create([
+                'nombre'=>$request->nombreCliente,
+                'dni'=>$request->dniCliente,
+                'ruc'=>$request->rucCliente,
+                'telefono'=>$request->telefonoCliente,
+                'email'=>$request->emailCliente,
+                'direccion'=>$request->direccionCliente
+            ]);
+
+        }else{
+            $cliente = Cliente::find($request->cliente_id);
+        } */
+
+        $coti = Cotizacion::find($request->coti_id);
+        //$cotiNew = Cotizacion::create($coti);
+        //$coti->cliente_id = $cliente->id;
+        unset($coti->id,$coti->codigoCoti);
+        dd($coti);
     }
 
     public function pdfCotizacion($id){
@@ -43,8 +69,8 @@ class CotizacionController extends Controller
 
         $pdf = PDF::loadView('admin.cotizacion.pdf',['coti'=>$coti,"miEmp"=>$miEmp,'fechaEmision'=>$fechaTrans,'moneda'=>$moneda]);
         $pdf->setPaper('A4');
-        //return $pdf->stream('admin.cotizacion.pdf');
-        return $pdf->download($coti->codigoCoti.'.pdf');
+        return $pdf->stream('admin.cotizacion.pdf');
+        //return $pdf->download($coti->codigoCoti.'.pdf');
     }
 
 
@@ -143,6 +169,25 @@ class CotizacionController extends Controller
         $moneda = $cotizacion->tipoMoneda=='soles'? 'S/. ':'$. ';
         $fechaEmision = Carbon::createFromFormat('Y-m-d',$cotizacion->fechaEmision)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
         return view('admin.cotizacion.show',compact('cotizacion','moneda','fechaEmision'));
+    }
+
+    public function delete($id){
+
+        try{
+            $coti = Cotizacion::find($id);
+
+            $coti->delete();
+
+            return response()->json([
+                'res'=>true,
+                'data'=>['icon'=>'success','msg'=>'La cotizacion se elimino correctamente']
+            ]);
+        }catch(Exception $e){
+            return response()->json([
+                'res'=>false,
+                'data'=>['icon'=>'error','msg'=>'Ocurrio un error al eliminar la cotizacion']
+            ]);
+        }
     }
 
 }

@@ -8,6 +8,10 @@
 
 @section('content')
     <div class="card">
+        <div class="card-header">
+            <a href="{{route('admin.cotizacion.index')}}" class="btn  btn-secondary"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ route('admin.cotizacion.pdf', $cotizacion->id) }}" class="btn  btn-sfibras2"><i class="fas fa-file-pdf"></i></a>
+        </div>
         <div class="card-body">
             <div class="mb-3">
                <h6><b>Fecha de Emisión: </b>&nbsp; {{ $fechaEmision}}</h6>
@@ -67,9 +71,10 @@
                     </table>
                 </div>
             </div>
-            <div class="row my-3">
+            <div class="form-group my-3">
+                <label>Introducción:</label>
                 <p>
-                    {{$cotizacion->introCoti}}
+                    {{ $cotizacion->introCoti }}
                 </p>
             </div>
             <div class="table-responsive">
@@ -142,9 +147,10 @@
                 </table>
                 </div>
         </div>
-        <div class="row">
+        <div class="form-group">
+            <label>Conclusión:</label>
             <p>
-                {{$cotizacion->conclusionCoti}}
+                {{ $cotizacion->conclusionCoti }}
             </p>
         </div>
         </div>

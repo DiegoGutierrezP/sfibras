@@ -280,7 +280,7 @@ return [
         [
             'text' => 'Cotizaciones',
             'route'  => 'admin.cotizacion.index',
-            'active'=>['admin/cotizacion',],
+            'active'=>['admin/cotizacion/*',],
             'icon' => 'fas fa-scroll',
         ],
         [

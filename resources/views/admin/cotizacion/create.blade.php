@@ -50,7 +50,7 @@
                         <div id="form-nuevo-cliente">
                             <div class="form-group">
                                 <label class="form-check-label">Nombre</label>
-                                <input type="text" class="form-control" name="nombreCliente" value="mrda"  placeholder="Nombre del Cliente">
+                                <input type="text" class="form-control" name="nombreCliente" value=""  placeholder="Nombre del Cliente">
                                 <small class="error-nombre text-danger"></small>
                             </div>
                             <div class="form-group">
@@ -130,22 +130,23 @@
                                         <span>Sin IGV</span>
                                     </label>
                                     <label class="form-check-label mb-1">
-                                        <input type="checkbox" id="">
+                                        <input type="checkbox" id="check-envio">
                                         <span>Envio</span>
                                     </label>
                                 </div>
-                                <div class="content-envio-precio d-none">
+                                <div class="content-envio-precio my-0 d-none">
+                                    <small class="py-0 px-1">Tenga en cuenta el tipo de moneda seleccionado*</small>
                                     <table class="table p-0 m-0">
                                         <tr>
                                             <td width="50%"><label>Envio:</label></td>
-                                            <td width="50%"><input type="number" class="form-control" placeholder="precio"></td>
+                                            <td width="50%"><input type="number" class="precio-envio form-control" placeholder="precio"></td>
                                         </tr>
                                     </table>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <th colspan="2">Forma de Pago</th>
+                            <th colspan="2" class="pt-2">Forma de Pago</th>
                         </tr>
                         <tr>
                             <td colspan="2" class="pt-0">
@@ -165,7 +166,7 @@
                         </tr>
 
                     </table>
-                    <div class="form-group mt-4">
+                    <div class="form-group mt-2">
                         <label>Referencia</label>
                         <input type="text" name="referencia_cotizacion" class="referencia-cotizacion form-control" placeholder="referencia de busqueda(opcional)">
                     </div>
@@ -288,13 +289,12 @@
                 <label >Conclusión</label>
                 <textarea  rows="4" name="conclusion_cotizacion" class="conclusion-cotizacion form-control">Sin otro particular, quedamos de Ustedes.</textarea>
             </div>
-
-            <div class="mt-5">
-                <div class="float-right">
-                    <a href="{{route('admin.cotizacion.index')}}" class="btn btn-secondary">Cancelar</a>
-                   {{--  <button class="btn-cotizacion-pdf btn btn-success">Generar</button> --}}
-                    <button class="btn-cotizacion-guardar btn btn-primary">Generar</button>
-                </div>
+        </div>
+        <div class="card-footer">
+            <div class="float-right">
+                <a href="{{route('admin.cotizacion.index')}}" class="btn btn-secondary">Cancelar</a>
+               {{--  <button class="btn-cotizacion-pdf btn btn-success">Generar</button> --}}
+                <button class="btn-cotizacion-guardar btn btn-primary">Generar</button>
             </div>
         </div>
         </form>
@@ -319,7 +319,8 @@
             $inputDescuento = d.querySelector('.input-descuento'),
             $inputFechaEmision = d.querySelector('.input-fecha-emision'),
             $checkClientNew = d.getElementById('check-cliente-nuevo'),
-            $checkSinIgv = d.getElementById('check-sin-igv');
+            $checkSinIgv = d.getElementById('check-sin-igv'),
+            $checkEnvio = d.getElementById('check-envio');
 
         var selectCategoriaValue = 0 ;
 
@@ -363,7 +364,7 @@
 
         //evento para validar solo entrada de numeros enteros positivos
         d.addEventListener("input",e=>{
-            if(e.target.matches(['.cantidad-item','.input-descuento','.input-medidas'])){
+            if(e.target.matches(['.cantidad-item','.input-descuento','.input-medidas','.precio-envio'])){
                 let val = e.target.value;
                 e.target.value = val.replace(/\D|\-/,'');
             }
@@ -416,11 +417,10 @@
                     $btnAddItem.setAttribute("disabled");
                 }
             }
-        })
-
-        d.addEventListener("keyup",e=>{
-
-
+            //---------------------------------------------
+            if(e.target.matches('.precio-envio')){
+                calcularTotales($inputDescuento.value);
+            }
         })
 
         d.addEventListener("click",e =>{
@@ -636,37 +636,62 @@
                 }
 
             }
+            if(e.target.matches('#check-envio')){
+                const $contentEnvio = d.querySelector(".content-envio-precio");
+                if(e.target.checked){
+                    $contentEnvio.classList.remove('d-none');
+                }else{
+                    $contentEnvio.classList.add('d-none');
+                    d.querySelector('.precio-envio').value = '';
+                    calcularTotales($inputDescuento.value);
+                }
+            }
 
         })
 
         function calcularTotales(descuento = 0){
             //para totales
-            let neto=0,total=0,igv=0,moneda = 'S/';
+            let neto=0,subtotal=0,total=0,igv=0,moneda = 'S/';
             for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
 
                 neto +=  parseFloat($tableItems.rows[i].querySelector('.precio-total-item').value);
             }
-            total = neto;
+            subtotal = neto;
             if(descuento!= 0){
-                total =  neto - ((parseFloat(descuento) * neto)/100);
+                subtotal =  neto - ((parseFloat(descuento) * neto)/100);
             }
             //para igv
             if(!$checkSinIgv.checked){
-                igv = total * 0.18;
+                igv = subtotal * 0.18;
             }
             let tipoMoneda = d.querySelector('input[name="tipo_moneda"]:checked').value;
             if(tipoMoneda == 'dolares'){
                 moneda = '$';
             }
+            let precioEnvio = 0;
+            if($checkEnvio.checked){
+                precioEnvio = d.querySelector('.precio-envio').value;
+                if(!isNaN(precioEnvio) && parseFloat(precioEnvio) > 0){
+                    precioEnvio = parseFloat(precioEnvio);
+                }else{
+                    precioEnvio = 0;
+                }
+            }
+
+            total = subtotal + igv + precioEnvio;
 
             $tableTotales.rows[0].children[1].querySelector('span').textContent = `${moneda}. ${neto.toFixed(2)}`;
             $tableTotales.rows[0].children[1].querySelector('input[name="coti_precio_neto"]').value = `${neto.toFixed(2)}`;
-            $tableTotales.rows[2].children[1].querySelector('span').textContent = `${moneda}. ${total.toFixed(2)}`;
-            $tableTotales.rows[2].children[1].querySelector('input[name="coti_precio_subtotal"]').value = `${total.toFixed(2)}`;
+            $tableTotales.rows[2].children[1].querySelector('span').textContent = `${moneda}. ${subtotal.toFixed(2)}`;
+            $tableTotales.rows[2].children[1].querySelector('input[name="coti_precio_subtotal"]').value = `${subtotal.toFixed(2)}`;
             $tableTotales.rows[3].children[1].querySelector('span').textContent = `${moneda}. ${igv.toFixed(2)}`;
             $tableTotales.rows[3].children[1].querySelector('input[name="coti_precio_igv"]').value = `${igv.toFixed(2)}`;
-            $tableTotales.rows[5].children[1].querySelector('span').textContent = `${moneda}. ${(total + igv).toFixed(2)}`;
-            $tableTotales.rows[5].children[1].querySelector('input[name="coti_precio_total"]').value = `${(total + igv).toFixed(2)}`;
+
+            $tableTotales.rows[4].children[1].querySelector('span').textContent = `${moneda}. ${precioEnvio.toFixed(2)}`;
+            $tableTotales.rows[4].children[1].querySelector('input[name="coti_precio_envio"]').value = `${precioEnvio.toFixed(2)}`;
+
+            $tableTotales.rows[5].children[1].querySelector('span').textContent = `${moneda}. ${(total).toFixed(2)}`;
+            $tableTotales.rows[5].children[1].querySelector('input[name="coti_precio_total"]').value = `${(total).toFixed(2)}`;
         }
 
         function validacionCotizacion(){

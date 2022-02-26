@@ -16,6 +16,8 @@ class CotizacionIndex extends Component
     public $readyToLoad = false;
     public $cant='10';
 
+    protected $listeners = ['render'];
+
     public function updatingSearch(){
         $this->resetPage();
     }

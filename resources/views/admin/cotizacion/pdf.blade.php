@@ -78,7 +78,8 @@
             width: 47%;
             /* padding: 5px; */
             height: 90%;
-            border: 1px solid #dee2e6;
+            border: 1px solid #6A6A6A;
+            border-radius: 3px;
             margin-left: 5px
         }
         .header-2 .datos-cli{
@@ -88,8 +89,8 @@
             margin-right: 5px;
             /* padding: 5px; */
             height: 90%;
-            border: 1px solid #dee2e6;
-
+            border: 1px solid #6A6A6A;
+            border-radius: 3px;
         }
         .header-2 .condi-generales h5,
         .header-2 .datos-cli h5{
@@ -141,11 +142,11 @@
         .table-coti td{
             padding: 0.5rem;
             vertical-align: top;
-            border-top: 1px solid #dee2e6;
+            border-top: 1px solid #6A6A6A;
         }
         .table-coti thead th{
             vertical-align: bottom;
-            border-bottom: 2px solid #dee2e6;
+            border-bottom: 2px solid #6A6A6A;
         }
         /* .content-table-totales{
             float: right;
@@ -159,9 +160,10 @@
         }
         .content-table-totales .content{
             float: right;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding:5px 10px;
+            border: 1px solid #6A6A6A;
+            border-radius: 3px;
+            padding:2px 10px;
+
         }
         .content-table-totales table{
         }

@@ -2,7 +2,7 @@
 
         <div class="card-header">
             <div class="row">
-                <div class="col-4 d-flex align-items-center">
+                <div class="col-lg-4 col-md-4 col-12 d-flex align-items-center mb-2">
 
                     <select class="form-control" wire:model="cant" style="width: 70px;">
                         <option value="10">10</option>
@@ -11,7 +11,7 @@
                     </select>
                     <span class="ml-2">registros</span>
                 </div>
-                <div class="col-8 pl-5">
+                <div class="col-lg-8 col-md-8 col-12 pl-lg-5 pl-md-5 pl-0 mb-2">
                     <div class="input-group">
                         <input class="form-control py-2 border-right-0" type="search" wire:model="search"
                             placeholder="Ingrese codigo o nombre del cliente">
@@ -25,8 +25,8 @@
         </div>
     @if (count($cotizaciones))
         <div class="card-body">
-            <div class="table-responsive-sm">
-                <table class="table table-bordered table-striped">
+            <div class="table-responsive">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Codigo</th>
@@ -46,12 +46,12 @@
                                 <td>{{ $coti->fechaEmision }}</td>
                                 <td>{{ $coti->tipoMoneda == 'soles' ? 'S/. ' . $coti->precioTotalCoti : '$. ' . $coti->precioTotalCoti }}
                                 </td>
-                                <td >
+                                <td style="min-width:160px;">
                                     <a href="{{ route('admin.cotizacion.show', $coti->id) }}"
                                         class="btn btn-sm btn-sfibras2"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('admin.cotizacion.pdf', $coti->id) }}" class="btn btn-sm btn-sfibras2"><i class="fas fa-file-pdf"></i></a>
-                                    <a href="{{ route('admin.cotizacion.clonar') }}" class="btn btn-sm btn-sfibras2"><i class="fas fa-copy"></i></a>
-                                    <a href="" class="btn btn-sm btn-sfibras2"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ route('admin.cotizacion.clonar', $coti->id) }}" class="btn btn-sm btn-sfibras2"><i class="fas fa-copy"></i></a>
+                                    <a href="" class="btn-delete-coti btn btn-sm btn-sfibras2" data-coti="{{$coti->id}}"><i data-coti="{{$coti->id}}" class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                         @endforeach
