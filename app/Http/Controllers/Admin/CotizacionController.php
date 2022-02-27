@@ -38,25 +38,74 @@ class CotizacionController extends Controller
 
     public function storeClonar(Request $request){
         //dd($request);
-        /* if($request->check_cliente_nuevo){//si el cliente es nuevo lo creamos
-            $cliente = Cliente::create([
-                'nombre'=>$request->nombreCliente,
-                'dni'=>$request->dniCliente,
-                'ruc'=>$request->rucCliente,
-                'telefono'=>$request->telefonoCliente,
-                'email'=>$request->emailCliente,
-                'direccion'=>$request->direccionCliente
+        try{
+            if($request->check_cliente_nuevo){//si el cliente es nuevo lo creamos
+                $cliente = Cliente::create([
+                    'nombre'=>$request->nombreCliente,
+                    'dni'=>$request->dniCliente,
+                    'ruc'=>$request->rucCliente,
+                    'telefono'=>$request->telefonoCliente,
+                    'email'=>$request->emailCliente,
+                    'direccion'=>$request->direccionCliente
+                ]);
+
+            }else{
+                $cliente = Cliente::find($request->cliente_id);
+            }
+
+            $coti = Cotizacion::find($request->coti_id);
+
+            $cotiNew = Cotizacion::create([
+                'fechaEmision'=>Carbon::now()->toDateString(),
+                'diasExpiracion'=>$coti->diasExpiracion,
+                'tiempoEntrega'=>$coti->tiempoEntrega,
+                'formaPago'=>$coti->formaPago,
+                'tipoMoneda'=>$coti->tipoMoneda,
+                'valorDolar'=>$coti->valorDolar,
+                'referenciaCoti'=>$coti->referenciaCoti,
+                'introCoti'=>$coti->introCoti,
+                'conclusionCoti'=>$coti->conclusionCoti,
+                'precioNetoCoti'=>$coti->precioNetoCoti,
+                'descuentoCoti'=>$coti->descuentoCoti,
+                'precioSubTotalCoti'=>$coti->precioSubTotalCoti,
+                'precioIgvCoti'=>$coti->precioIgvCoti,
+                'precioEnvioCoti'=>$coti->precioEnvioCoti,
+                'precioTotalCoti'=>$coti->precioTotalCoti,
+
+                'clienteNombre'=>$cliente->nombre,
+                'clienteDni'=>$cliente->dni,
+                'clienteRuc'=>$cliente->ruc,
+                'clienteTelefono'=>$cliente->telefono,
+
+                'cliente_id'=>$cliente->id,
             ]);
 
-        }else{
-            $cliente = Cliente::find($request->cliente_id);
-        } */
+            $codigoCoti  = str_pad($cotiNew->id,4,'0',STR_PAD_LEFT);
+            $cotiNew->update([
+                    'codigoCoti'=>'SFC-'.$codigoCoti,
+            ]);
 
-        $coti = Cotizacion::find($request->coti_id);
-        //$cotiNew = Cotizacion::create($coti);
-        //$coti->cliente_id = $cliente->id;
-        unset($coti->id,$coti->codigoCoti);
-        dd($coti);
+            //$cotiNew->items()->createMany($coti->items);
+
+            $items = [];
+           foreach($coti->items as $item){
+             $items[] = [
+                        'nombre'=>$item['nombre'],
+                        'descripcion'=>$item['descrip'],
+                        'cantidad'=>$item['cantidad'],
+                        'precioUnit'=>$item['precioUnit'],
+                        'precioTotal'=>$item['precioTotal']
+                        ];
+           }
+           if(!empty($items)){
+                $cotiNew->items()->createMany($items);
+            }
+
+            return redirect()->route('admin.cotizacion.index')->with('msg-sweet','La cotizacion se clono correctamente');
+        }catch(Exception $e){
+            return 'Error '.$e;
+        }
+
     }
 
     public function pdfCotizacion($id){
@@ -137,7 +186,7 @@ class CotizacionController extends Controller
             //codigo de cotizacion
             $codigoCoti  = str_pad($cotizacion->id,4,'0',STR_PAD_LEFT);
             $cotizacion->update([
-                'codigoCoti'=>'SG-'.$codigoCoti,
+                'codigoCoti'=>'SFC-'.$codigoCoti,
             ]);
 
 

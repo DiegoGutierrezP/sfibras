@@ -10,7 +10,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <a href="{{route('admin.clientes.index')}}" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{route('admin.clientes.index')}}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
         </div>
         <div class="card-body">
             <table class="table">

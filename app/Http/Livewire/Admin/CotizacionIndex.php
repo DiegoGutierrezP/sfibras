@@ -30,6 +30,7 @@ class CotizacionIndex extends Component
         if($this->readyToLoad){
             $cotizaciones = Cotizacion::where('codigoCoti','like','%'.$this->search.'%')
                         ->orWhere('clienteNombre','like','%'.$this->search.'%')
+                        ->orderBy('id','desc')
                         ->paginate($this->cant);
         }else{
             $cotizaciones = [];

@@ -26,7 +26,7 @@
     @if (count($cotizaciones))
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Codigo</th>
@@ -51,7 +51,7 @@
                                         class="btn btn-sm btn-sfibras2"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('admin.cotizacion.pdf', $coti->id) }}" class="btn btn-sm btn-sfibras2"><i class="fas fa-file-pdf"></i></a>
                                     <a href="{{ route('admin.cotizacion.clonar', $coti->id) }}" class="btn btn-sm btn-sfibras2"><i class="fas fa-copy"></i></a>
-                                    <a href="" class="btn-delete-coti btn btn-sm btn-sfibras2" data-coti="{{$coti->id}}"><i data-coti="{{$coti->id}}" class="fas fa-trash"></i></a>
+                                    <a href="" class="btn-delete-coti btn btn-sm btn-danger" data-coti="{{$coti->id}}"><i data-coti="{{$coti->id}}" class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                         @endforeach

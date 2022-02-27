@@ -54,7 +54,8 @@
 }
 
 .btn-sfibras2{
-    background-color: var(--black);
+    /* background-color: var(--black); */
+    background: #304477;
     color: var(--white);
 }
 .btn-sfibras2:hover{

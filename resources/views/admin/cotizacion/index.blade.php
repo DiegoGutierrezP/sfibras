@@ -18,6 +18,20 @@
 @section('js')
     <script>
 
+        @if(Session::has('msg-sweet'))
+            let msg = "{{Session::get('msg-sweet')}}";
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: msg,
+                background:'#E6F4EA',
+                toast:true,
+                color: '#333',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            })
+        @endif
 
         const d = document;
         d.addEventListener("click",e=>{

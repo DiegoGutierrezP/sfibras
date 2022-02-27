@@ -17,15 +17,13 @@
     @if (count($clientes))
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>dni</th>
                             <th>ruc</th>
-                            <th></th>
-                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -37,16 +35,14 @@
                                     <td>{{ $cliente->nombre }}</td>
                                     <td>{{ is_null($cliente->dni) ? '-' : $cliente->dni }}</td>
                                     <td>{{ is_null($cliente->ruc) ? '-' : $cliente->ruc }}</td>
-                                    <td width='10px' class="pl-0">
-                                        <a class="btn btn-light btn-sm"
+                                    <td style="min-width: 150px;">
+                                        <a class="btn btn-sfibras2 btn-sm"
                                             href="{{ route('admin.clientes.show', $cliente) }}"><i
                                                 class="fas fa-eye"></i></a>
-                                    </td>
-                                    <td width='10px' class="pl-0"><a
-                                            class="btn-editar-cliente btn btn-light btn-sm"
-                                            wire:click.prevent="edit({{ $cliente->id }})"><i
-                                                class="fas fa-pen"></i></a></td>
-                                    <td width='10px' class="pl-0">
+                                        <a
+                                            class="btn-editar-cliente btn btn-sfibras2 btn-sm"
+                                                wire:click.prevent="edit({{ $cliente->id }})"><i
+                                                    class="fas fa-pen"></i></a>
                                         <a wire:click="$emit('deleteCliente',{{ $cliente }})"
                                             class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                                     </td>
