@@ -38,7 +38,7 @@ class CreateCotizacionesTable extends Migration
             $table->string('clienteRuc')->nullable();
             $table->string('clienteTelefono')->nullable();
 
-
+            $table->enum('estado',[1,2,3,4,5])->default(1);//1:pendiente.cuando es creada \ 2:aceptada:cuando se asocia una orden de compra,3:aceptado pero modificado  \ 4:expirada.cuando paso de la fecha \ 5:rechazada
 
             $table->unsignedBigInteger('cliente_id')->nullable();
             $table->foreign('cliente_id')->references('id')->on('clientes');

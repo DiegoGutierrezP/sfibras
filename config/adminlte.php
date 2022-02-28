@@ -278,6 +278,11 @@ return [
             'icon' => 'fas fa-box',
         ],
         [
+            'text' => 'Ordenes de Compra',
+            'url'  => 'admin.productos.index',
+            'icon' => 'fas fa-folder',
+        ],
+        [
             'text' => 'Cotizaciones',
             'route'  => 'admin.cotizacion.index',
             'active'=>['admin/cotizacion/*',],

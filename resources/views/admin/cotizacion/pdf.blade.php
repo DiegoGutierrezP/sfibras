@@ -27,7 +27,7 @@
             padding: 0;
             margin: 0;
             min-height: 100vh;
-            font-size: 1rem;
+            font-size: .9rem;
             line-height: 1.3;
         }
         .header-1{

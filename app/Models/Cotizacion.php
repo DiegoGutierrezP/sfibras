@@ -32,7 +32,8 @@ class Cotizacion extends Model
         'clienteDni',
         'clienteRuc',
         'clienteTelefono',
-        'cliente_id'
+        'cliente_id',
+        'estado'
     ];
 
     public function cliente(){

@@ -82,7 +82,7 @@ class CotizacionController extends Controller
 
             $codigoCoti  = str_pad($cotiNew->id,4,'0',STR_PAD_LEFT);
             $cotiNew->update([
-                    'codigoCoti'=>'SFC-'.$codigoCoti,
+                    'codigoCoti'=>'SFC'.$codigoCoti,
             ]);
 
             //$cotiNew->items()->createMany($coti->items);
@@ -186,7 +186,7 @@ class CotizacionController extends Controller
             //codigo de cotizacion
             $codigoCoti  = str_pad($cotizacion->id,4,'0',STR_PAD_LEFT);
             $cotizacion->update([
-                'codigoCoti'=>'SFC-'.$codigoCoti,
+                'codigoCoti'=>'SFC'.$codigoCoti,
             ]);
 
 
