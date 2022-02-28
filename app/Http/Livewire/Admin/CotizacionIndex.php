@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Cotizacion;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 class CotizacionIndex extends Component
 {
@@ -28,6 +29,9 @@ class CotizacionIndex extends Component
     public function render()
     {
         if($this->readyToLoad){
+
+            DB::statement('call pa_verificarEstadoCotizacion()');
+
             $cotizaciones = Cotizacion::where('codigoCoti','like','%'.$this->search.'%')
                         ->orWhere('clienteNombre','like','%'.$this->search.'%')
                         ->orderBy('id','desc')

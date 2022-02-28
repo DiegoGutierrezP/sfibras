@@ -34,6 +34,7 @@
                             <th>Cliente</th>
                             <th>Emisión</th>
                             <th>Total</th>
+                            <th>Estado</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -45,6 +46,20 @@
                                 <td>{{ $coti->clienteNombre }}</td>
                                 <td>{{ $coti->fechaEmision }}</td>
                                 <td>{{ $coti->tipoMoneda == 'soles' ? 'S/. ' . $coti->precioTotalCoti : '$. ' . $coti->precioTotalCoti }}
+                                </td>
+                                <td width="10px">
+                                    @if ($coti->estado == 1)
+                                        <h6><span class="badge badge-warning">Pendiente</span></h6>
+                                    @elseif($coti->estado == 2)
+                                        <h6><span class="badge badge-success">Aceptado</span></h6>
+                                    @elseif($coti->estado == 3)
+                                        <h6><span class="badge badge-primary">Aceptado / Modificado</span></h6>
+                                    @elseif($coti->estado == 4)
+                                        <h6><span class="badge badge-secondary">Expirado</span></h6>
+                                    @elseif($coti->estado == 5)
+                                        <h6><span class="badge badge-danger">Rechazado</span></h6>
+                                    @endif
+
                                 </td>
                                 <td style="min-width:160px;">
                                     <a href="{{ route('admin.cotizacion.show', $coti->id) }}"

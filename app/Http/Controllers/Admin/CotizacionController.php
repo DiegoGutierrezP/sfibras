@@ -141,7 +141,9 @@ class CotizacionController extends Controller
     }
 
     public function generarCotizacion(Request $request){
-        //dd($request->tipo_moneda == "dolares"?$request->valor_dolar:"gaa");
+
+        /* $fecha = Carbon::createFromFormat('Y-m-d',$request->fecha_emision)->addDays(1)->toDateString();
+        dd($fecha); */
         try{
             if($request->cliente_nuevo){//si el cliente es nuevo lo creamos
                 $cliente = Cliente::create([

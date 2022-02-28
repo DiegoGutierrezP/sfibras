@@ -30,6 +30,7 @@ class ClienteIndex extends Component
             ->orWhere('dni','like','%'.$this->search.'%')
             ->orWhere('ruc','like','%'.$this->search.'%')
             ->paginate(10);
+
         }else{
             $clientes = [];
         }

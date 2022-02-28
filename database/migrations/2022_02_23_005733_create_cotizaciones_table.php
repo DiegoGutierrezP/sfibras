@@ -19,6 +19,7 @@ class CreateCotizacionesTable extends Migration
             $table->string('codigoCoti')->nullable();
             $table->date('fechaEmision');
             $table->string('diasExpiracion');
+            //$table->date('fechaExpiracion')->nullable();
             $table->string('tiempoEntrega');
             $table->string('formaPago');
             $table->string('tipoMoneda');
