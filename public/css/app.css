@@ -664,17 +664,8 @@ select {
 .float-left {
   float: left;
 }
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-.my-3 {
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-.my-4 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+.m-0 {
+  margin: 0px;
 }
 .my-5 {
   margin-top: 1.25rem;
@@ -684,13 +675,25 @@ select {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
+.my-3 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
 .my-12 {
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+.my-0 {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 .ml-3 {
   margin-left: 0.75rem;
@@ -743,8 +746,11 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
-.mt-5 {
-  margin-top: 1.25rem;
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.mb-1 {
+  margin-bottom: 0.25rem;
 }
 .mb-8 {
   margin-bottom: 2rem;
@@ -754,6 +760,9 @@ select {
 }
 .ml-auto {
   margin-left: auto;
+}
+.mb-0 {
+  margin-bottom: 0px;
 }
 .-mr-2 {
   margin-right: -0.5rem;
@@ -847,6 +856,9 @@ select {
 }
 .shrink-0 {
   flex-shrink: 0;
+}
+.border-collapse {
+  border-collapse: collapse;
 }
 .origin-top-left {
   transform-origin: top left;
@@ -1046,14 +1058,17 @@ select {
 .fill-current {
   fill: currentColor;
 }
+.p-2 {
+  padding: 0.5rem;
+}
 .p-6 {
   padding: 1.5rem;
 }
 .p-5 {
   padding: 1.25rem;
 }
-.p-2 {
-  padding: 0.5rem;
+.p-0 {
+  padding: 0px;
 }
 .px-4 {
   padding-left: 1rem;
@@ -1066,6 +1081,10 @@ select {
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 .py-1 {
   padding-top: 0.25rem;
@@ -1083,13 +1102,13 @@ select {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+}
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 .py-5 {
   padding-top: 1.25rem;
@@ -1110,6 +1129,9 @@ select {
 .pt-8 {
   padding-top: 2rem;
 }
+.pl-0 {
+  padding-left: 0px;
+}
 .pt-1 {
   padding-top: 0.25rem;
 }
@@ -1127,6 +1149,12 @@ select {
 }
 .pl-4 {
   padding-left: 1rem;
+}
+.pr-2 {
+  padding-right: 0.5rem;
+}
+.pt-0 {
+  padding-top: 0px;
 }
 .pb-3 {
   padding-bottom: 0.75rem;

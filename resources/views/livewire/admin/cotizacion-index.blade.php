@@ -19,12 +19,18 @@
                             <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
                         </span>
                     </div>
+
                 </div>
             </div>
 
         </div>
     @if (count($cotizaciones))
         <div class="card-body">
+            <div class="float-right mb-2">
+                <button class="btn btn-sm btn-warning" wire:click="$set('estado',1)"></button>|<button class="btn btn-sm btn-primary"></button>|<button class="btn btn-sm btn-success"></button>|
+                <button class="btn btn-sm btn-secondary"></button>|<button class="btn btn-sm btn-danger"></button>
+            </div>
+            {{$estado}}
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                     <thead>
@@ -49,16 +55,27 @@
                                 </td>
                                 <td width="10px">
                                     @if ($coti->estado == 1)
-                                        <h6><span class="badge badge-warning">Pendiente</span></h6>
+                                        <h5 ><span class=" badge badge-warning ">Pendiente</span></h5>
                                     @elseif($coti->estado == 2)
-                                        <h6><span class="badge badge-success">Aceptado</span></h6>
+                                        <h5><span class=" badge badge-success" >Aceptado</span></h5>
                                     @elseif($coti->estado == 3)
-                                        <h6><span class="badge badge-primary">Aceptado / Modificado</span></h6>
+                                        <h5><span class=" badge badge-primary" >Aceptado/Modificado</span></h5>
                                     @elseif($coti->estado == 4)
-                                        <h6><span class="badge badge-secondary">Expirado</span></h6>
+                                        <h5><span class=" badge badge-secondary" >Expirado</span></h5>
                                     @elseif($coti->estado == 5)
-                                        <h6><span class="badge badge-danger">Rechazado</span></h6>
+                                        <h5><span class=" badge badge-danger" >Rechazado</span></h5>
                                     @endif
+                                    {{-- @if ($coti->estado == 1)
+                                        <a href="" class="btn-estado-coti btn btn-sm btn-warning px-1 py-0 font-weight-bold" data-estado="{{$coti->estado}}" data-codigo="{{$coti->codigoCoti}}">Pendiente</a>
+                                    @elseif($coti->estado == 2)
+                                        <a href="" class="btn-estado-coti btn btn-sm btn-success px-1 py-0 font-weight-bold" data-estado="{{$coti->estado}}" data-codigo="{{$coti->codigoCoti}}">Aceptado</a>
+                                    @elseif($coti->estado == 3)
+                                        <a href="" class="btn-estado-coti btn btn-sm btn-primary px-1 py-0 font-weight-bold" data-estado="{{$coti->estado}}" data-codigo="{{$coti->codigoCoti}}">Aceptado/Modificado</a>
+                                    @elseif($coti->estado == 4)
+                                        <button class="btn btn-sm btn-secondary px-1 py-0 font-weight-bold">Expirado</button>
+                                    @elseif($coti->estado == 5)
+                                        <button class="btn btn-sm btn-danger px-1 py-0 font-weight-bold" data-estado="{{$coti->estado}}">Rechazado</button>
+                                    @endif --}}
 
                                 </td>
                                 <td style="min-width:160px;">

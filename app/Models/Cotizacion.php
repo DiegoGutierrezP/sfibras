@@ -15,7 +15,7 @@ class Cotizacion extends Model
         'codigoCoti',
         'fechaEmision',
         'diasExpiracion',
-        //'fechaExpiracion',
+        'fechaExpiracion',
         'tiempoEntrega',
         'formaPago',
         'tipoMoneda',

@@ -15,7 +15,7 @@ class CotizacionIndex extends Component
 
     public $search = '';
     public $readyToLoad = false;
-    public $cant='10';
+    public $cant='10',$estado='1';
 
     protected $listeners = ['render'];
 
@@ -30,10 +30,11 @@ class CotizacionIndex extends Component
     {
         if($this->readyToLoad){
 
-            DB::statement('call pa_verificarEstadoCotizacion()');
+            DB::statement('call pa_verificarEstadoCotizacion()');//procedimiento almacenado que modifica el estado comparando las fechas
 
             $cotizaciones = Cotizacion::where('codigoCoti','like','%'.$this->search.'%')
                         ->orWhere('clienteNombre','like','%'.$this->search.'%')
+                        ->orWhere('estado',$this->estado)
                         ->orderBy('id','desc')
                         ->paginate($this->cant);
         }else{

@@ -37,7 +37,8 @@ class CotizacionController extends Controller
     }
 
     public function storeClonar(Request $request){
-        //dd($request);
+        /* $coti = Cotizacion::find($request->coti_id);
+        dd(strstr($coti->diasExpiracion, ' ',true)); */
         try{
             if($request->check_cliente_nuevo){//si el cliente es nuevo lo creamos
                 $cliente = Cliente::create([
@@ -58,6 +59,7 @@ class CotizacionController extends Controller
             $cotiNew = Cotizacion::create([
                 'fechaEmision'=>Carbon::now()->toDateString(),
                 'diasExpiracion'=>$coti->diasExpiracion,
+                'fechaExpiracion'=>Carbon::now()->addDays(strstr($coti->diasExpiracion, ' ',true))->toDateString(),
                 'tiempoEntrega'=>$coti->tiempoEntrega,
                 'formaPago'=>$coti->formaPago,
                 'tipoMoneda'=>$coti->tipoMoneda,
@@ -159,10 +161,11 @@ class CotizacionController extends Controller
                 $cliente = Cliente::find($request->cliente_id);
             }
 
-
+            $diasExpiracion = $request->dias_expiracion?$request->dias_expiracion:10;
             $cotizacion = Cotizacion::create([
                 'fechaEmision'=>$request->fecha_emision,
                 'diasExpiracion'=>$request->dias_expiracion?$request->dias_expiracion.' dias':'10 dias',
+                'fechaExpiracion'=>Carbon::createFromFormat('Y-m-d',$request->fecha_emision)->addDays($diasExpiracion)->toDateString(),
                 'tiempoEntrega'=>$request->tiempo_entrega?$request->tiempo_entrega.' dias':'5 dias',
                 'formaPago'=>$request->formaPago == "contado"? "Al contado": "adelanto 50%",
                 'tipoMoneda'=>$request->tipo_moneda == "soles"? "soles":"dolares",
@@ -220,6 +223,21 @@ class CotizacionController extends Controller
         $moneda = $cotizacion->tipoMoneda=='soles'? 'S/. ':'$. ';
         $fechaEmision = Carbon::createFromFormat('Y-m-d',$cotizacion->fechaEmision)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
         return view('admin.cotizacion.show',compact('cotizacion','moneda','fechaEmision'));
+    }
+
+    public function cambiarEstadoCoti(Request $request){
+        try{
+            $coti = Cotizacion::where('codigoCoti',$request->codigo_coti);
+
+            $coti->update([
+                'estado'=>$request->estadosCoti,
+            ]);
+
+            return redirect()->route('admin.cotizacion.index')->with('msg-sweet','La cotizacion '.$request->codigo_coti.' cambio de estado');
+
+        }catch(Exception $e){
+            dd($e);
+        }
     }
 
     public function delete($id){

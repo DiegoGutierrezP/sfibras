@@ -23,6 +23,7 @@ Route::get('cotizacion/product/{id}',[CotizacionController::class,'getProduct'])
 Route::delete('cotizacion/{id}',[CotizacionController::class,'delete'])->name('cotizacion.delete');
 Route::post('cotizacion/generar',[CotizacionController::class,'generarCotizacion'])->name('admin.cotizacion.generar');
 Route::get('cotizacion-pdf/{id}',[CotizacionController::class,'pdfCotizacion'])->name('admin.cotizacion.pdf');
+Route::post('cotizacion/cambiarEstado',[CotizacionController::class,'cambiarEstadoCoti'])->name('admin.cotizacion.cambiarEstado');
 
 Route::resource('miEmpresa',MiEmpresaController::class)->only(['index','edit','update'])->names('admin.miEmpresa');
 

@@ -11,6 +11,19 @@
         <div class="card-header">
             <a href="{{route('admin.cotizacion.index')}}" class="btn  btn-secondary"><i class="fas fa-arrow-left"></i></a>
             <a href="{{ route('admin.cotizacion.pdf', $cotizacion->id) }}" class="btn  btn-sfibras2"><i class="fas fa-file-pdf"></i></a>
+            <div class="float-right">
+                @if ($cotizacion->estado == 1)
+                    <a href="" class="btn-estado-coti btn  btn-warning px-2 py-1 font-weight-bold" data-estado="{{$cotizacion->estado}}" data-codigo="{{$cotizacion->codigoCoti}}">Pendiente</a>
+                @elseif($cotizacion->estado == 2)
+                    <a href="" class="btn-estado-coti btn btn-success px-2 py-1 font-weight-bold" data-estado="{{$cotizacion->estado}}" data-codigo="{{$cotizacion->codigoCoti}}">Aceptado</a>
+                @elseif($cotizacion->estado == 3)
+                    <a href="" class="btn-estado-coti btn  btn-primary px-2 py-1 font-weight-bold" data-estado="{{$cotizacion->estado}}" data-codigo="{{$cotizacion->codigoCoti}}">Aceptado/Modificado</a>
+                @elseif($cotizacion->estado == 4)
+                    <button class="btn btn-secondary px-2 py-1 font-weight-bold">Expirado</button>
+                @elseif($cotizacion->estado == 5)
+                    <button class="btn  btn-danger px-2 py-1 font-weight-bold">Rechazado</button>
+                @endif
+            </div>
         </div>
         <div class="card-body">
             <div class="mb-3">
@@ -155,6 +168,64 @@
         </div>
         </div>
     </div>
+
+    {{-- Modal --}}
+    <div wire:ignore.self class="modal fade" id="estadosCotiModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Estados de la Cotizacion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true close-btn">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5></h5>
+                    <form action="{{route('admin.cotizacion.cambiarEstado')}}" method="POST" id="form-checks-estado-coti">
+                        @csrf
+                        <input type="hidden" name="codigo_coti" value="">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios1" value="1">
+                            <label class="form-check-label" for="exampleRadios1">
+                                Pendiente
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios2" value="2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Aceptado
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios3" value="3">
+                            <label class="form-check-label" for="exampleRadios3">
+                                Aceptado/Modificado
+                            </label>
+                        </div>
+                        <div class="form-check mb-1 disabled">
+                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios4" value="4"
+                                disabled>
+                            <label class="form-check-label" for="exampleRadios4">
+                                Expirado
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios5" value="5">
+                            <label class="form-check-label" for="exampleRadios5">
+                                Rechazado
+                            </label>
+                        </div>
+                        </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary btn-guardar-estado-coti">Guardar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')
@@ -178,5 +249,87 @@
             timerProgressBar: true,
         })
     @endif
+
+    const d= document;
+
+    d.addEventListener("click",e=>{
+        if (e.target.matches('.btn-estado-coti')) {
+                e.preventDefault();
+                console.log(e.target.dataset.estado, e.target.dataset.codigo);
+                $('#estadosCotiModal').modal('show');
+                $('#estadosCotiModal').find('.modal-body h5').text('Cotización ' + e.target.dataset.codigo);
+                $('#estadosCotiModal').find('.modal-body input[name="codigo_coti"]').val(e.target.dataset.codigo);
+                d.querySelectorAll('#estadosCotiModal input[name="estadosCoti"]').forEach(el => {
+                    if (el.value == e.target.dataset.estado) {
+                        el.checked = true;
+                    }
+                });
+            }
+            if(e.target.matches('.btn-guardar-estado-coti')){
+                e.preventDefault();
+                $('#estadosCotiModal').modal('hide');
+                if(d.querySelector('input[name="estadosCoti"]:checked')){
+                    let estado = d.querySelector('input[name="estadosCoti"]:checked').value;
+                    if(estado == 1 || estado == 5){
+                        d.getElementById("form-checks-estado-coti").submit();
+                    }
+                }
+
+                /* if(d.querySelector('input[name="estadosCoti"]:checked')){
+                    $('#estadosCotiModal').modal('hide');
+                    let estado = d.querySelector('input[name="estadosCoti"]:checked').value;
+                    if(estado == 1 || estado == 5){
+                        let codigoCoti = d.querySelector('#estadosCotiModal input[name="codigo_coti"]').value;
+                        let url = '{{ route('admin.cotizacion.cambiarEstado') }}';
+                        let obj = {
+                            url : url,
+                            ops: {
+                                method: "POST",
+                                headers: {
+                                    "Content-type": "application/json; charset=utf-8",
+                                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                },
+                                body: JSON.stringify({
+                                    codigoCoti: codigoCoti,
+                                    estadoCoti:estado
+                                })
+                            },
+                            success: json => {
+                                //Livewire.emitTo('admin.cotizacion-index', 'render');
+                                window.location.href
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: json.data.icon,
+                                    title: json.data.msg,
+                                    background: '#E6F4EA',
+                                    toast: true,
+                                    color: '#333',
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                })
+                            },
+                            error: err=>{
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: err.data.icon,
+                                    title: err.data.msg,
+                                    background: '#FFD2D2',
+                                    toast: true,
+                                    color: '#D8000C',
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                })
+                            }
+                        }
+
+                        ajax(obj);
+                    }
+                } */
+
+            }
+    })
+
     </script>
 @stop
