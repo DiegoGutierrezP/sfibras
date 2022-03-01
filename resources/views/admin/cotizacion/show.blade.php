@@ -272,6 +272,11 @@
                     let estado = d.querySelector('input[name="estadosCoti"]:checked').value;
                     if(estado == 1 || estado == 5){
                         d.getElementById("form-checks-estado-coti").submit();
+                    }else if(estado == 2 || estado == 3){
+                        let codigoCoti = d.querySelector('#estadosCotiModal input[name="codigo_coti"]').value;
+                        let url = '{{ route('admin.ordenCompra.create', ':codigo') }}';
+                        url = url.replace(':codigo', codigoCoti);
+                        window.location.href = url;
                     }
                 }
 

@@ -1,15 +1,25 @@
 <div wire:init="loadCotis" class="card">
 
         <div class="card-header">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-12 d-flex align-items-center mb-2">
 
+                <div class="d-flex align-items-center mb-2">
                     <select class="form-control" wire:model="cant" style="width: 70px;">
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
                     </select>
                     <span class="ml-2">registros</span>
+                </div>
+                <div class="row">
+                <div class="col-lg-4 col-md-4 col-12 d-flex align-items-center mb-2">
+                    <select wire:model="estado" class="form-control">
+                        <option value="">Todos</option>
+                        <option value="1">Pendiente</option>
+                        <option value="2">Aceptado</option>
+                        <option value="3">Aceptado/Modificado</option>
+                        <option value="4">Expirado</option>
+                        <option value="5">Rechazado</option>
+                    </select>
                 </div>
                 <div class="col-lg-8 col-md-8 col-12 pl-lg-5 pl-md-5 pl-0 mb-2">
                     <div class="input-group">
@@ -26,11 +36,6 @@
         </div>
     @if (count($cotizaciones))
         <div class="card-body">
-            <div class="float-right mb-2">
-                <button class="btn btn-sm btn-warning" wire:click="$set('estado',1)"></button>|<button class="btn btn-sm btn-primary"></button>|<button class="btn btn-sm btn-success"></button>|
-                <button class="btn btn-sm btn-secondary"></button>|<button class="btn btn-sm btn-danger"></button>
-            </div>
-            {{$estado}}
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                     <thead>
@@ -65,18 +70,6 @@
                                     @elseif($coti->estado == 5)
                                         <h5><span class=" badge badge-danger" >Rechazado</span></h5>
                                     @endif
-                                    {{-- @if ($coti->estado == 1)
-                                        <a href="" class="btn-estado-coti btn btn-sm btn-warning px-1 py-0 font-weight-bold" data-estado="{{$coti->estado}}" data-codigo="{{$coti->codigoCoti}}">Pendiente</a>
-                                    @elseif($coti->estado == 2)
-                                        <a href="" class="btn-estado-coti btn btn-sm btn-success px-1 py-0 font-weight-bold" data-estado="{{$coti->estado}}" data-codigo="{{$coti->codigoCoti}}">Aceptado</a>
-                                    @elseif($coti->estado == 3)
-                                        <a href="" class="btn-estado-coti btn btn-sm btn-primary px-1 py-0 font-weight-bold" data-estado="{{$coti->estado}}" data-codigo="{{$coti->codigoCoti}}">Aceptado/Modificado</a>
-                                    @elseif($coti->estado == 4)
-                                        <button class="btn btn-sm btn-secondary px-1 py-0 font-weight-bold">Expirado</button>
-                                    @elseif($coti->estado == 5)
-                                        <button class="btn btn-sm btn-danger px-1 py-0 font-weight-bold" data-estado="{{$coti->estado}}">Rechazado</button>
-                                    @endif --}}
-
                                 </td>
                                 <td style="min-width:160px;">
                                     <a href="{{ route('admin.cotizacion.show', $coti->id) }}"

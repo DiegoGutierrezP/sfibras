@@ -5,6 +5,7 @@ use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CotizacionController;
 use App\Http\Controllers\Admin\MiEmpresaController;
+use App\Http\Controllers\Admin\OrdenCompraController;
 
 Route::get('/',function(){
     return view('admin.index');
@@ -24,6 +25,9 @@ Route::delete('cotizacion/{id}',[CotizacionController::class,'delete'])->name('c
 Route::post('cotizacion/generar',[CotizacionController::class,'generarCotizacion'])->name('admin.cotizacion.generar');
 Route::get('cotizacion-pdf/{id}',[CotizacionController::class,'pdfCotizacion'])->name('admin.cotizacion.pdf');
 Route::post('cotizacion/cambiarEstado',[CotizacionController::class,'cambiarEstadoCoti'])->name('admin.cotizacion.cambiarEstado');
+
+Route::get('ordenCompra',[OrdenCompraController::class,'index'])->name('admin.ordenCompra.index');
+Route::get('ordenCompra/create/{coti?}',[OrdenCompraController::class,'create'])->name('admin.ordenCompra.create');
 
 Route::resource('miEmpresa',MiEmpresaController::class)->only(['index','edit','update'])->names('admin.miEmpresa');
 

@@ -279,7 +279,8 @@ return [
         ],
         [
             'text' => 'Ordenes de Compra',
-            'url'  => 'admin.productos.index',
+            'route'  => 'admin.ordenCompra.index',
+            'active'=>['admin/ordenCompra/*',],
             'icon' => 'fas fa-folder',
         ],
         [
