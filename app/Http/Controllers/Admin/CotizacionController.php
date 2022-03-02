@@ -13,11 +13,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Carbon\Carbon;
 use PDF;
+use DataTables;
+use Illuminate\Support\Facades\DB;
 
 class CotizacionController extends Controller
 {
 
-    public function index(){
+    public function index(Request $request){
+        DB::statement('call pa_verificarEstadoCotizacion()');//procedimiento almacenado que modifica el estado comparando las fechas
+        if($request->ajax()){
+            $cotis=Cotizacion::all();
+            $cotis->map(function($item,$key){//agregamos nuevo campo a cada coti
+                $item->precioConMoneda = $item->tipoMoneda == 'dolares'? '$. '.$item->precioTotalCoti:'S/. '.$item->precioTotalCoti;
+                return $item;
+            });
+
+            return Datatables::of($cotis)
+            ->addColumn('actions',function($cotis){
+                return view('admin.cotizacion.actions-index',compact('cotis'));
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
+        }
+
         return view('admin.cotizacion.index');
     }
 

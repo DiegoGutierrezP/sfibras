@@ -185,7 +185,7 @@
                     <form action="{{route('admin.cotizacion.cambiarEstado')}}" method="POST" id="form-checks-estado-coti">
                         @csrf
                         <input type="hidden" name="codigo_coti" value="">
-                        <div class="form-check mb-1">
+                        {{-- <div class="form-check mb-1">
                             <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios1" value="1">
                             <label class="form-check-label" for="exampleRadios1">
                                 Pendiente
@@ -214,6 +214,19 @@
                             <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios5" value="5">
                             <label class="form-check-label" for="exampleRadios5">
                                 Rechazado
+                            </label>
+                        </div> --}}
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios3" value="2">
+                            <label class="form-check-label" for="exampleRadios3">
+                                Aceptar
+                            </label>
+                        </div>
+                        <div class="form-check mb-1 ">
+                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios4" value="5"
+                                >
+                            <label class="form-check-label" for="exampleRadios4">
+                                Rechazar
                             </label>
                         </div>
                         </form>
