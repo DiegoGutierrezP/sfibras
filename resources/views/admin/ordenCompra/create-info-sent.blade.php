@@ -1,78 +1,244 @@
-@extends('adminlte::page')
+<div></div>
+<div class="card">
+    <div class="card-header">
+        <h5>Cotizacion relacionada : {{ $cotizacion->codigoCoti }}</h5>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
 
-@section('title', 'Orden de Compra')
+            <div class="col-lg-6 col-md-6 col-12 p-2">
+                <h5>Datos del Cliente</h5>
+                <table class="table">
+                    <tr>
+                        <th>Cliente:</th>
+                        <td>{{ $cotizacion->cliente->nombre }}</td>
+                    </tr>
+                    <tr>
+                        <th>ruc:</th>
+                        <td>{{ $cotizacion->cliente->ruc }}</td>
+                    </tr>
+                    <tr>
+                        <th>dni:</th>
+                        <td>{{ $cotizacion->cliente->dni }}</td>
+                    </tr>
+                    <tr>
+                        <th>telefono:</th>
+                        <td>{{ $cotizacion->cliente->telefono }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td>{{ $cotizacion->cliente->email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Direccion:</th>
+                        <td>{{ $cotizacion->cliente->direccion }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12 p-2">
+                <h5>Condiciones Generales</h5>
+                <table class="table">
+                    <tr>
+                        <th>Precios:</th>
+                        <td><input type="hidden" name="incluye_igv" value="{{ $cotizacion->precioIgvCoti == 0 ? 0 : 1 }}">{{ $cotizacion->precioIgvCoti == 0 ? 'No Incluye IGV' : 'Incluye IGV' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Forma de Pago:</th>
+                        <td>{{ $cotizacion->formaPago }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tiempo Entrega:</th>
+                        <td>{{ $cotizacion->tiempoEntrega }}</td>
+                    </tr>
+                    <tr>
+                        <th>Moneda:</th>
+                        <td><input type="hidden" name="tipo_moneda" value="{{$cotizacion->tipoMoneda}}">{{ $cotizacion->tipoMoneda }}</td>
+                    </tr>
+                    @if ($cotizacion->tipoMoneda == 'dolares')
+                        <tr>
+                            <th>Valor Dolar:</th>
+                            <td><input type="hidden" name="valor_dolar" value="{{$cotizacion->valorDolar}}">{{ $cotizacion->valorDolar }}</td>
+                        </tr>
+                    @endif
 
-@section('content_header')
-    <h1>Registrar Orden de Compra</h1>
-@stop
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="">Observaciones:</label>
+            <textarea  cols="3" class="form-control" ></textarea>
+        </div>
 
-@section('content')
+    </div>
+</div>
 
-@if (is_null($cotizacion))
-    @include('admin.ordenCompra.create-info-nosent')
-@else
-    @include('admin.ordenCompra.create-info-sent')
-@endif
+<div class="card">
+    <div class="card-body">
+        <div class="form-group">
+            <label>Elija una categoria</label>
+            <div class="row">
+                <div class="col-8">
+                    <select name="" id="select-cates-prods" class="form-control">
+                        <option value="0" selected>--Eliga una Categoria--</option>
+                        @foreach ($catesprod as $cate)
+                            <option value="{{ $cate->id }}">{{ $cate->nombre }}</option>
+                        @endforeach
+                    </select>
+                    <select id="select-prods" class="form-control my-3">
+                        <option value="0">--Eliga un item--</option>
+                    </select>
+                    <div class="form-group d-none" id="content-medidas-señales">
+                        <label>Medidas</label>
+                        <table>
+                            <tr>
+                                <td><input type="number" disabled class="input-medidas form-control"></td>
+                                <td class="px-3">X</td>
+                                <td><input type="number" disabled class="input-medidas form-control"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-center col-4">
+                    <button class="btn-agregar-item btn btn-sfibras mb-3" disabled>Agregar Item</button>
+                    <a href="" class="btn-agregar-fila-vacia">Agregar Fila Vacia</a>
+                </div>
+            </div>
 
-@stop
+        </div>
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin.css">
-@stop
+        <hr>
 
-@section('js')
-{{-- <script>
-    const d = document,
+        <div class="table-responsive">
+            <table class="table-items-oc table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Item</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Precio/u</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($cotizacion->items as $i => $item)
+                        <tr>
+                                <td><span class="nro-item">{{$i+1}}</span></td>
+                                <td>
+                                    <input type='text' name="items[{{ $i }}][nombre]" class='nombre-item form-control'
+                                    value='{{ $item->nombre }}'>
+                                </td>
+                                <td>
+                                    <textarea rows="1" name="items[{{ $i }}][descrip]" class='descrip-item form-control'
+                                    placeholder=''>{{ $item->descripcion }}</textarea>
+                                </td>
+                                <td>
+                                    <input type='number' name='items[{{ $i }}][cantidad]' min='1'
+                                    class='cantidad-item cantidad-item form-control' value='{{ $item->cantidad }}'>
+                                </td>
+                                <td>
+                                    <input type='number' name='items[{{ $i }}][precioUnit]'
+                                    class='precio-unit-item form-control' value='{{ $item->precioUnit }}'>
+                                </td>
+                                <td>
+                                    <input type='number' name='items[{{ $i }}][precioTotal]'
+                                    class='precio-total-item form-control' readonly value='{{ $item->precioTotal }}'>
+                                </td>
+                                <td></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row position-relative my-4 ">
+            <div class="w-100">
+                <table class="table-oc-totales table table-sm table-bordered">
+                    <tr>
+                        <td>Neto</td>
+                        <td>
+                            <input type="hidden" name="coti_precio_neto" value="">
+                            <span>S/ 0.00</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Descuento</td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">%</div>
+                                </div>
+                                <input type="number" name="coti_descuento" class="input-descuento form-control"
+                                    value="0">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sub Total</td>
+                        <td>
+                            <input type="hidden" name="coti_precio_subtotal" value="">
+                            <span>S/ 0.00</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>IGV</td>
+                        <td>
+                            <input type="hidden" name="coti_precio_igv" value="">
+                            <span>S/ 0.00</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Envio</td>
+                        <td>
+                            <input type="hidden" name="coti_precio_envio" value="">
+                            <span>S/ 0.00</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td>
+                            <input type="hidden" name="coti_precio_total" value="">
+                            <span>S/ 0.00</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+@push('js')
+    <script>
+        const d = document,
         $selectProds = d.getElementById("select-prods"),
         $contentMedidasSen = d.getElementById("content-medidas-señales"),
         $btnAddItem = d.querySelector(".btn-agregar-item"),
         $btnAddFilaVacia = d.querySelector(".btn-agregar-fila-vacia"),
-        $tableItems = d.querySelector(".table-items-cotizacion tbody"),
-        $tableTotales = d.querySelector(".table-cotizacion-totales"),
+        $tableItems = d.querySelector(".table-items-oc tbody"),
+        $tableTotales = d.querySelector(".table-oc-totales"),
         $inputDescuento = d.querySelector('.input-descuento'),
         $inputFechaEmision = d.querySelector('.input-fecha-emision'),
         $checkClientNew = d.getElementById('check-cliente-nuevo'),
-        $checkSinIgv = d.getElementById('check-sin-igv'),
+        $incluyeIgv = d.querySelector('input[name="incluye_igv"]').value,
         $checkEnvio = d.getElementById('check-envio');
 
     var selectCategoriaValue = 0 ;
 
     d.addEventListener("DOMContentLoaded", e=>{
-        let today = new Date(),
+        /* let today = new Date(),
         mes = today.getMonth()+1,
         dia = today.getDate(),
         anio = today.getFullYear();
         if(dia<10) dia='0'+dia; //agrega cero si el menor de 10
         if(mes<10) mes='0'+mes //agrega cero si el menor de 10
         $inputFechaEmision.value = anio+"-"+mes+"-"+dia;
+ */
 
-        //select2 cdn
-        $('#select-clientes').select2();
-
-        //api dolar
-        peticiones({
-            url:'https://deperu.com/api/rest/cotizaciondolar.json',
-            ops: {
-                method: "GET",
-                headers: {
-                    'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-                },
-                //mode:"cors"
-            },
-            success: json => {
-                d.querySelector('.content-valor-dolar')
-                .querySelector('input[name="valor_dolar"]')
-                .value=(json.Cotizacion[0].Venta);
-                //console.log(Math.round(json.Cotizacion[0].Venta*100)/100,json.Cotizacion[0].Venta)
-            },
-            error: err=> {
-                d.querySelector('.content-valor-dolar')
-                .querySelector('input[name="valor_dolar"]')
-                .value='0';
-                d.querySelector('.radio-dolar').setAttribute("disabled");
-            }
-        })
-
+        setTimeout(() => {
+            calcularTotales();
+        }, 300);
     })
 
     //evento para validar solo entrada de numeros enteros positivos
@@ -152,6 +318,7 @@
                         }
                     },
                     success: (json) => {
+
                         let descrip = json.producto.descripcion_producto,
                         precioUnit = json.producto.precio;
 
@@ -165,10 +332,10 @@
                             precioUnit = (precioUnit * precioMedida).toFixed(2);
                         }
                         //TIPO MONEDA
-                        let tipoMoneda = d.querySelector('input[name="tipo_moneda"]:checked').value;
+                        let tipoMoneda = d.querySelector('input[name="tipo_moneda"]').value;
                         if(tipoMoneda == 'dolares'){
                             let dolar = d.querySelector('input[name="valor_dolar"]').value;
-                           //console.log((precioUnit / dolar).toFixed(2)) ;
+                           //console.log(dolar) ;
                            precioUnit = (precioUnit / dolar).toFixed(2);
                         }
 
@@ -184,13 +351,14 @@
                             cell5 = row.insertCell(4),
                             cell6 = row.insertCell(5),
                             cell7 = row.insertCell(6);
-                        cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
-                        cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='form-control' value='${descrip}'>`;
-                        cell3.innerHTML = `<textarea rows="1" name='items[${index}][descrip]' class='form-control' placeholder='descripcion (opcional)'></textarea>`;
+                        cell1.innerHTML = `<span class='nro-item'>${$tableItems.rows.length++}</span>`;
+                        cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='nombre-item form-control' value='${descrip}'>`;
+                        cell3.innerHTML = `<textarea rows="1" name='items[${index}][descrip]' class='descrip-item form-control' placeholder='descripcion (opcional)'></textarea>`;
                         cell4.innerHTML = `<input type='number' name='items[${index}][cantidad]' min='1' class='cantidad-item form-control' value='1'>`;
                         cell5.innerHTML = `<input type='number' name='items[${index}][precioUnit]' class='precio-unit-item form-control' value='${precioUnit}'>`;
                         cell6.innerHTML = `<input type='number' name='items[${index}][precioTotal]' class='precio-total-item form-control' readonly value='${precioTotal}'>`;
                         cell7.innerHTML = `<a class='btn-delete-item btn btn-sm btn-danger'>X</a>`;
+
 
                         calcularTotales($inputDescuento.value);
                     },
@@ -208,9 +376,9 @@
                             cell5 = row.insertCell(4),
                             cell6 = row.insertCell(5),
                             cell7 = row.insertCell(6);
-                        cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
-                        cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='form-control' value=''>`;
-                        cell3.innerHTML = `<textarea rows="1" name='items[${index}][descrip]' class='form-control' placeholder='descripcion (opcional)'></textarea>`;
+                        cell1.innerHTML = `<span class='nro-item'>${$tableItems.rows.length++}</span>`;
+                        cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='nombre-item form-control' value=''>`;
+                        cell3.innerHTML = `<textarea rows="1" name='items[${index}][descrip]' class='descrip-item form-control' placeholder='descripcion (opcional)'></textarea>`;
                         cell4.innerHTML = `<input type='number' name='items[${index}][cantidad]' min='1' class='cantidad-item form-control' value='1'>`;
                         cell5.innerHTML = `<input type='number' name='items[${index}][precioUnit]' class='precio-unit-item form-control' value='0.00'>`;
                         cell6.innerHTML = `<input type='number' name='items[${index}][precioTotal]' class='precio-total-item form-control' readonly value='0.00'>`;
@@ -218,15 +386,17 @@
         }
         if(e.target.matches('.btn-delete-item')){
             let row = e.target.parentNode.parentNode;
+
             $tableItems.removeChild(row);
 
             for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
-                $tableItems.rows[i].childNodes[0].textContent = i+1;
-                $tableItems.rows[i].childNodes[1].childNodes[0].setAttribute("name",`items[${i}][nombre]`);
-                $tableItems.rows[i].childNodes[2].childNodes[0].setAttribute("name",`items[${i}][descrip]`);
-                $tableItems.rows[i].childNodes[3].childNodes[0].setAttribute("name",`items[${i}][cantidad]`);
-                $tableItems.rows[i].childNodes[4].childNodes[0].setAttribute("name",`items[${i}][precioUnit]`);
-                $tableItems.rows[i].childNodes[5].childNodes[0].setAttribute("name",`items[${i}][precioTotal]`);
+                $tableItems.rows[i].querySelector('.nro-item').textContent = i+1;
+                $tableItems.rows[i].querySelector('.nombre-item').setAttribute("name",`items[${i}][nombre]`);
+                $tableItems.rows[i].querySelector('.descrip-item').setAttribute("name",`items[${i}][descrip]`);
+                $tableItems.rows[i].querySelector('.cantidad-item').setAttribute("name",`items[${i}][cantidad]`);
+                $tableItems.rows[i].querySelector('.precio-unit-item').setAttribute("name",`items[${i}][precioUnit]`);
+                $tableItems.rows[i].querySelector('.precio-total-item').setAttribute("name",`items[${i}][precioTotal]`);
+
             }
 
             calcularTotales($inputDescuento.value);
@@ -256,16 +426,13 @@
                         }
                     },
                     success: (json) => {
-                        //const $select = d.createElement('select');
-                        //$select.classList.add('form-control');
                         let opt = '<option value="0" selected>--Eliga un item--</option>';
                         json.productos.forEach(el => {
                             opt +=
                                 `<option value="${el.id}">${el.descripcion_producto}</option>`
                         });
                         $selectProds.innerHTML = opt;
-                        //$selectCategory.insertAdjacentElement("afterend",$select);
-                        //$contentSelectProds.insertAdjacentElement("afterbegin", $select);
+
                         if(e.target.value == 1){
                             $contentMedidasSen.classList.remove('d-none');
                         }else{
@@ -300,56 +467,6 @@
                 })
            }
         }
-        if(e.target.matches('#check-cliente-nuevo')){
-            //console.log(e.target.checked);
-            const $formNewClient = d.querySelector('.content-form-nuevo-cliente'),
-            $selectClienteContent = d.querySelector('.content-select-clientes');
-            if(e.target.checked){
-                $formNewClient.classList.remove('d-none');
-                $selectClienteContent.classList.add('d-none');
-
-            }else{
-                $formNewClient.classList.add('d-none');
-                $selectClienteContent.classList.remove('d-none');
-
-            }
-        }
-        if(e.target.matches('#check-sin-igv')){
-            calcularTotales($inputDescuento.value);
-        }
-        if(e.target.matches('.tipo-moneda')){
-            //console.log(e.target.value,d.querySelector('input[name="valor_dolar"]').value);
-            let dolar = d.querySelector('input[name="valor_dolar"]').value;
-            if(e.target.value == 'dolares'){
-
-                for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
-                    let precioUnitSoles = $tableItems.rows[i].childNodes[4].childNodes[0].value;
-                    let precioTotalSoles = $tableItems.rows[i].childNodes[5].childNodes[0].value;
-                    $tableItems.rows[i].childNodes[4].childNodes[0].value = (precioUnitSoles/dolar).toFixed(2);
-                    $tableItems.rows[i].childNodes[5].childNodes[0].value = (precioTotalSoles/dolar).toFixed(2);
-                }
-                calcularTotales($inputDescuento.value);
-            }else if(e.target.value == 'soles'){
-                for(let i=0; i<$tableItems.rows.length; i++){//indexa la tabla nuevamente
-                    let precioUnitSoles = $tableItems.rows[i].childNodes[4].childNodes[0].value;
-                    let precioTotalSoles = $tableItems.rows[i].childNodes[5].childNodes[0].value;
-                    $tableItems.rows[i].childNodes[4].childNodes[0].value = (precioUnitSoles*dolar).toFixed(2);
-                    $tableItems.rows[i].childNodes[5].childNodes[0].value = (precioTotalSoles*dolar).toFixed(2);
-                }
-                calcularTotales($inputDescuento.value);
-            }
-
-        }
-        if(e.target.matches('#check-envio')){
-            const $contentEnvio = d.querySelector(".content-envio-precio");
-            if(e.target.checked){
-                $contentEnvio.classList.remove('d-none');
-            }else{
-                $contentEnvio.classList.add('d-none');
-                d.querySelector('.precio-envio').value = '';
-                calcularTotales($inputDescuento.value);
-            }
-        }
 
     })
 
@@ -365,22 +482,22 @@
             subtotal =  neto - ((parseFloat(descuento) * neto)/100);
         }
         //para igv
-        if(!$checkSinIgv.checked){
+        if($incluyeIgv == 1){
             igv = subtotal * 0.18;
         }
-        let tipoMoneda = d.querySelector('input[name="tipo_moneda"]:checked').value;
+        let tipoMoneda = d.querySelector('input[name="tipo_moneda"]').value;
         if(tipoMoneda == 'dolares'){
             moneda = '$';
         }
         let precioEnvio = 0;
-        if($checkEnvio.checked){
+        /* if($checkEnvio.checked){
             precioEnvio = d.querySelector('.precio-envio').value;
             if(!isNaN(precioEnvio) && parseFloat(precioEnvio) > 0){
                 precioEnvio = parseFloat(precioEnvio);
             }else{
                 precioEnvio = 0;
             }
-        }
+        } */
 
         total = subtotal + igv + precioEnvio;
 
@@ -473,5 +590,5 @@
             error(err);
         }
     }
-</script> --}}
-@stop
+    </script>
+@endpush

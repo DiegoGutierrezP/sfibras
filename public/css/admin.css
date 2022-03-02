@@ -34,11 +34,13 @@
     width: 25%;
 }
 
-.table-cotizacion-totales{
+.table-cotizacion-totales,
+.table-oc-totales{
     width: 300px;
     float: right;
 }
-.table-cotizacion-totales tr td{
+.table-cotizacion-totales tr td,
+.table-oc-totales tr td{
     width: 50%;
 }
 .btn-sfibras{

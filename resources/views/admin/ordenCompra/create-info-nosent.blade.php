@@ -1,27 +1,279 @@
-@extends('adminlte::page')
+<div>
+    <div class="card">
+        <div class="card-header">
+            <div class="content-valor-dolar float-right d-flex align-items-center ">
+                <h5 class="pr-2">Valor del dolar hoy:</h5>
+                <div class="input-group" style="width: 120px">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                    </div>
+                    <input type="number" name="valor_dolar" class="form-control" readonly value="0">
+                </div>
+            </div>
 
-@section('title', 'Orden de Compra')
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <div class="form-group">
+                        <div class="content-select-clientes ">
+                            <label>Cliente</label>
+                            <select name="cliente_id" id="select-clientes" class="form-control">
+                                @foreach ($clientes as $cli)
+                                    <option value="{{ $cli->id }}">{{ $cli->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
-@section('content_header')
-    <h1>Registrar Orden de Compra</h1>
-@stop
+                    </div>
+                    <div class="content-form-nuevo-cliente d-none">
+                        <label>Nuevo Cliente</label>
 
-@section('content')
+                        <div id="form-nuevo-cliente">
+                            <div class="form-group">
+                                <label class="form-check-label">Nombre</label>
+                                <input type="text" class="form-control" name="nombreCliente" value=""
+                                    placeholder="Nombre del Cliente">
+                                <small class="error-nombre text-danger"></small>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label">Dni</label>
+                                <input type="text" class="form-control" name="dniCliente"
+                                    placeholder="Dni del cliente">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label">Ruc</label>
+                                <input type="text" class="form-control" name="rucCliente"
+                                    placeholder="Ruc del cliente">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label">Telefono</label>
+                                <input type="text" class="form-control" name="telefonoCliente"
+                                    placeholder="Telefono del cliente">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label">Email</label>
+                                <input type="text" class="form-control" name="emailCliente"
+                                    placeholder="Email del cliente">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label">Dirección</label>
+                                <input type="text" class="form-control" name="direccionCliente"
+                                    placeholder="Direccion del cliente">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <table class="table table-borderless mb-0">
+                        <tr>
+                            <th>Fecha Emision</th>
+                            <td>
+                                <input type="date" name="fecha_emision" class="input-fecha-emision form-control ">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Tiempo entrega</th>
+                            <td>
+                                <input type="number" name="tiempo_entrega" class="tiempo-entrega form-control"
+                                    value="5">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Tipo de moneda</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="py-0">
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" name="tipo_moneda" value="soles" checked
+                                            class="tipo-moneda form-check-input">
+                                        <span>Soles</span>
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" name="tipo_moneda" value="dolares"
+                                            class="tipo-moneda radio-dolar form-check-input">
+                                        <span>Dolares</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Opcionales</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="py-0">
+                                <div class="d-flex flex-column">
+                                    <label class="form-check-label mb-1">
+                                        <input type="checkbox" name="cliente_nuevo" id="check-cliente-nuevo">
+                                        <span>Cliente nuevo</span>
+                                    </label>
+                                    <label class="form-check-label mb-1">
+                                        <input type="checkbox" id="check-sin-igv">
+                                        <span>Sin IGV</span>
+                                    </label>
+                                    <label class="form-check-label mb-1">
+                                        <input type="checkbox" id="check-envio">
+                                        <span>Envio</span>
+                                    </label>
+                                </div>
+                                <div class="content-envio-precio my-0 d-none">
+                                    <small class="py-0 px-1">Tenga en cuenta el tipo de moneda
+                                        seleccionado*</small>
+                                    <table class="table p-0 m-0">
+                                        <tr>
+                                            <td width="50%"><label>Envio:</label></td>
+                                            <td width="50%"><input type="number" class="precio-envio form-control"
+                                                    placeholder="precio"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" class="pt-2">Forma de Pago</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="pt-0">
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" name="formaPago" value="contado" checked
+                                            class="form-check-input">
+                                        <span>Contado</span>
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" name="formaPago" value="50adelanto"
+                                            class="form-check-input">
+                                        <span>Adelanto 50%</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
 
-@if (is_null($cotizacion))
-    @include('admin.ordenCompra.create-info-nosent')
-@else
-    @include('admin.ordenCompra.create-info-sent')
-@endif
+                    </table>
+                </div>
+            </div>
 
-@stop
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group">
+                <label>Elija una categoria</label>
+                <div class="row">
+                    <div class="col-8">
+                        <select name="" id="select-cates-prods" class="form-control">
+                            <option value="0" selected>--Eliga una Categoria--</option>
+                            @foreach ($catesprod as $cate)
+                                <option value="{{ $cate->id }}">{{ $cate->nombre }}</option>
+                            @endforeach
+                        </select>
+                        <select id="select-prods" class="form-control my-3">
+                            <option value="0">--Eliga un item--</option>
+                        </select>
+                        <div class="form-group d-none" id="content-medidas-señales">
+                            <label>Medidas</label>
+                            <table>
+                                <tr>
+                                    <td><input type="number" disabled class="input-medidas form-control"></td>
+                                    <td class="px-3">X</td>
+                                    <td><input type="number" disabled class="input-medidas form-control"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column align-items-center justify-content-center col-4">
+                        <button class="btn-agregar-item btn btn-sfibras mb-3" disabled>Agregar Item</button>
+                        <a href="" class="btn-agregar-fila-vacia">Agregar Fila Vacia</a>
+                    </div>
+                </div>
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin.css">
-@stop
+            </div>
 
-@section('js')
-{{-- <script>
+            <hr>
+
+            <div class="table-responsive">
+                <table class="table-items-cotizacion table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Item</th>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Precio/u</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row position-relative my-4 ">
+                <div class="w-100">
+                    <table class="table-cotizacion-totales table table-sm table-bordered">
+                        <tr>
+                            <td>Neto</td>
+                            <td>
+                                <input type="hidden" name="coti_precio_neto" value="">
+                                <span>S/ 0.00</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Descuento</td>
+                            <td>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">%</div>
+                                    </div>
+                                    <input type="number" name="coti_descuento" class="input-descuento form-control"
+                                        value="0">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sub Total</td>
+                            <td>
+                                <input type="hidden" name="coti_precio_subtotal" value="">
+                                <span>S/ 0.00</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>IGV</td>
+                            <td>
+                                <input type="hidden" name="coti_precio_igv" value="">
+                                <span>S/ 0.00</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Envio</td>
+                            <td>
+                                <input type="hidden" name="coti_precio_envio" value="">
+                                <span>S/ 0.00</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td>
+                                <input type="hidden" name="coti_precio_total" value="">
+                                <span>S/ 0.00</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('js')
+
+<script>
     const d = document,
         $selectProds = d.getElementById("select-prods"),
         $contentMedidasSen = d.getElementById("content-medidas-señales"),
@@ -473,5 +725,6 @@
             error(err);
         }
     }
-</script> --}}
-@stop
+</script>
+
+@endpush

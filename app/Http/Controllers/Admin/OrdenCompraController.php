@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CategoriaProducto;
 use App\Models\Cotizacion;
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 
 class OrdenCompraController extends Controller
@@ -17,6 +19,8 @@ class OrdenCompraController extends Controller
         }else{
             $cotizacion = null;
         }
-        return view('admin.ordenCompra.create',compact('cotizacion'));
+        $catesprod = CategoriaProducto::all();
+        $clientes = Cliente::all();
+        return view('admin.ordenCompra.create',compact('cotizacion','catesprod','clientes'));
     }
 }

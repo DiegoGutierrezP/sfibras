@@ -175,7 +175,7 @@
             </div>
             <div class="form-group">
                 <label>Introducción</label>
-                <textarea rows="4" name="intro_cotizacion" class="intro-cotizacion form-control">La presente es para saludarlo y a su vez enviarle la cotización solicitada
+                <textarea rows="3" name="intro_cotizacion" class="intro-cotizacion form-control">La presente es para saludarlo y a su vez enviarle la cotización solicitada
                 </textarea>
             </div>
             <hr>
@@ -287,7 +287,7 @@
 
             <div class="position relative">
                 <label >Conclusión</label>
-                <textarea  rows="4" name="conclusion_cotizacion" class="conclusion-cotizacion form-control">Sin otro particular, quedamos de Ustedes.</textarea>
+                <textarea  rows="3" name="conclusion_cotizacion" class="conclusion-cotizacion form-control">Sin otro particular, quedamos de Ustedes.</textarea>
             </div>
         </div>
         <div class="card-footer">
@@ -309,7 +309,6 @@
 @section('js')
     <script>
         const d = document,
-            $selectCategory = d.getElementById("select-cates-prods"),
             $selectProds = d.getElementById("select-prods"),
             $contentMedidasSen = d.getElementById("content-medidas-señales"),
             $btnAddItem = d.querySelector(".btn-agregar-item"),
@@ -472,7 +471,7 @@
                                 cell6 = row.insertCell(5),
                                 cell7 = row.insertCell(6);
                             cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
-                            cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='form-control' value='${descrip}'>`;
+                            cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='form-control' placeholder='nombre del item' value='${descrip}'>`;
                             cell3.innerHTML = `<textarea rows="1" name='items[${index}][descrip]' class='form-control' placeholder='descripcion (opcional)'></textarea>`;
                             cell4.innerHTML = `<input type='number' name='items[${index}][cantidad]' min='1' class='cantidad-item form-control' value='1'>`;
                             cell5.innerHTML = `<input type='number' name='items[${index}][precioUnit]' class='precio-unit-item form-control' value='${precioUnit}'>`;
@@ -496,7 +495,7 @@
                                 cell6 = row.insertCell(5),
                                 cell7 = row.insertCell(6);
                             cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
-                            cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='form-control' value=''>`;
+                            cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='form-control' placeholder='nombre del item'  value=''>`;
                             cell3.innerHTML = `<textarea rows="1" name='items[${index}][descrip]' class='form-control' placeholder='descripcion (opcional)'></textarea>`;
                             cell4.innerHTML = `<input type='number' name='items[${index}][cantidad]' min='1' class='cantidad-item form-control' value='1'>`;
                             cell5.innerHTML = `<input type='number' name='items[${index}][precioUnit]' class='precio-unit-item form-control' value='0.00'>`;
