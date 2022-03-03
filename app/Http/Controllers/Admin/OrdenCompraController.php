@@ -28,12 +28,15 @@ class OrdenCompraController extends Controller
 
     public function store(Request $request){
 
-        $coti=Cotizacion::find($request->cotizacion_id);
+        if($request->hasFile('file_OC')){
+            dd($request->file('file_OC')->getMimeType());
+        }
+        /* $coti=Cotizacion::find($request->cotizacion_id);
 
         $oc = OrdenCompra::create([
             'fechaRegistroOC'=>Carbon::now()->toDateString(),
             'observaciones'=>$request->observaciones_oc,
-            'entregaEstimada'=>$request->entrega_estimada,
+            'entregaEstimada'=>$coti->tiempoEntrega,
             'tipoMoneda'=>$coti->tipoMoneda,
             'valorDolar'=>$coti->valorDolar,
             'formaPago'=>$coti->formaPago,
@@ -96,7 +99,7 @@ class OrdenCompraController extends Controller
          }
         if(!empty($items)){
             $oc->orden_detalles()->createMany($items);
-        }
+        } */
 
     }
 

@@ -1,5 +1,5 @@
 <div>
-<form action="{{route('admin.ordenCompra.store')}}" id="form-ordenCompra-crear" method="POST" >
+<form action="{{route('admin.ordenCompra.store')}}" id="form-ordenCompra-crear" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="card">
         <div class="card-header">
@@ -7,8 +7,14 @@
             <input type="hidden" name="cotizacion_id" value="{{$cotizacion->id}}">
         </div>
         <div class="card-body">
+            <div class="form-group row">
+                <label for="file-OC" class="col-sm-3 col-form-label">Archivo: (Imagen o Pdf)</label>
+                <div class="col-sm-9">
+                  <input type="file" class="form-control-file" name="file_OC" id="file-OC" placeholder="col-form-label" accept="image/jpeg,image/gif,image/png,image/jpg,application/pdf">
+                    <small class="error-file text-danger"></small>
+                </div>
+            </div>
             <div class="row mb-3">
-
                 <div class="col-lg-6 col-md-6 col-12 p-2">
                     <h5>Datos del Cliente</h5>
                     <table class="table">
@@ -67,10 +73,7 @@
                                         value="{{ $cotizacion->valorDolar }}">{{ $cotizacion->valorDolar }}</td>
                             </tr>
                         @endif
-                        <tr>
-                            <th>Entrega Estimada</th>
-                            <td><input type="number" name="entrega_estimada" class="entrega-estimada form-control" placeholder="en dias"></td>
-                        </tr>
+
                     </table>
                 </div>
             </div>
@@ -242,7 +245,8 @@
             $inputFechaEmision = d.querySelector('.input-fecha-emision'),
             $checkClientNew = d.getElementById('check-cliente-nuevo'),
             $incluyeIgv = d.querySelector('input[name="incluye_igv"]').value,
-            $checkEnvio = d.getElementById('check-envio');
+            $checkEnvio = d.getElementById('check-envio'),
+            $inputFile = d.getElementById('file-OC');
 
         var selectCategoriaValue = 0;
 
@@ -263,7 +267,7 @@
 
         //evento para validar solo entrada de numeros enteros positivos
         d.addEventListener("input", e => {
-            if (e.target.matches(['.cantidad-item', '.input-descuento', '.input-medidas', '.precio-envio','.entrega-estimada'])) {
+            if (e.target.matches(['.cantidad-item', '.input-descuento', '.input-medidas', '.precio-envio'])) {
                 let val = e.target.value;
                 e.target.value = val.replace(/\D|\-/, '');
             }
@@ -504,6 +508,32 @@
                     })
                 }
             }
+            if(e.target.matches("#file-OC")){
+                let ext = e.target.value.split('.').pop();
+                console.log(ext);
+                let $errorFile = d.querySelector(".error-file");
+                if(e.target.value != ''){
+                    if(ext == "pdf" || ext=="png" || ext=="jpg" || ext=="jpeg"){
+
+                        let sizeMegaBytes = e.target.files[0].size/1024;//lo pasamos de bytes a kilobytes
+                       if(ext == "pdf"){
+                           if(sizeMegaBytes < 1024){//en kilobytes
+                               console.log("ok pdf")
+                           }else{
+                                $errorFile.textContent = "El archivo excede los 1mb";
+                           }
+                       }else{
+                            if(sizeMegaBytes < 3072){//menor a 3 mb
+                                console.log("ok img")
+                            }else{
+                                $errorFile.textContent = "La imagen excede los 3mb";
+                            }
+                       }
+                    }else{
+                        $errorFile.textContent = "Solo se aceptan formatos pdf o imagenes";
+                    }
+                }
+            }
 
         })
 
@@ -560,11 +590,31 @@
         }
 
         function validacionOrdenCompra() {
-            let errorInputEntrega,errorTablaItems;
-            let inputEntregaEstimada = d.querySelector('input[name="entrega_estimada"]');
-
-            if(inputEntregaEstimada.value == null || inputEntregaEstimada.value== 0){
-                errorInputEntrega = "El campo entrega estimada es necesario";
+            let errorTablaItems,errorFile;
+            if($inputFile.value !=''){
+                let $errorFile = d.querySelector(".error-file");
+                let ext = $inputFile.value.split('.').pop();
+                if(ext == "pdf" || ext=="png" || ext=="jpg" || ext=="jpeg"){
+                    let sizeMegaBytes = $inputFile.files[0].size/1024;//lo pasamos de bytes a kilobytes
+                    if(ext == "pdf"){
+                        if(sizeMegaBytes < 1024){//en kilobytes
+                            console.log("ok pdf")
+                        }else{
+                            $errorFile.textContent = "El archivo excede los 1mb";
+                            errorFile = "El archivo excede los 1mb";
+                        }
+                    }else{
+                        if(sizeMegaBytes < 3072){//menor a 3 mb
+                            console.log("ok img")
+                        }else{
+                            $errorFile.textContent = "La imagen excede los 3mb";
+                            errorFile = "La imagen excede los 3mbs";
+                        }
+                    }
+                }else{
+                    $errorFile.textContent = "Solo se aceptan formatos pdf o imagenes";
+                    errorFile = "Solo se aceptan formatos pdf o imagenes";
+                }
             }
 
             if (!$tableItems.rows.length) { //si la tabla de items no tiene filas
@@ -584,17 +634,16 @@
                 }
             }
 
-            if (errorTablaItems || errorInputEntrega) {
+            if (errorTablaItems || errorFile) {
                 let listaErrors = '<ul>';
-                listaErrors += errorInputEntrega? `<li>${errorInputEntrega}</li>`:'' ;
+                listaErrors += errorFile? `<li>${errorFile}</li>`:'' ;
                 listaErrors += errorTablaItems? `<li>${errorTablaItems}</li>`: '';
                 listaErrors += '</ul>';
-                if(errorInputEntrega){
-                    inputEntregaEstimada.classList.add('is-invalid');
-                    const topPos = inputEntregaEstimada.getBoundingClientRect().top + window.pageYOffset
+                if(errorFile){
+                    const topPos = $inputFile.getBoundingClientRect().top + window.pageYOffset
                     window.scrollTo({
-                        top: topPos - 160, // scroll so that the element is at the top of the view
-                        behavior: 'smooth' // smooth scroll
+                        behavior:"smooth",
+                        top:topPos-150,
                     })
                 }
                 Swal.fire({
@@ -602,7 +651,7 @@
                     icon: 'warning',
                     background: '#FEEFB3',
                     title: 'Errores',
-                    html: listaErrors,
+                    html:listaErrors,
                     toast: true,
                     color: '#9f6000',
                     showConfirmButton: false,
@@ -610,9 +659,9 @@
                     timerProgressBar: true,
 
                 })
-            } else if (!errorTablaItems) {
-                console.log('todo ok',inputEntregaEstimada.value == null || inputEntregaEstimada.value== 0?'ga':'ga2');
-                d.getElementById('form-ordenCompra-crear').submit();
+            } else if (!errorTablaItems && !errorFile) {
+                console.log('todo ok');
+                //d.getElementById('form-ordenCompra-crear').submit();
             }
         }
 
