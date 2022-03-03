@@ -10,16 +10,26 @@ class OrdenCompra extends Model
     use HasFactory;
 
     protected $fillable = [
-        'descripcion',
-        'fecha_inicio',
-        'fecha_final',
-        'fecha_entrega',
-        'estado_orden',
-        'estado_pago',
-        'moneda',
-        'precio_venta',
-        'precio_total_igv',
-        'cliente_id'
+        'codigoOC',
+        'fechaRegistroOC',
+        'observaciones',
+        'fechaInicioTrabajo',
+        'fechaFinalTrabajo',
+        'fechaEntrega',
+        'entregaEstimada',
+        'formaPago',
+        'tipoMoneda',
+        'valorDolar',
+        'estadoPedido',
+        'estadoPago',
+        'precioNetoOC',
+        'descuentoOC',
+        'precioSubTotalOC',
+        'precioIgvOC',
+        'precioEnvioOC',
+        'precioTotalOC',
+        'cliente_id',
+        'cotizacion_id '
     ];
 
     public function cliente(){
@@ -32,5 +42,8 @@ class OrdenCompra extends Model
 
     public function orden_detalles(){
         return $this->hasMany('App\Models\OrdenDetalle');
+    }
+    public function cotizacion(){
+        return $this->belongsTo('App\Models\Cotizacion');
     }
 }

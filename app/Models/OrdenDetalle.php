@@ -10,13 +10,14 @@ class OrdenDetalle extends Model
     use HasFactory;
 
     protected $fillable = [
+        'nombre',
         'descripcion',
         'cantidad',
         'unidad_medida',
-        'valor_unitario',
+        'precioUnit',
+        'precioTotal',
         'estado',
-        'orden_compra_id',
-        'producto_id'
+        'orden_compra_id'
     ];
 
     public function orden_compra(){

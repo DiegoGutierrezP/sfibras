@@ -16,16 +16,19 @@ class CreateOrdenDetallesTable extends Migration
         Schema::create('orden_detalles', function (Blueprint $table) {
             $table->id();
 
+            $table->string('nombre');
             $table->text('descripcion')->nullable();
             $table->integer('cantidad');
-            $table->string('unidad_medida');
-            $table->decimal('valor_unitario',10,2);
+            $table->string('unidad_medida')->nullable();
+            $table->decimal('precioUnit',10,2);
+            $table->decimal('precioTotal',10,2);
             $table->enum('estado',[1,2])->default(1);//1 no terminado, 2 terminado
 
             $table->unsignedBigInteger('orden_compra_id');
             $table->foreign('orden_compra_id')->references('id')->on('orden_compras')->onDelete('cascade');
-            $table->unsignedBigInteger('producto_id');
-            $table->foreign('producto_id')->references('id')->on('productos');
+
+            /* $table->unsignedBigInteger('producto_id');
+            $table->foreign('producto_id')->references('id')->on('productos'); */
 
 
             $table->timestamps();

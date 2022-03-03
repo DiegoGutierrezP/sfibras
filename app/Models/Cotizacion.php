@@ -44,4 +44,7 @@ class Cotizacion extends Model
     public function items(){
         return $this->hasMany('App\Models\CotizacionItem');
     }
+    public function orden_compra(){
+        return $this->hasOne('App\Models\OrdenCompra');
+    }
 }

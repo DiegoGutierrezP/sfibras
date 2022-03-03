@@ -11,7 +11,7 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered" id="cotizaciones">
+                <table class="table-cotizaciones-index table table-striped table-bordered" id="cotizaciones">
                     <thead>
                         <tr>
                             <th>Codigo</th>
@@ -63,7 +63,7 @@
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
                     "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla =(",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla ",
                     "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
                     "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
@@ -87,20 +87,23 @@
                 processing: true,
                 serverSide: true,
                 responsive: true,
+                autoWidth:false,
                 ajax: "{{route('admin.cotizacion.index')}}",
                 dataType: 'json',
                 type: "POST",
                 columns: [{
                         data: 'codigoCoti',
-                        name: 'codigoCoti'
+                        name: 'codigoCoti',
                     },
                     {
                         data: 'referenciaCoti',
                         name: 'referenciaCoti',
+                        orderable: false
                     },
                     {
                         data: 'clienteNombre',
-                        name: 'clienteNombre'
+                        name: 'clienteNombre',
+                        orderable: false
                     },
                     {
                         data: 'fechaEmision',

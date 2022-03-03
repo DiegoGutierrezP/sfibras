@@ -33,7 +33,9 @@
 .table-items-cotizacion tbody tr td:nth-child(3){
     width: 25%;
 }
-
+.table-cotizaciones-index tbody tr td:nth-child(7){
+    min-width: 140px;
+}
 .table-cotizacion-totales,
 .table-oc-totales{
     width: 300px;

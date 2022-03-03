@@ -695,9 +695,8 @@
 
         function validacionCotizacion(){
             let errorFormCliente,errorTablaItems;
-
+            const $formCliente = d.getElementById("form-nuevo-cliente");
             if($checkClientNew.checked){//si el checked cliente esta marcado
-                const $formCliente = d.getElementById("form-nuevo-cliente");
                 let nombreCliente = $formCliente.querySelector('input[name="nombreCliente"]').value;
                 if(!nombreCliente){
 
@@ -727,9 +726,11 @@
                 listaErrors += errorTablaItems? `<li>${errorTablaItems}</li>`: '';
                 listaErrors += '</ul>';
                 if(errorFormCliente){
+                    $formCliente.querySelector('input[name="nombreCliente"]').classList.add('is-invalid')
+                    const topPos = $formCliente.getBoundingClientRect().top + window.pageYOffset
                     window.scrollTo({
                         behavior:"smooth",
-                        top:0,
+                        top:topPos-150,
                     })
                 }
                 Swal.fire({

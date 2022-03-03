@@ -14,6 +14,7 @@ Route::get('/',function(){
 Route::get('clientes',[ClienteController::class,'index'])->name('admin.clientes.index');
 Route::get('clientes/{cliente}',[ClienteController::class,'show'])->name('admin.clientes.show');
 
+//Cotizaciones
 Route::get('cotizacion',[CotizacionController::class,'index'])->name('admin.cotizacion.index');
 Route::get('cotizacion-create',[CotizacionController::class,'create'])->name('admin.cotizacion.create');
 Route::get('cotizacion/clonar/{id}',[CotizacionController::class,'clonar'])->name('admin.cotizacion.clonar');
@@ -26,8 +27,10 @@ Route::post('cotizacion/generar',[CotizacionController::class,'generarCotizacion
 Route::get('cotizacion-pdf/{id}',[CotizacionController::class,'pdfCotizacion'])->name('admin.cotizacion.pdf');
 Route::post('cotizacion/cambiarEstado',[CotizacionController::class,'cambiarEstadoCoti'])->name('admin.cotizacion.cambiarEstado');
 
+//Orden de Compra
 Route::get('ordenCompra',[OrdenCompraController::class,'index'])->name('admin.ordenCompra.index');
 Route::get('ordenCompra/create/{coti?}',[OrdenCompraController::class,'create'])->name('admin.ordenCompra.create');
+Route::post('ordenCompra/store',[OrdenCompraController::class,'store'])->name('admin.ordenCompra.store');
 
 Route::resource('miEmpresa',MiEmpresaController::class)->only(['index','edit','update'])->names('admin.miEmpresa');
 
