@@ -14,6 +14,13 @@
                     <small class="error-file text-danger"></small>
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="emision-OC" class="col-sm-3 col-form-label">Fecha Emision:</label>
+                <div class="col-sm-9">
+                  <input type="date" class="form-control col-lg-6 col-md-6 col-sm-12" name="emision_OC" id="emision-OC" placeholder="col-form-label">
+                </div>
+            </div>
+
             <div class="row mb-3">
                 <div class="col-lg-6 col-md-6 col-12 p-2">
                     <h5>Datos del Cliente</h5>
@@ -71,6 +78,12 @@
                                 <th>Valor Dolar:</th>
                                 <td><input type="hidden" name="valor_dolar"
                                         value="{{ $cotizacion->valorDolar }}">{{ $cotizacion->valorDolar }}</td>
+                            </tr>
+                        @endif
+                        @if ($cotizacion->precioEnvioCoti > 0)
+                           <tr>
+                                <th>Envio</th>
+                                <td><input type="number" class="precio-envio form-control" value="{{round($cotizacion->precioEnvioCoti)}}"></td>
                             </tr>
                         @endif
 
@@ -224,7 +237,7 @@
         </div>
         <div class="card-footer">
             <div class="float-right">
-                <a href="{{route('admin.cotizacion.index')}}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{route('admin.ordenCompra.index')}}" class="btn btn-secondary">Cancelar</a>
                 <button class="btn-orden-compra-registrar btn btn-primary">Generar</button>
             </div>
         </div>
@@ -242,7 +255,7 @@
             $tableItems = d.querySelector(".table-items-oc tbody"),
             $tableTotales = d.querySelector(".table-oc-totales"),
             $inputDescuento = d.querySelector('.input-descuento'),
-            $inputFechaEmision = d.querySelector('.input-fecha-emision'),
+            $inputFechaEmision = d.getElementById('emision-OC'),
             $checkClientNew = d.getElementById('check-cliente-nuevo'),
             $incluyeIgv = d.querySelector('input[name="incluye_igv"]').value,
             $checkEnvio = d.getElementById('check-envio'),
@@ -251,14 +264,14 @@
         var selectCategoriaValue = 0;
 
         d.addEventListener("DOMContentLoaded", e => {
-            /* let today = new Date(),
+            let today = new Date(),
             mes = today.getMonth()+1,
             dia = today.getDate(),
             anio = today.getFullYear();
             if(dia<10) dia='0'+dia; //agrega cero si el menor de 10
             if(mes<10) mes='0'+mes //agrega cero si el menor de 10
             $inputFechaEmision.value = anio+"-"+mes+"-"+dia;
-     */
+
 
             setTimeout(() => {
                 calcularTotales();
@@ -440,6 +453,7 @@
             }
             if(e.target.matches('.btn-orden-compra-registrar')){
                 e.preventDefault();
+                e.target.setAttribute('disabled');
                 validacionOrdenCompra();
             }
         })
@@ -512,6 +526,7 @@
                 let ext = e.target.value.split('.').pop();
                 console.log(ext);
                 let $errorFile = d.querySelector(".error-file");
+                $errorFile.textContent = "";
                 if(e.target.value != ''){
                     if(ext == "pdf" || ext=="png" || ext=="jpg" || ext=="jpeg"){
 
@@ -561,14 +576,13 @@
                 moneda = '$'
             }
             let precioEnvio = 0;
-            /* if($checkEnvio.checked){
-                precioEnvio = d.querySelector('.precio-envio').value;
-                if(!isNaN(precioEnvio) && parseFloat(precioEnvio) > 0){
-                    precioEnvio = parseFloat(precioEnvio);
-                }else{
-                    precioEnvio = 0;
+
+            let inputPEnvio =  d.querySelector('.precio-envio');
+            if(inputPEnvio){
+                if(!isNaN(inputPEnvio.value) && parseFloat(inputPEnvio.value) > 0){
+                    precioEnvio = parseFloat(inputPEnvio.value);
                 }
-            } */
+            }
 
             total = subtotal + igv + precioEnvio;
 
@@ -635,6 +649,7 @@
             }
 
             if (errorTablaItems || errorFile) {
+                d.querySelector('.btn-orden-compra-registrar').removeAttribute('disabled');
                 let listaErrors = '<ul>';
                 listaErrors += errorFile? `<li>${errorFile}</li>`:'' ;
                 listaErrors += errorTablaItems? `<li>${errorTablaItems}</li>`: '';
@@ -661,7 +676,7 @@
                 })
             } else if (!errorTablaItems && !errorFile) {
                 console.log('todo ok');
-                //d.getElementById('form-ordenCompra-crear').submit();
+                d.getElementById('form-ordenCompra-crear').submit();
             }
         }
 

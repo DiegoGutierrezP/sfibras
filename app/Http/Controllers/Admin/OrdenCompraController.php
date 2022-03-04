@@ -9,12 +9,30 @@ use App\Models\Cliente;
 use App\Models\OrdenCompra;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use DataTables;
 
 class OrdenCompraController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
+        if($request->ajax()){
+            $ordenCompras = DB::select('select oc.id , oc.codigoOC , oc.tipoMoneda, oc.estadoPedido, oc.estadoPago ,oc.precioTotalOC, c.nombre as clienteNombre from orden_compras as oc inner join clientes as c on oc.cliente_id = c.id');
+            collect($ordenCompras)->map(function($item ,$key){
+                $item->precioConMoneda = $item->tipoMoneda == 'dolares'? '$. '.$item->precioTotalOC:'S/. '.$item->precioTotalOC;
+                return $item;
+            });
+
+            return Datatables::of($ordenCompras)
+            ->addColumn('actions',function($ordenCompras){
+                return view('admin.ordenCompra.actions-index',compact('ordenCompras'));
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
+        }
         return view('admin.ordenCompra.index');
     }
+
     public function create($coti = null){
         if($coti != null){
             $cotizacion = Cotizacion::where('codigoCoti',$coti)->firstOrFail();
@@ -28,13 +46,10 @@ class OrdenCompraController extends Controller
 
     public function store(Request $request){
 
-        if($request->hasFile('file_OC')){
-            dd($request->file('file_OC')->getMimeType());
-        }
-        /* $coti=Cotizacion::find($request->cotizacion_id);
+        $coti=Cotizacion::find($request->cotizacion_id);
 
         $oc = OrdenCompra::create([
-            'fechaRegistroOC'=>Carbon::now()->toDateString(),
+            'fechaEmisionOC'=>$request->emision_OC,
             'observaciones'=>$request->observaciones_oc,
             'entregaEstimada'=>$coti->tiempoEntrega,
             'tipoMoneda'=>$coti->tipoMoneda,
@@ -55,6 +70,18 @@ class OrdenCompraController extends Controller
         $oc->update([
             'codigoOC'=>'SFOC'.$codigoOC,
         ]);
+
+        //file
+        if($request->hasFile('file_OC')){
+            //dd($request->file('file_OC')->getMimeType());
+            $file = $request->file('file_OC');
+            $nombreFile = $oc->codigoOC.'-'.time().'.'.$file->guessExtension();
+            $url = Storage::putFileAs('admin/filesOC',$request->file('file_OC'),$nombreFile);
+
+            $oc->files()->create([
+                'url'=>$url,
+            ]);
+        }
 
         $arrayItemsCoti = [];
         foreach($coti->items as $item){//lo convertimos a array para comparar
@@ -99,7 +126,7 @@ class OrdenCompraController extends Controller
          }
         if(!empty($items)){
             $oc->orden_detalles()->createMany($items);
-        } */
+        }
 
     }
 

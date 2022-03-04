@@ -520,10 +520,12 @@
             //Para botones generar
             if(e.target.matches('.btn-cotizacion-pdf')){
                 e.preventDefault();
+                e.target.setAttribute('disabled');
                 validacionCotizacion();
             }
             if(e.target.matches('.btn-cotizacion-guardar')){
                 e.preventDefault();
+                e.target.setAttribute('disabled');
                 validacionCotizacion();
             }
         })
@@ -721,6 +723,7 @@
             }
 
             if(errorFormCliente || errorTablaItems){
+                d.querySelector('.btn-cotizacion-guardar').removeAttribute('disabled');
                 let listaErrors = '<ul>';
                 listaErrors += errorFormCliente? `<li>${errorFormCliente}</li>`:'' ;
                 listaErrors += errorTablaItems? `<li>${errorTablaItems}</li>`: '';

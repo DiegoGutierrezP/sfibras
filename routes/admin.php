@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CotizacionController;
 use App\Http\Controllers\Admin\MiEmpresaController;
 use App\Http\Controllers\Admin\OrdenCompraController;
+use App\Models\OrdenCompra;
 
 Route::get('/',function(){
     return view('admin.index');
@@ -31,6 +32,7 @@ Route::post('cotizacion/cambiarEstado',[CotizacionController::class,'cambiarEsta
 Route::get('ordenCompra',[OrdenCompraController::class,'index'])->name('admin.ordenCompra.index');
 Route::get('ordenCompra/create/{coti?}',[OrdenCompraController::class,'create'])->name('admin.ordenCompra.create');
 Route::post('ordenCompra/store',[OrdenCompraController::class,'store'])->name('admin.ordenCompra.store');
+Route::get('ordenCompra/show',[OrdenCompraController::class,'show'])->name('admin.ordenCompra.show');
 
 Route::resource('miEmpresa',MiEmpresaController::class)->only(['index','edit','update'])->names('admin.miEmpresa');
 

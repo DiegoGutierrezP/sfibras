@@ -11,7 +11,7 @@ class OrdenCompra extends Model
 
     protected $fillable = [
         'codigoOC',
-        'fechaRegistroOC',
+        'fechaEmisionOC',
         'observaciones',
         'fechaInicioTrabajo',
         'fechaFinalTrabajo',

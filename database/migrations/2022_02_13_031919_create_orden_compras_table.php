@@ -26,7 +26,7 @@ class CreateOrdenComprasTable extends Migration
             $table->decimal('precio_venta',10,2);
             $table->decimal('precio_total_igv',10,2); */
             $table->string('codigoOC')->nullable();
-            $table->date('fechaRegistroOC');
+            $table->date('fechaEmisionOC');
             $table->text('observaciones')->nullable();
             $table->date('fechaInicioTrabajo')->nullable();
             $table->date('fechaFinalTrabajo')->nullable();
