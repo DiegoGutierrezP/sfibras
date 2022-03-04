@@ -8,6 +8,7 @@
 
 @section('content')
 
+
 @if (is_null($cotizacion))
     @include('admin.ordenCompra.create-info-nosent')
 @else

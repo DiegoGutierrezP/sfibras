@@ -185,7 +185,7 @@ class CotizacionController extends Controller
                 'diasExpiracion'=>$request->dias_expiracion?$request->dias_expiracion.' dias':'10 dias',
                 'fechaExpiracion'=>Carbon::createFromFormat('Y-m-d',$request->fecha_emision)->addDays($diasExpiracion)->toDateString(),
                 'tiempoEntrega'=>$request->tiempo_entrega?$request->tiempo_entrega.' dias':'5 dias',
-                'formaPago'=>$request->formaPago == "contado"? "Al contado": "adelanto 50%",
+                'formaPago'=>$request->formaPago == "contado"? "Al contado": ($request->formaPago == "otro"? $request->otra_forma_pago : "adelanto 50%"),
                 'tipoMoneda'=>$request->tipo_moneda == "soles"? "soles":"dolares",
                 'valorDolar'=>$request->tipo_moneda == "dolares"?$request->valor_dolar:0,
                 'referenciaCoti'=>$request->referencia_cotizacion,

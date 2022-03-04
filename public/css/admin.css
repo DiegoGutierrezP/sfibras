@@ -67,7 +67,8 @@
     color: var(--white);
 }
 /* Cotizacion content-Envio */
-.content-envio-precio{
+.content-envio-precio,
+.content-otro-formaPago{
     background: #DADADA;
     border-radius: 5px;
 }

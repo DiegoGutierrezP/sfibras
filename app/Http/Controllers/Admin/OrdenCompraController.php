@@ -46,7 +46,26 @@ class OrdenCompraController extends Controller
 
     public function store(Request $request){
 
-        $coti=Cotizacion::find($request->cotizacion_id);
+        $tiempoEntrega="";$tipoMoneda="";$valorDolar="";$formaPago="";$cotiID=null;$clienteID=null;
+        if($request->cotizacion_id){
+            $coti=Cotizacion::find($request->cotizacion_id);
+            $tiempoEntrega = $coti->tiempoEntrega;
+            $tipoMoneda=$coti->tipoMoneda;
+            $valorDolar=$coti->valorDolar;
+            $formaPago=$coti->formaPago;
+            $cotiID=$coti->id;
+            $clienteID=$coti->cliente_id;
+            dd($cotiID);
+        }else{
+            $tiempoEntrega = $request->tiempoEntrega;
+            $tipoMoneda=$request->tipoMoneda;
+            $valorDolar=$request->valorDolar;
+            $formaPago=$request->formaPago;
+            $clienteID=$request->cliente_id;
+            dd($cotiID);
+        }
+
+        /* $coti=Cotizacion::find($request->cotizacion_id);
 
         $oc = OrdenCompra::create([
             'fechaEmisionOC'=>$request->emision_OC,
@@ -82,7 +101,7 @@ class OrdenCompraController extends Controller
                 'url'=>$url,
             ]);
         }
-
+        //para con cotizacion
         $arrayItemsCoti = [];
         foreach($coti->items as $item){//lo convertimos a array para comparar
             $arrayItemsCoti[]= [
@@ -112,7 +131,6 @@ class OrdenCompraController extends Controller
             }
 
         }
-
          //
          $items = [];
          foreach($request->items as $item){
@@ -126,7 +144,7 @@ class OrdenCompraController extends Controller
          }
         if(!empty($items)){
             $oc->orden_detalles()->createMany($items);
-        }
+        } */
 
     }
 

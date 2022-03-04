@@ -1,5 +1,6 @@
 <div>
-    <form action="" id="form-ordenCompra-crear">
+    <form action="{{route('admin.ordenCompra.store')}}" id="form-ordenCompra-crear" method="POST" enctype="multipart/form-data">
+        @csrf
         <div class="card">
             <div class="card-header">
                 <div class="content-valor-dolar float-right d-flex align-items-center">
@@ -145,28 +146,36 @@
                                 <th colspan="2" class="pt-2">Forma de Pago</th>
                             </tr>
                             <tr>
-                                <td colspan="2" class="pt-0">
+                                <td colspan="2" class="pt-0 pb-1">
                                     <div class="form-check form-check-inline">
                                         <label class="form-check-label">
                                             <input type="radio" name="formaPago" value="contado" checked
-                                                class="form-check-input">
+                                                class="forma-pago form-check-input">
                                             <span>Contado</span>
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <label class="form-check-label">
                                             <input type="radio" name="formaPago" value="50adelanto"
-                                                class="form-check-input">
+                                                class="forma-pago form-check-input">
                                             <span>Adelanto 50%</span>
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <label class="form-check-label">
                                             <input type="radio" name="formaPago" value="otro"
-                                                class="form-check-input">
+                                                class="forma-pago form-check-input">
                                             <span>Otro</span>
                                         </label>
                                     </div>
+
+                                    <div class="content-otro-formaPago form-group row mt-2 p-2 d-none">
+                                        <label class="col-sm-4 col-form-label">Forma Pago:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="text-forma-pago form-control" placeholder="otra forma de pago">
+                                        </div>
+                                    </div>
+
                                 </td>
                             </tr>
 
@@ -647,6 +656,15 @@
                     calcularTotales($inputDescuento.value);
                 }
             }
+            if(e.target.matches(".forma-pago")){
+                console.log(e.target.value);
+                const contentFP = d.querySelector(".content-otro-formaPago");
+                if(e.target.value == "otro"){
+                    contentFP.classList.remove("d-none");
+                }else{
+                    contentFP.classList.add("d-none");
+                }
+            }
             if(e.target.matches("#file-OC")){
                 let ext = e.target.value.split('.').pop();
                 console.log(ext);
@@ -730,8 +748,20 @@
         }
 
         function validacionOrdenCompra() {
-            let errorFormCliente, errorTablaItems;
-
+            let errorFormCliente, errorTablaItems,errorFile,errorFormaPago,errorTiempoEntrega;
+            const $formCliente = d.getElementById("form-nuevo-cliente");
+            let radioFP = d.querySelector('input[name="formaPago"]:checked').value;
+            const $textTE = d.querySelector(".tiempo-entrega");
+            if($textTE.value == ''){
+                errorTiempoEntrega = "Ingrese el tiempo de entrega";
+            }
+            if(radioFP == "otro"){
+                let textFP = d.querySelector(".text-forma-pago").value;
+                console.log(textFP);
+                if(textFP == ''){
+                    errorFormaPago = "Ingrese la forma de pago";
+                }
+            }
             if($inputFile.value !=''){
                 let $errorFile = d.querySelector(".error-file");
                 let ext = $inputFile.value.split('.').pop();
@@ -758,7 +788,6 @@
                 }
             }
             if ($checkClientNew.checked) { //si el checked cliente esta marcado
-                const $formCliente = d.getElementById("form-nuevo-cliente");
                 let nombreCliente = $formCliente.querySelector('input[name="nombreCliente"]').value;
                 if (!nombreCliente) {
 
@@ -784,23 +813,33 @@
                 }
             }
 
-            if (errorFormCliente || errorTablaItems || errorFile) {
+            if (errorFormCliente || errorTablaItems || errorFile || errorFormaPago || errorTiempoEntrega) {
+                d.querySelector('.btn-orden-compra-registrar').removeAttribute('disabled');
                 let listaErrors = '<ul>';
                 listaErrors += errorFormCliente ? `<li>${errorFormCliente}</li>` : '';
                 listaErrors += errorTablaItems ? `<li>${errorTablaItems}</li>` : '';
+                listaErrors += errorFormaPago ? `<li>${errorFormaPago}</li>` : '';
                 listaErrors += errorFile ? `<li>${errorFile}</li>` : '';
+                listaErrors += errorTiempoEntrega ? `<li>${errorTiempoEntrega}</li>` : '';
                 listaErrors += '</ul>';
+                let topPos = 150;
+                if(errorTiempoEntrega){
+                    topPos = $textTE.getBoundingClientRect().top + window.pageYOffset;
+                }
                 if (errorFormCliente) {
-                    window.scrollTo({
-                        behavior: "smooth",
-                        top: 0,
-                    })
+                    topPos = $formCliente.getBoundingClientRect().top + window.pageYOffset;
                 }
                 if(errorFile){
-                    const topPos = $inputFile.getBoundingClientRect().top + window.pageYOffset
+                    topPos = $inputFile.getBoundingClientRect().top + window.pageYOffset
+                }
+                if(errorFormaPago){
+                    const cfp = d.querySelector(".content-otro-formaPago");
+                    topPos = cfp.getBoundingClientRect().top + window.pageYOffset
+                }
+                if(errorTiempoEntrega || errorFormaPago || errorFormCliente || errorFile){
                     window.scrollTo({
                         behavior:"smooth",
-                        top:topPos-150,
+                        top:topPos-100,
                     })
                 }
                 Swal.fire({
@@ -818,7 +857,7 @@
                 })
             } else if (!errorFormCliente && !errorTablaItems) {
                 console.log('todo ok');
-                //d.getElementById('form-ordenCompra-crear').submit();
+                d.getElementById('form-ordenCompra-crear').submit();
             }
         }
 

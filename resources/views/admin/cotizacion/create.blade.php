@@ -93,7 +93,7 @@
                         <tr>
                             <th>Tiempo entrega</th>
                             <td>
-                                <input type="number" name="tiempo_entrega" class="tiempo-entrega form-control" value="5">
+                                <input type="number" name="tiempo_entrega" class="tiempo-entrega form-control" placeholder="en dias" value="5">
                             </td>
                         </tr>
                         <tr>
@@ -152,15 +152,29 @@
                             <td colspan="2" class="pt-0">
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" name="formaPago" value="contado" checked class="form-check-input">
+                                        <input type="radio" name="formaPago" value="contado" checked class="forma-pago form-check-input">
                                         <span>Contado</span>
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" name="formaPago" value="50adelanto" class="form-check-input">
+                                        <input type="radio" name="formaPago" value="50adelanto" class="forma-pago form-check-input">
                                         <span>Adelanto 50%</span>
                                     </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" name="formaPago" value="otro"
+                                            class="forma-pago form-check-input">
+                                        <span>Otro</span>
+                                    </label>
+                                </div>
+
+                                <div class="content-otro-formaPago form-group row mt-2 p-2 d-none">
+                                    <label class="col-sm-4 col-form-label">Forma Pago:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="otra_forma_pago" class="text-forma-pago form-control" placeholder="otra forma de pago">
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -647,6 +661,15 @@
                     calcularTotales($inputDescuento.value);
                 }
             }
+            if(e.target.matches(".forma-pago")){
+                console.log(e.target.value);
+                const contentFP = d.querySelector(".content-otro-formaPago");
+                if(e.target.value == "otro"){
+                    contentFP.classList.remove("d-none");
+                }else{
+                    contentFP.classList.add("d-none");
+                }
+            }
 
         })
 
@@ -696,8 +719,19 @@
         }
 
         function validacionCotizacion(){
-            let errorFormCliente,errorTablaItems;
+            let errorFormCliente,errorTablaItems,errorFormaPago,errorTiempoEntrega;
             const $formCliente = d.getElementById("form-nuevo-cliente");
+            let radioFP = d.querySelector('input[name="formaPago"]:checked').value;
+            const $textTE = d.querySelector(".tiempo-entrega");
+            if($textTE.value == ''){
+                errorTiempoEntrega = "Ingrese el tiempo de entrega";
+            }
+            if(radioFP == "otro"){
+                let textFP = d.querySelector(".text-forma-pago").value;
+                if(textFP == ''){
+                    errorFormaPago = "Ingrese la forma de pago";
+                }
+            }
             if($checkClientNew.checked){//si el checked cliente esta marcado
                 let nombreCliente = $formCliente.querySelector('input[name="nombreCliente"]').value;
                 if(!nombreCliente){
@@ -722,20 +756,33 @@
                 }
             }
 
-            if(errorFormCliente || errorTablaItems){
+            if(errorFormCliente || errorTablaItems || errorFormaPago || errorTiempoEntrega){
                 d.querySelector('.btn-cotizacion-guardar').removeAttribute('disabled');
                 let listaErrors = '<ul>';
                 listaErrors += errorFormCliente? `<li>${errorFormCliente}</li>`:'' ;
                 listaErrors += errorTablaItems? `<li>${errorTablaItems}</li>`: '';
+                listaErrors += errorFormaPago? `<li>${errorFormaPago}</li>`: '';
+                listaErrors += errorTiempoEntrega? `<li>${errorTiempoEntrega}</li>`: '';
                 listaErrors += '</ul>';
+                let topPos = 130;
+                if(errorTiempoEntrega){
+                    topPos = $textTE.getBoundingClientRect().top + window.pageYOffset;
+                }
+                if(errorFormaPago){
+                    const cfp = d.querySelector(".content-otro-formaPago");
+                    topPos = cfp.getBoundingClientRect().top + window.pageYOffset
+                }
                 if(errorFormCliente){
                     $formCliente.querySelector('input[name="nombreCliente"]').classList.add('is-invalid')
-                    const topPos = $formCliente.getBoundingClientRect().top + window.pageYOffset
+                    topPos = $formCliente.getBoundingClientRect().top + window.pageYOffset
+                }
+                if(errorTiempoEntrega || errorFormaPago || errorFormCliente){
                     window.scrollTo({
                         behavior:"smooth",
-                        top:topPos-150,
+                        top:topPos-100,
                     })
                 }
+
                 Swal.fire({
                             position: 'top-end',
                             icon: 'warning',
