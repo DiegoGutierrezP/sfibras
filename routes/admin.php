@@ -27,12 +27,13 @@ Route::delete('cotizacion/{id}',[CotizacionController::class,'delete'])->name('c
 Route::post('cotizacion/generar',[CotizacionController::class,'generarCotizacion'])->name('admin.cotizacion.generar');
 Route::get('cotizacion-pdf/{id}',[CotizacionController::class,'pdfCotizacion'])->name('admin.cotizacion.pdf');
 Route::post('cotizacion/cambiarEstado',[CotizacionController::class,'cambiarEstadoCoti'])->name('admin.cotizacion.cambiarEstado');
+Route::post('cotizacion/informationAceptada',[CotizacionController::class,'informationCotiAceptada'])->name('cotizacion.informationAceptada');
 
 //Orden de Compra
 Route::get('ordenCompra',[OrdenCompraController::class,'index'])->name('admin.ordenCompra.index');
 Route::get('ordenCompra/create/{coti?}',[OrdenCompraController::class,'create'])->name('admin.ordenCompra.create');
 Route::post('ordenCompra/store',[OrdenCompraController::class,'store'])->name('admin.ordenCompra.store');
-Route::get('ordenCompra/show',[OrdenCompraController::class,'show'])->name('admin.ordenCompra.show');
+Route::get('ordenCompra/{id}',[OrdenCompraController::class,'show'])->name('admin.ordenCompra.show');
 
 Route::resource('miEmpresa',MiEmpresaController::class)->only(['index','edit','update'])->names('admin.miEmpresa');
 

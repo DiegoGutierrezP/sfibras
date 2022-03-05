@@ -25,12 +25,16 @@
     height: 100%;
 
 }
-.table-items-cotizacion input{
+.table-items-cotizacion input,
+.table-items-oc input{
     min-width: 60px;
     padding: .5rem;
 }
+
 .table-items-cotizacion tbody tr td:nth-child(2),
-.table-items-cotizacion tbody tr td:nth-child(3){
+.table-items-cotizacion tbody tr td:nth-child(3),
+.table-items-oc tbody tr td:nth-child(2),
+.table-items-oc tbody tr td:nth-child(3){
     width: 25%;
 }
 .table-cotizaciones-index tbody tr td:nth-child(7){
@@ -68,10 +72,24 @@
 }
 /* Cotizacion content-Envio */
 .content-envio-precio,
-.content-otro-formaPago{
+.content-otro-formaPago,
+.content-form-nuevo-cliente{
     background: #DADADA;
     border-radius: 5px;
 }
+
+/* Cotizacion show */
+.table-items-coti-show thead,
+.table-precios-coti-show tr td:nth-child(1){
+    background: #304477;
+    color: #fff;
+}
+.table-items-coti-show tbody,
+.table-precios-coti-show tr td:nth-child(2){
+    background: var(--light-bg);
+
+}
+
 
 @media (max-width:500px){
     .table-items-cotizacion tbody tr td:nth-child(2) input,

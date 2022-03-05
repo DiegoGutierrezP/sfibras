@@ -29,7 +29,7 @@ class OrdenCompra extends Model
         'precioEnvioOC',
         'precioTotalOC',
         'cliente_id',
-        'cotizacion_id '
+        'cotizacion_id'
     ];
 
     public function cliente(){

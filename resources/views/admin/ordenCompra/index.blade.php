@@ -3,11 +3,16 @@
 @section('title', 'Orden de Compra')
 
 @section('content_header')
-    <h1>Ordenes de Compra</h1>
+    <h1>Lista Ordenes de Compra</h1>
 @stop
 
 @section('content')
     <div class="card">
+        <div class="card-header">
+            <div class="float-right">
+                <a href="{{route('admin.ordenCompra.create')}}" class="btn btn-secondary">Registrar Orden de Compra</a>
+            </div>
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table-orden-compra-index table table-striped table-bordered" id="orden-compra">
@@ -36,6 +41,20 @@
 
 @section('js')
     <script>
+        @if (Session::has('msg-sweet'))
+            let msg = "{{ Session::get('msg-sweet') }}";
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: msg,
+            background:'#E6F4EA',
+            toast:true,
+            color: '#333',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            })
+        @endif
         const d = document;
 
         d.addEventListener("DOMContentLoaded", e => {
@@ -70,6 +89,7 @@
                 serverSide: true,
                 responsive: true,
                 autoWidth: false,
+                order:[0,'desc'],
                 ajax: "{{ route('admin.ordenCompra.index') }}",
                 dataType: 'json',
                 type: "POST",

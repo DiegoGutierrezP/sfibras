@@ -44,7 +44,7 @@
                         </div>
 
                     </div>
-                    <div class="content-form-nuevo-cliente d-none">
+                    <div class="content-form-nuevo-cliente d-none p-1">
                         <label>Nuevo Cliente</label>
 
                         <div id="form-nuevo-cliente">

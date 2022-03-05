@@ -36,7 +36,7 @@
                             </div>
 
                         </div>
-                        <div class="content-form-nuevo-cliente d-none">
+                        <div class="content-form-nuevo-cliente d-none p-1">
                             <label>Nuevo Cliente</label>
 
                             <div id="form-nuevo-cliente">
@@ -79,7 +79,7 @@
                             <tr>
                                 <th>Fecha Emision</th>
                                 <td>
-                                    <input type="date" name="fecha_emision" class="input-fecha-emision form-control ">
+                                    <input type="date" name="emision_OC" class="input-fecha-emision form-control ">
                                 </td>
                             </tr>
                             <tr>
@@ -172,7 +172,7 @@
                                     <div class="content-otro-formaPago form-group row mt-2 p-2 d-none">
                                         <label class="col-sm-4 col-form-label">Forma Pago:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="text-forma-pago form-control" placeholder="otra forma de pago">
+                                            <input type="text" name="otra_forma_pago" class="text-forma-pago form-control" placeholder="otra forma de pago">
                                         </div>
                                     </div>
 

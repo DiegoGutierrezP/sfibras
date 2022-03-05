@@ -258,6 +258,26 @@ class CotizacionController extends Controller
         }
     }
 
+    public function informationCotiAceptada(Request $request){
+        try{
+            $coti = Cotizacion::find($request->codigoCoti);
+            $oc = $coti->orden_compra;
+
+            return response()->json([
+                'res'=>true,
+                'data'=>[
+                    'res'=>true,
+                    'oc'=>$oc
+                ]
+            ]);
+        }catch(Exception $e){
+            return response()->json([
+                'res'=>false,
+                'data'=>['icon'=>'error','msg'=>'Ocurrio al consultar con la base de datos']
+            ]);
+        }
+    }
+
     public function delete($id){
 
         try{

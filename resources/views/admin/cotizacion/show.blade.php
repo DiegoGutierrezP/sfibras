@@ -15,9 +15,9 @@
                 @if ($cotizacion->estado == 1)
                     <a href="" class="btn-estado-coti btn  btn-warning px-2 py-1 font-weight-bold" data-estado="{{$cotizacion->estado}}" data-codigo="{{$cotizacion->codigoCoti}}">Pendiente</a>
                 @elseif($cotizacion->estado == 2)
-                    <a href="" class="btn-estado-coti btn btn-success px-2 py-1 font-weight-bold" data-estado="{{$cotizacion->estado}}" data-codigo="{{$cotizacion->codigoCoti}}">Aceptado</a>
+                    <button class="btn-coti-aceptada btn btn-success px-2 py-1 font-weight-bold" data-coti="{{$cotizacion->id}}" data-estado="{{$cotizacion->estado}}">Aceptado</button>
                 @elseif($cotizacion->estado == 3)
-                    <a href="" class="btn-estado-coti btn  btn-primary px-2 py-1 font-weight-bold" data-estado="{{$cotizacion->estado}}" data-codigo="{{$cotizacion->codigoCoti}}">Aceptado/Modificado</a>
+                    <button class="btn-coti-aceptada btn btn-primary px-2 py-1 font-weight-bold" data-coti="{{$cotizacion->id}}" data-estado="{{$cotizacion->estado}}">Aceptado/Modificado</button>
                 @elseif($cotizacion->estado == 4)
                     <button class="btn btn-secondary px-2 py-1 font-weight-bold">Expirado</button>
                 @elseif($cotizacion->estado == 5)
@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-12 p-2">
                     <h5 >Datos del Cliente</h5>
-                    <table class="table">
+                    <table class="table table-sm table-borderless">
                         <tr>
                             <th>Cliente:</th>
                             <td>{{$cotizacion->clienteNombre}}</td>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-12 p-2">
                     <h5 >Condiciones Generales</h5>
-                    <table class="table">
+                    <table class="table table-sm table-borderless">
                         <tr>
                             <th>Precios:</th>
                             <td>{{$cotizacion->precioIgvCoti==0? 'No Incluye IGV':'Incluye IGV'}}</td>
@@ -91,7 +91,7 @@
                 </p>
             </div>
             <div class="table-responsive">
-                <table  class="table table-bordered">
+                <table class="table-items-coti-show table table-bordered">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -118,7 +118,7 @@
             </div>
             <div class="row position-relative my-4 ">
                 <div class="w-100">
-                <table style="width: 300px; float:right;" class="table table-sm table-bordered">
+                <table style="width: 300px; float:right;" class="table-precios-coti-show table table-sm table-bordered">
                     @if ($cotizacion->descuentoCoti != 0)
                         <tr>
                             <td>Neto</td>
@@ -170,7 +170,7 @@
     </div>
 
     {{-- Modal --}}
-    <div wire:ignore.self class="modal fade" id="estadosCotiModal" tabindex="-1" role="dialog"
+    <div  class="modal fade" id="estadosCotiModal" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -185,37 +185,6 @@
                     <form action="{{route('admin.cotizacion.cambiarEstado')}}" method="POST" id="form-checks-estado-coti">
                         @csrf
                         <input type="hidden" name="codigo_coti" value="">
-                        {{-- <div class="form-check mb-1">
-                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios1" value="1">
-                            <label class="form-check-label" for="exampleRadios1">
-                                Pendiente
-                            </label>
-                        </div>
-                        <div class="form-check mb-1">
-                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios2" value="2">
-                            <label class="form-check-label" for="exampleRadios2">
-                                Aceptado
-                            </label>
-                        </div>
-                        <div class="form-check mb-1">
-                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios3" value="3">
-                            <label class="form-check-label" for="exampleRadios3">
-                                Aceptado/Modificado
-                            </label>
-                        </div>
-                        <div class="form-check mb-1 disabled">
-                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios4" value="4"
-                                disabled>
-                            <label class="form-check-label" for="exampleRadios4">
-                                Expirado
-                            </label>
-                        </div>
-                        <div class="form-check mb-1">
-                            <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios5" value="5">
-                            <label class="form-check-label" for="exampleRadios5">
-                                Rechazado
-                            </label>
-                        </div> --}}
                         <div class="form-check mb-1">
                             <input class="form-check-input" type="radio" name="estadosCoti" id="exampleRadios3" value="2">
                             <label class="form-check-label" for="exampleRadios3">
@@ -234,6 +203,42 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-primary btn-guardar-estado-coti">Guardar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{-- Modal information coti aceptada --}}
+    <div  class="modal fade" id="cotiAceptadaModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Informacion Cotizacion Aceptada</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true close-btn">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="info"></p>
+                    <table class="table-information table table-sm talbe-borderless">
+                        <tr>
+                            <th>Orden de Compra Relacionada:</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Fecha de Aprobacion:</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Estado de la Orden de Compra:</th>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary ">Guardar</button>
                 </div>
 
             </div>
@@ -267,31 +272,72 @@
 
     d.addEventListener("click",e=>{
         if (e.target.matches('.btn-estado-coti')) {
-                e.preventDefault();
-                console.log(e.target.dataset.estado, e.target.dataset.codigo);
-                $('#estadosCotiModal').modal('show');
-                $('#estadosCotiModal').find('.modal-body h5').text('Cotización ' + e.target.dataset.codigo);
-                $('#estadosCotiModal').find('.modal-body input[name="codigo_coti"]').val(e.target.dataset.codigo);
-                d.querySelectorAll('#estadosCotiModal input[name="estadosCoti"]').forEach(el => {
-                    if (el.value == e.target.dataset.estado) {
-                        el.checked = true;
-                    }
-                });
-            }
-            if(e.target.matches('.btn-guardar-estado-coti')){
-                e.preventDefault();
-                $('#estadosCotiModal').modal('hide');
-                if(d.querySelector('input[name="estadosCoti"]:checked')){
-                    let estado = d.querySelector('input[name="estadosCoti"]:checked').value;
-                    if(estado == 1 || estado == 5){
-                        d.getElementById("form-checks-estado-coti").submit();
-                    }else if(estado == 2 || estado == 3){
-                        let codigoCoti = d.querySelector('#estadosCotiModal input[name="codigo_coti"]').value;
-                        let url = '{{ route('admin.ordenCompra.create', ':codigo') }}';
-                        url = url.replace(':codigo', codigoCoti);
-                        window.location.href = url;
-                    }
+            e.preventDefault();
+            console.log(e.target.dataset.estado, e.target.dataset.codigo);
+            $('#estadosCotiModal').modal('show');
+            $('#estadosCotiModal').find('.modal-body h5').text('Cotización ' + e.target.dataset.codigo);
+            $('#estadosCotiModal').find('.modal-body input[name="codigo_coti"]').val(e.target.dataset.codigo);
+            d.querySelectorAll('#estadosCotiModal input[name="estadosCoti"]').forEach(el => {
+                if (el.value == e.target.dataset.estado) {
+                    el.checked = true;
                 }
+            });
+        }
+        if(e.target.matches('.btn-guardar-estado-coti')){
+            e.preventDefault();
+            $('#estadosCotiModal').modal('hide');
+            if(d.querySelector('input[name="estadosCoti"]:checked')){
+                let estado = d.querySelector('input[name="estadosCoti"]:checked').value;
+                if(estado == 1 || estado == 5){
+                    d.getElementById("form-checks-estado-coti").submit();
+                }else if(estado == 2 || estado == 3){
+                    let codigoCoti = d.querySelector('#estadosCotiModal input[name="codigo_coti"]').value;
+                    let url = '{{ route('admin.ordenCompra.create', ':codigo') }}';
+                    url = url.replace(':codigo', codigoCoti);
+                    window.location.href = url;
+                }
+            }
+        }
+        if(e.target.matches('.btn-coti-aceptada')){
+            e.preventDefault();
+            console.log(e.target.dataset.coti);
+            let estadoCoti = e.target.dataset.estado;
+            let url = '{{ route('cotizacion.informationAceptada') }}';
+            let obj ={
+                url:url,
+                ops:{
+                    method:"POST",
+                    headers: {
+                        "Content-type": "application/json; charset=utf-8",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        codigoCoti: e.target.dataset.coti,
+                    })
+                },
+                success: json => {
+                    const contentModal = d.querySelector("#cotiAceptadaModal .modal-body");
+                    let msg = "";
+                    if(estadoCoti == 2){
+                        msg = 'Esta cotizacion fue aceptada sin ninguna modificacion.'
+                    }else{
+                        msg = 'Esta cotizacion fue aceptada con alguna  modificacion.'
+                    }
+                    contentModal.querySelector('.info').textContent = msg;
+                    const tableInfo = contentModal.querySelector('.table-information');
+                    let fechaAprobacion = new Date(json.data.oc.created_at);
+                    tableInfo.rows[0].cells[1].innerHTML = `<a href="">${json.data.oc.codigoOC}</a>`
+                    tableInfo.rows[1].cells[1].textContent = fechaAprobacion.toLocaleString();
+                    tableInfo.rows[2].cells[1].textContent = json.data.oc.estadoPedido;
+                    $('#cotiAceptadaModal').modal('show');
+                    console.log(json)
+                },
+                error:err => {
+                    console.log(err)
+                }
+            }
+            peticiones(obj);
+        }
 
                 /* if(d.querySelector('input[name="estadosCoti"]:checked')){
                     $('#estadosCotiModal').modal('hide');
@@ -346,8 +392,25 @@
                     }
                 } */
 
-            }
+
     })
+    async function peticiones(options) {
+            let {url,ops,success,error} = options;
+            try {
+                let res = await fetch(url, ops),
+                    json = await res.json();
+
+                if (!res.ok) throw {
+                    status: res.status,
+                    statusText: res.statusText
+                };
+                //console.log(json);
+                success(json);
+            } catch (err) {
+                console.log(err);
+                error(err);
+            }
+        }
 
     </script>
 @stop

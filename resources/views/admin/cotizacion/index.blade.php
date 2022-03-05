@@ -9,6 +9,11 @@
 @section('content')
     {{-- @livewire('admin.cotizacion-index') --}}
     <div class="card">
+        <div class="card-header">
+            <div class="float-right">
+                <a href="{{route('admin.cotizacion.create')}}" class="btn btn-secondary">Crear Cotización</a>
+            </div>
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table-cotizaciones-index table table-striped table-bordered" id="cotizaciones">
@@ -88,6 +93,7 @@
                 serverSide: true,
                 responsive: true,
                 autoWidth:false,
+                order:[0,'desc'],
                 ajax: "{{route('admin.cotizacion.index')}}",
                 dataType: 'json',
                 type: "POST",
