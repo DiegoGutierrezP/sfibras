@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Orden de Compra</h1>
+    <h1>Orden de Compra {{$oc->codigoOC}}</h1>
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@
             </div>
           </nav>
           <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="info-oc" role="tabpanel" aria-labelledby="info-oc-tab">information</div>
+            <div class="tab-pane fade show active" id="info-oc" role="tabpanel" aria-labelledby="info-oc-tab">@include('admin.ordenCompra.show-information',[$oc,$fechaEmisionOC,$moneda])</div>
             <div class="tab-pane fade" id="files-oc" role="tabpanel" aria-labelledby="files-oc-tab">Files</div>
             <div class="tab-pane fade" id="pagos-oc" role="tabpanel" aria-labelledby="pagos-oc-tab">Pagos</div>
           </div>

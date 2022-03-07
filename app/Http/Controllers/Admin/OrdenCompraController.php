@@ -167,7 +167,10 @@ class OrdenCompraController extends Controller
     }
 
     public function show($id){
-        return view('admin.ordenCompra.show');
+        $oc = OrdenCompra::find($id);
+        $moneda = $oc->tipoMoneda=='soles'? 'S/. ':'$. ';
+        $fechaEmisionOC = Carbon::createFromFormat('Y-m-d',$oc->fechaEmisionOC)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
+        return view('admin.ordenCompra.show',compact('oc','fechaEmisionOC','moneda'));
     }
 
 

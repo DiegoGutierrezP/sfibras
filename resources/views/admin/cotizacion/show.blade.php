@@ -237,8 +237,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary ">Guardar</button>
+                    <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Cerrar</button>
                 </div>
 
             </div>
@@ -330,7 +329,7 @@
                     tableInfo.rows[1].cells[1].textContent = fechaAprobacion.toLocaleString();
                     tableInfo.rows[2].cells[1].textContent = json.data.oc.estadoPedido;
                     $('#cotiAceptadaModal').modal('show');
-                    console.log(json)
+                    //console.log(json)
                 },
                 error:err => {
                     console.log(err)

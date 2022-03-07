@@ -80,11 +80,13 @@
 
 /* Cotizacion show */
 .table-items-coti-show thead,
-.table-precios-coti-show tr td:nth-child(1){
+.table-precios-coti-show tr td:nth-child(1),
+.table-items-oc-show thead{
     background: #304477;
     color: #fff;
 }
 .table-items-coti-show tbody,
+.table-items-oc-show tbody,
 .table-precios-coti-show tr td:nth-child(2){
     background: var(--light-bg);
 
