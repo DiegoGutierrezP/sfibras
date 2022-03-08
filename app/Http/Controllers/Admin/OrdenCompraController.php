@@ -172,6 +172,15 @@ class OrdenCompraController extends Controller
         $fechaEmisionOC = Carbon::createFromFormat('Y-m-d',$oc->fechaEmisionOC)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
         return view('admin.ordenCompra.show',compact('oc','fechaEmisionOC','moneda'));
     }
+    public function datesOC($id){
+        $oc = OrdenCompra::find($id);
+        return response()->json([
+            'res'=>true,
+            'fechaInicio'=>$oc->fechaInicioTrabajo,
+            'fechaFinal'=>$oc->	fechaFinalTrabajo,
+            'fechaEntrega'=>$oc->fechaEntrega
+        ]);
+    }
 
 
 }

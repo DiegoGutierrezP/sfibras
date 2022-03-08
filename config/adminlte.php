@@ -406,17 +406,17 @@ return [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js',
+                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js',
                 ],
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.2/locales-all.js',
+                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.css',
+                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css',
                 ],
             ],
         ],
