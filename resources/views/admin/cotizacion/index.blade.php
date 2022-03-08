@@ -11,7 +11,7 @@
     <div class="card">
         <div class="card-header">
             <div class="float-right">
-                <a href="{{route('admin.cotizacion.create')}}" class="btn btn-secondary">Crear Cotización</a>
+                <a href="{{route('admin.cotizacion.create')}}" class="btn btn-sfibras2">Crear Cotización</a>
             </div>
         </div>
         <div class="card-body">

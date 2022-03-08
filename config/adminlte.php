@@ -385,6 +385,41 @@ return [
     */
 
     'plugins' => [
+        'FullCalendar' => [
+            'active' => true,
+            'files' => [
+                /* [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js',
+                ], */
+                /* [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css',
+                ], */
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.2/locales-all.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.css',
+                ],
+            ],
+        ],
         'Datatables' => [
             'active' => true,
             'files' => [

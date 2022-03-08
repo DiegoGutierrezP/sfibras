@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-header">
             <div class="float-right">
-                <a href="{{route('admin.ordenCompra.create')}}" class="btn btn-secondary">Registrar Orden de Compra</a>
+                <a href="{{route('admin.ordenCompra.create')}}" class="btn btn-sfibras2">Registrar Orden de Compra</a>
             </div>
         </div>
         <div class="card-body">
@@ -108,13 +108,33 @@
                     },
                     {
                         data: 'estadoPedido',
-                        name: 'estadoPedido',
+                        render: function (data, type, row) {
+                            if (data == 1) {
+                                return '<h5 ><span class=" badge badge-warning ">Pendiente</span></h5>';
+                            }
+                            if (data == 2) {
+                                return '<h5><span class=" badge badge-primary" >Terminado</span></h5>';
+                            }
+                            if (data == 3) {
+                                return '<h5><span class=" badge badge-success" >Entregado</span></h5>';
+                            }
+                            if (data == 4) {
+                                return '<h5><span class=" badge badge-danger" >Cancelado</span></h5>';
+                            }
+                        },
                         searchable: false,
                         orderable: false
                     },
                     {
                         data: 'estadoPago',
-                        name: 'estadoPago',
+                        render: function (data, type, row) {
+                            if (data == 1) {
+                                return '<h5 ><span class=" badge badge-secondary">Debe</span></h5>';
+                            }
+                            if (data == 2) {
+                                return '<h5><span class=" badge badge-primary">Pagado</span></h5>';
+                            }
+                        },
                         searchable: false,
                         orderable: false
                     },

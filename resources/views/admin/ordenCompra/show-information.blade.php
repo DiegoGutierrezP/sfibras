@@ -1,15 +1,37 @@
-<div class="card-body">
-    <div class="mb-3">
-        <h6><b>Fecha de Emisión: </b>&nbsp; {{$fechaEmisionOC}}</h6>
-        <h6><b>Cotizacion Relacionada: </b>&nbsp;
-            @if (!is_null($oc->cotizacion))
-                <a href="{{route('admin.cotizacion.show',$oc->cotizacion->id)}}">{{$oc->cotizacion->codigoCoti}}</a>
-            @else
-                --
-            @endif
-        </h6>
+<div class="card-body mt-2">
+    <div class="row mb-2">
+        <div class="col-lg-6 col-md-6 col-12">
+            <h6 class="mt-1"><b>Fecha de Emisión: </b>&nbsp; {{$fechaEmisionOC}}</h6>
+            <h6 class="mt-3"><b>Cotizacion Relacionada: </b>&nbsp;
+                @if (!is_null($oc->cotizacion))
+                    <a href="{{route('admin.cotizacion.show',$oc->cotizacion->id)}}">{{$oc->cotizacion->codigoCoti}}</a>
+                @else
+                    --
+                @endif
+            </h6>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+            <div class="mt-1 d-flex"><b>Estado de la Orden: </b>&nbsp;&nbsp;
+                @if ($oc->estadoPedido == 1)
+                    <h5><span class=" badge badge-warning ">Pendiente</span></h5>
+                @elseif($oc->estadoPedido == 2)
+                    <h5 ><span class=" badge badge-primary ">Terminado</span></h5>
+                @elseif($oc->estadoPedido == 3)
+                    <h5 ><span class=" badge badge-success ">Entregado</span></h5>
+                @elseif($oc->estadoPedido == 4)
+                    <h5 ><span class=" badge badge-warning ">Cancelado</span></h5>
+                @endif
+            </div>
+            <div class="mt-3 d-flex"><b>Estado de Pago: </b>&nbsp;&nbsp;
+                @if ($oc->estadoPago == 1)
+                    <h5><span class=" badge badge-secondary">Debe</span></h5>
+                @elseif($oc->estadoPago == 2)
+                    <h5><span class=" badge badge-primary">Pagado</span></h5>
+                @endif
+            </div>
+        </div>
      </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg-6 col-md-6 col-12 p-2">
             <h5 >Datos del Cliente</h5>
                 <table class="table table-sm table-borderless">
@@ -60,6 +82,17 @@
             </table>
         </div>
     </div>
+    <div class="form-group row d-flex align-items-center">
+        <label for="" class="col-sm-3 col-form-label">Observaciones:</label>
+        <div class="col-sm-9">
+            @if (is_null($oc->observaciones))
+                --
+            @else
+                {{$oc->observaciones}}
+            @endif
+
+        </div>
+      </div>
     <div class="table-responsive mt-2">
         <table class="table-items-oc-show table table-bordered">
             <thead>

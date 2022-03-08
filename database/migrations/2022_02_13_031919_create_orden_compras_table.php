@@ -35,7 +35,7 @@ class CreateOrdenComprasTable extends Migration
             $table->string('formaPago')->nullable();//
             $table->string('tipoMoneda');
             $table->decimal('valorDolar',10,3)->nullable();
-            $table->enum('estadoPedido',[1,2,3,4])->default(1);
+            $table->enum('estadoPedido',[1,2,3,4])->default(1);//1:pendiente,2:terminada,3:entregado,4:cancelado
             $table->enum('estadoPago',[1,2])->default(1);
             $table->decimal('precioNetoOC',10,2);
             $table->string('descuentoOC')->nullable();
