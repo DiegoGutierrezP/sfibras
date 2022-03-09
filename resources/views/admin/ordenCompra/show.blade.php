@@ -20,7 +20,7 @@
                 @include('admin.ordenCompra.show-information',[$oc,$fechaEmisionOC,$moneda])
             </div>
             <div class="tab-pane fade show active" id="files-oc" role="tabpanel" aria-labelledby="files-oc-tab" >
-                @include('admin.ordenCompra.show-control-files',[$oc,$fechaEmisionOC,$moneda])
+                @include('admin.ordenCompra.show-control-files',[$oc])
             </div>
             <div class="tab-pane fade" id="pagos-oc" role="tabpanel" aria-labelledby="pagos-oc-tab">Pagos</div>
           </div>

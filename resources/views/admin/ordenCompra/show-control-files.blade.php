@@ -1,6 +1,6 @@
 <div class="card-body mt-2">
     <input type="hidden" value="{{$oc->id}}" class="id-oc">
-    <div>
+    <div class="content-fechas my-3">
         <div class="stepper-wrapper">
             <div class="stepper-item step-inicio">
               <div class="step-action step-counter" data-step="inicio">1</div>
@@ -23,9 +23,27 @@
             </div>
           </div>
     </div>
+    <div class="content-files mt-5">
+        <label>Archivos:</label>
+        <div class="table-responsive">
+            <table class="table-files-oc table table-sm table-bordered">
+                <thead>
+                   <tr>
+                       <th>File</th>
+                       <th>Tipo</th>
+                       <th>Descripcion</th>
+                       <th></th>
+                   </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>
-
+{{-- Modal --}}
 <div  class="modal fade" id="controlOCModal" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -56,34 +74,63 @@
             </div>
         </div>
     </div>
+    {{-- Modal Files --}}
+    <div class="modal fade bd-example-modal-lg" id="filesOCModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header py-2">
+                <a href="" id="descargar-fileOC" download>Descargar</a>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true close-btn">×</span>
+                </button>
+            </div>
+            {{-- <iframe class="iframe-pdf" src="" style="width:100%;height:700px;"></iframe> --}}
+            <object id="fileshow-oc" data="" type="" width="100%" height="700">
+                <a href="test.pdf" download ><img src="test.pdf.preview.jpg" ></a>
+             </object>
+          </div>
+        </div>
+      </div>
 
 @push('js')
     <script>
         const d = document;
         let idOC = d.querySelector(".id-oc").value;
+        const $tableFiles = d.querySelector('.table-files-oc tbody');
 
         d.addEventListener("DOMContentLoaded",()=>{
             cargarStepsDate();
+            cargarFilesOC();
         })
 
         d.addEventListener("click",e=>{
             if(e.target.matches('.step-action')){
                 let date = e.target.parentNode.querySelector('.step-date').textContent;
                 let obs = e.target.parentNode.querySelector('.step-date').dataset.obs;
-                /* let isCompleted = e.target.parentNode.classList.contains('completed');
-                console.log(isCompleted); */
-                $("#controlOCModal").find(".modal-body .data-step").val(e.target.dataset.step);
+
+                let dateInicio = d.querySelector(".step-inicio");
+                let dateFinal = d.querySelector(".step-final");
+                let stepTrabajando = d.querySelector(".step-trabajando");
+                let dateEntrega = d.querySelector(".step-entrega");
+                let bandera = false;
                 if(e.target.dataset.step == 'inicio'){
                     $("#controlOCModal").find(".modal-title").text('Fecha de Inicio');
-                }else if(e.target.dataset.step == 'final'){
+                    bandera =true;
+                }else if(dateInicio.classList.contains('completed') && e.target.dataset.step == 'final'){
                     $("#controlOCModal").find(".modal-title").text('Fecha de Final');
-                }else if(e.target.dataset.step == 'entrega'){
+                    bandera =true;
+                }else if(dateFinal.classList.contains('completed') && e.target.dataset.step == 'entrega'){
                     $("#controlOCModal").find(".modal-title").text('Fecha de Entrega');
+                    bandera =true;
                 }
-                $("#controlOCModal").find(".modal-body .fecha-step").val(date);
-                $("#controlOCModal").find(".modal-body .obs-step").val(obs);
-                $("#controlOCModal").find(".modal-body .validate-date").text('');
-               $("#controlOCModal").modal('show');
+                if(bandera){
+                    $("#controlOCModal").find(".modal-body .data-step").val(e.target.dataset.step);
+                    $("#controlOCModal").find(".modal-body .fecha-step").val(date);
+                    $("#controlOCModal").find(".modal-body .obs-step").val(obs);
+                    $("#controlOCModal").find(".modal-body .validate-date").text('');
+                    $("#controlOCModal").modal('show');
+                }
+
             }
             //--------------------------------------------------------------------------------------------
             if(e.target.matches('.guardar-fechas-oc')){
@@ -138,10 +185,46 @@
                 }else{
                     $("#controlOCModal").find(".modal-body .validate-date").text('Debe ingresar la fecha');
                 }
-
+            }
+            //---------------------------------------------------------------------------------
+            if(e.target.matches('.link-file')){
+                e.preventDefault();
+                const $iframe = d.querySelector("#filesOCModal #fileshow-oc"),
+                $descarga = d.querySelector("#filesOCModal #descargar-fileOC");
+                /* $iframe.src = `/storage/${e.target.dataset.file}`; */
+                $iframe.setAttribute('data', `/storage/${e.target.dataset.file}`);
+                $iframe.setAttribute('type', e.target.dataset.type);
+                $descarga.href=`/storage/${e.target.dataset.file}`;
+                $("#filesOCModal").modal("show");
+                console.log(e.target.dataset.file);
             }
         })
-
+        function cargarFilesOC(){
+            let url = '{{ route('admin.ordenCompra.getFilesOC', ':id') }}';
+            url = url.replace(':id', idOC);
+            ajax({
+                url:url,
+                ops:{
+                    method:"GET",
+                    headers: {
+                        "Content-type": "application/json; charset=utf-8"
+                    }
+                },
+                success: json =>{
+                    json.data.forEach(el => {
+                        let row = $tableFiles.insertRow($tableFiles.rows.length);
+                        row.insertCell(0).innerHTML = el.url?`<a href="" class='link-file' data-file='${el.url}' data-type='${el.tipo_archivo}'>${el.url}</a>`:'--';
+                        row.insertCell(1).innerHTML = el.tipo_archivo?el.tipo_archivo:'--';
+                        row.insertCell(2).innerHTML = el.descripcion?el.descripcion:'--';
+                        row.insertCell(3).innerHTML = `<a class='btn btn-sm btn-sfibras2'><i class='fas fa-pen'></i></a>
+                        <a class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></a>`;
+                    });
+                },
+                error:err=>{
+                    console.log(err)
+                }
+            });
+        }
         function cargarStepsDate(){
             let url = '{{ route('admin.ordenCompra.getDatesOC', ':id') }}';
             url = url.replace(':id', idOC);
@@ -180,7 +263,6 @@
                     }else{
                         dateEntrega.querySelector(".step-date").textContent = '--';
                     }
-                    //console.log(json)
                 },
                 error:err=>{
                     console.log(err)

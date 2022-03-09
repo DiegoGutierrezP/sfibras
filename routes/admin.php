@@ -36,6 +36,7 @@ Route::post('ordenCompra/store',[OrdenCompraController::class,'store'])->name('a
 Route::get('ordenCompra/{id}',[OrdenCompraController::class,'show'])->name('admin.ordenCompra.show');
 Route::get('ordenCompra/dates/{id}',[OrdenCompraController::class,'getdatesOC'])->name('admin.ordenCompra.getDatesOC');
 Route::put('updateDatesOC',[OrdenCompraController::class,'updateDatesOC'])->name('admin.ordenCompra.updateDatesOC');
+Route::get('ordenCompra/files/{id}',[OrdenCompraController::class,'getFilesOC'])->name('admin.ordenCompra.getFilesOC');
 
 Route::resource('miEmpresa',MiEmpresaController::class)->only(['index','edit','update'])->names('admin.miEmpresa');
 

@@ -49,7 +49,8 @@ class OrdenCompraController extends Controller
 
     public function store(Request $request){
 
-        //dd($request);
+        //dd($request->file('file_OC')->guessExtension());
+
         $coti=null;$tiempoEntrega=null;$tipoMoneda=null;$valorDolar=null;$formaPago=null;$cotiID=null;$clienteID=null;
         if($request->cotizacion_id){
             $coti=Cotizacion::find($request->cotizacion_id);
@@ -118,6 +119,7 @@ class OrdenCompraController extends Controller
 
             $oc->files()->create([
                 'url'=>$url,
+                'tipo_archivo'=>$file->getMimeType()
             ]);
         }
         if($coti!=null){
@@ -231,6 +233,18 @@ class OrdenCompraController extends Controller
                 'res'=>false,
                 'data'=>['icon'=>'error','msg'=>'Ocurrio un error '.$err]
             ]);
+        }
+
+    }
+    public function getFilesOC($id){
+        try{
+            $oc = OrdenCompra::find($id);
+            return response()->json([
+                'res'=>true,
+                'data'=>$oc->files
+            ]);
+        }catch(Exception $err){
+
         }
 
     }
