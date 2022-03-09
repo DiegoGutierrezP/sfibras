@@ -143,10 +143,11 @@
     border-radius: 50%;
     background: #ccc;
     margin-bottom: 6px;
+    transition: .3s all ease;
   }
 
   .stepper-item .step-counter:hover{
-    opacity: .95;
+    transform: scale(1.1,1.1);
   }
 
   .stepper-item.active {

@@ -11,7 +11,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Exception;
 use DataTables;
+use stdClass;
 
 class OrdenCompraController extends Controller
 {
@@ -172,7 +174,7 @@ class OrdenCompraController extends Controller
         $fechaEmisionOC = Carbon::createFromFormat('Y-m-d',$oc->fechaEmisionOC)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
         return view('admin.ordenCompra.show',compact('oc','fechaEmisionOC','moneda'));
     }
-    public function datesOC($id){
+    public function getdatesOC($id){
         $oc = OrdenCompra::find($id);
         return response()->json([
             'res'=>true,
@@ -181,6 +183,29 @@ class OrdenCompraController extends Controller
             'fechaEntrega'=>$oc->fechaEntrega
         ]);
     }
+    public function updateDatesOC(Request $request){
+        try{
+            $oc = OrdenCompra::find($request->codigoOC);
+            $obj = [];
+            if($request->dataStep == 'inicio'){
+                $obj = ['fechaInicioTrabajo'=>$request->date];
+            }else if($request->dataStep == 'final'){
+                $obj = ['fechaFinalTrabajo'=>$request->date];
+            }else if($request->dataStep == 'entrega'){
+                $obj = ['fechaEntrega'=>$request->date];
+            }
+            $oc->update($obj);
+            return response()->json([
+                'res'=>true,
+                'data'=>['icon'=>'success','msg'=>'Fecha insertada correctamente']
+            ]);
+        }catch(Exception $err){
+            return response()->json([
+                'res'=>false,
+                'data'=>['icon'=>'error','msg'=>'Ocurrio un error '.$err]
+            ]);
+        }
 
+    }
 
 }
