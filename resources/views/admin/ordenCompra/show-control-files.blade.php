@@ -5,7 +5,7 @@
             <div class="stepper-item step-inicio">
               <div class="step-action step-counter" data-step="inicio">1</div>
               <div class="step-name">Fecha de Inicio</div>
-              <div class="step-date"></div>
+              <div class="step-date" data-obs=""></div>
             </div>
             <div class="stepper-item step-trabajando">
               <div class="step-counter">2</div>
@@ -14,12 +14,12 @@
             <div class="stepper-item step-final">
               <div class="step-action step-counter" data-step="final">3</div>
               <div class="step-name">Fecha Final</div>
-              <div class="step-date"></div>
+              <div class="step-date" data-obs=""></div>
             </div>
             <div class="stepper-item step-entrega" >
               <div class="step-action step-counter" data-step="entrega">4</div>
               <div class="step-name">Entrega</div>
-              <div class="step-date"></div>
+              <div class="step-date" data-obs=""></div>
             </div>
           </div>
     </div>
@@ -69,6 +69,7 @@
         d.addEventListener("click",e=>{
             if(e.target.matches('.step-action')){
                 let date = e.target.parentNode.querySelector('.step-date').textContent;
+                let obs = e.target.parentNode.querySelector('.step-date').dataset.obs;
                 /* let isCompleted = e.target.parentNode.classList.contains('completed');
                 console.log(isCompleted); */
                 $("#controlOCModal").find(".modal-body .data-step").val(e.target.dataset.step);
@@ -80,9 +81,11 @@
                     $("#controlOCModal").find(".modal-title").text('Fecha de Entrega');
                 }
                 $("#controlOCModal").find(".modal-body .fecha-step").val(date);
+                $("#controlOCModal").find(".modal-body .obs-step").val(obs);
                 $("#controlOCModal").find(".modal-body .validate-date").text('');
                $("#controlOCModal").modal('show');
             }
+            //--------------------------------------------------------------------------------------------
             if(e.target.matches('.guardar-fechas-oc')){
                 let date = $("#controlOCModal").find(".modal-body .fecha-step").val();
                 let obs = $("#controlOCModal").find(".modal-body .obs-step").val();
@@ -117,6 +120,7 @@
                                 timer: 4000,
                                 timerProgressBar: true,
                             })
+                            console.log(json)
                             cargarStepsDate();
                         },
                         error:err=>{
@@ -154,25 +158,29 @@
                     let dateFinal = d.querySelector(".step-final");
                     let stepTrabajando = d.querySelector(".step-trabajando");
                     let dateEntrega = d.querySelector(".step-entrega");
-                    if(json.fechaInicio){
-                        dateInicio.querySelector(".step-date").textContent = json.fechaInicio;
+                    if(json.dataInicio.fecha){
+                        dateInicio.querySelector(".step-date").textContent = json.dataInicio.fecha;
+                        dateInicio.querySelector(".step-date").dataset.obs = json.dataInicio.obs?json.dataInicio.obs:'';
                         dateInicio.classList.add('completed');
                         stepTrabajando.classList.add('completed');
                     }else{
                         dateInicio.querySelector(".step-date").textContent = '--';
                     }
-                    if(json.fechaFinal){
-                        dateFinal.querySelector(".step-date").textContent = json.fechaFinal;
+                    if(json.dataFinal.fecha){
+                        dateFinal.querySelector(".step-date").textContent = json.dataFinal.fecha;
+                        dateFinal.querySelector(".step-date").dataset.obs = json.dataFinal.obs?json.dataFinal.obs:'';
                         dateFinal.classList.add('completed')
                     }else{
                         dateFinal.querySelector(".step-date").textContent = '--';
                     }
-                    if(json.fechaEntrega){
-                        dateEntrega.querySelector(".step-date").textContent = json.fechaEntrega;
+                    if(json.dataEntrega.fecha){
+                        dateEntrega.querySelector(".step-date").textContent = json.dataEntrega.fecha;
+                        dateEntrega.querySelector(".step-date").dataset.obs = json.dataEntrega.obs?json.dataEntrega.obs:'';
                         dateEntrega.classList.add('completed')
                     }else{
                         dateEntrega.querySelector(".step-date").textContent = '--';
                     }
+                    //console.log(json)
                 },
                 error:err=>{
                     console.log(err)

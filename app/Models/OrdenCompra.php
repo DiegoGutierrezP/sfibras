@@ -46,8 +46,12 @@ class OrdenCompra extends Model
     public function cotizacion(){
         return $this->belongsTo('App\Models\Cotizacion');
     }
+    public function fechas(){
+        return $this->hasMany('App\Models\Fecha');
+    }
     //relacion polimirfica uno a muchos
     public function files(){
         return $this->morphMany('App\Models\File','fileable');
     }
+
 }

@@ -106,6 +106,9 @@ class OrdenCompraController extends Controller
             'codigoOC'=>'SFOC'.$codigoOC,
         ]);
 
+        $fechasOC  = [['referencia'=>'inicioTrabajo'],['referencia'=>'finalTrabajo'],['referencia'=>'entrega']];
+        $oc->fechas()->createMany($fechasOC);
+
         //file
         if($request->hasFile('file_OC')){
             //dd($request->file('file_OC')->getMimeType());
@@ -176,28 +179,52 @@ class OrdenCompraController extends Controller
     }
     public function getdatesOC($id){
         $oc = OrdenCompra::find($id);
+
         return response()->json([
             'res'=>true,
-            'fechaInicio'=>$oc->fechaInicioTrabajo,
+            /* 'fechaInicio'=>$oc->fechaInicioTrabajo,
             'fechaFinal'=>$oc->	fechaFinalTrabajo,
-            'fechaEntrega'=>$oc->fechaEntrega
+            'fechaEntrega'=>$oc->fechaEntrega */
+            'dataInicio'=>['fecha'=>$oc->fechas[0]->fecha,'obs'=>$oc->fechas[0]->observaciones],
+            'dataFinal'=>['fecha'=>$oc->fechas[1]->fecha,'obs'=>$oc->fechas[1]->observaciones],
+            'dataEntrega'=>['fecha'=>$oc->fechas[2]->fecha,'obs'=>$oc->fechas[2]->observaciones],
+
         ]);
     }
     public function updateDatesOC(Request $request){
         try{
             $oc = OrdenCompra::find($request->codigoOC);
-            $obj = [];
+            $ref = '';
             if($request->dataStep == 'inicio'){
-                $obj = ['fechaInicioTrabajo'=>$request->date];
+                $ref = 'inicioTrabajo';
             }else if($request->dataStep == 'final'){
-                $obj = ['fechaFinalTrabajo'=>$request->date];
+                $ref = 'finalTrabajo';
             }else if($request->dataStep == 'entrega'){
-                $obj = ['fechaEntrega'=>$request->date];
+                $ref = 'entrega';
             }
-            $oc->update($obj);
+            $fechasRef = [];
+            foreach($oc->fechas as $fecha){
+                if($fecha->referencia == $ref){
+                    $fecha->update(['fecha'=>$request->date,'observaciones'=>$request->obsStep?$request->obsStep:null]);
+                }
+                if($fecha->fecha != null){
+                    $fechasRef[] = $fecha->referencia;
+                }
+            }
+            if(in_array('entrega',$fechasRef)){
+                $oc->update([
+                    'estadoPedido'=>3
+                ]);
+            }else if(in_array('finalTrabajo',$fechasRef)){
+                $oc->update([
+                    'estadoPedido'=>2
+                ]);
+            }
+
             return response()->json([
                 'res'=>true,
                 'data'=>['icon'=>'success','msg'=>'Fecha insertada correctamente']
+                //'data'=>$request->all()
             ]);
         }catch(Exception $err){
             return response()->json([

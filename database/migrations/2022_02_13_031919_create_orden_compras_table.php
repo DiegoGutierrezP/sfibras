@@ -28,9 +28,9 @@ class CreateOrdenComprasTable extends Migration
             $table->string('codigoOC')->nullable();
             $table->date('fechaEmisionOC');
             $table->text('observaciones')->nullable();
-            $table->date('fechaInicioTrabajo')->nullable();
+            /* $table->date('fechaInicioTrabajo')->nullable();
             $table->date('fechaFinalTrabajo')->nullable();
-            $table->date('fechaEntrega')->nullable();
+            $table->date('fechaEntrega')->nullable(); */
             $table->string('entregaEstimada')->nullable();
             $table->string('formaPago')->nullable();//
             $table->string('tipoMoneda');
