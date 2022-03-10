@@ -80,10 +80,7 @@ class OrdenCompraController extends Controller
             }else{
                 $clienteID=$request->cliente_id;
             }
-
-
         }
-
         $oc = OrdenCompra::create([
             'fechaEmisionOC'=>$request->emision_OC,
             'observaciones'=>$request->observaciones_oc,
@@ -244,8 +241,38 @@ class OrdenCompraController extends Controller
                 'data'=>$oc->files
             ]);
         }catch(Exception $err){
-
+            return response()->json([
+                'res'=>false,
+                'error'=>'ocurrio un error '.$err
+            ]);
         }
+    }
+    public function addFilesOC (Request $request){
+
+        try{
+            $oc = OrdenCompra::find($request->id_OC);
+
+            $file = $request->file('file_OC');
+            $nombreFile = $oc->codigoOC.'-'.time().'.'.$file->guessExtension();
+            $url = Storage::putFileAs('admin/filesOC',$request->file('file_OC'),$nombreFile);
+
+            $oc->files()->create([
+                'url'=>$url,
+                'descripcion'=>$request->descrip_file_OC,
+                'tipo_archivo'=>$file->getMimeType()
+            ]);
+
+            return response()->json([
+                'res'=>true,
+                'data'=>['icon'=>'success','msg'=>'File subido correctamente']
+            ]);
+        }catch(Exception $err){
+            return response()->json([
+                'res'=>false,
+                'error'=>'ocurrio un error '.$err
+            ]);
+        }
+
 
     }
 
