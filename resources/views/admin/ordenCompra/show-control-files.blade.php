@@ -1,5 +1,5 @@
 <div class="card-body mt-2">
-    <input type="hidden" value="{{$oc->id}}" class="id-oc">
+
     <div class="content-fechas my-5">
         <div class="stepper-wrapper">
             <div class="stepper-item step-inicio">
@@ -132,6 +132,42 @@
             </div>
         </div>
     </div>
+    {{-- Modal update FIle --}}
+    <div  class="modal fade" id="updateFileModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true close-btn">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form   id="form-edit-file"  enctype="multipart/form-data">
+                    {{-- @csrf --}}
+                    <input type="hidden" value=""  name="id_file" id="id_file">
+                    <div class="form-group">
+                        <label for="">Descripcion:</label>
+                        <textarea rows="4" name="descrip_file_OC" class="descrip-file-oc form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label >File</label>
+                        <input type="file" class="form-control-file" name="file_OC" id="file-update-OC"
+                            placeholder="col-form-label"
+                            accept="image/jpeg,image/gif,image/png,image/jpg,application/pdf">
+                        <small class="validate-file text-danger"></small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Cerrar</button>
+                <button type="button"  class="btn-update-file-oc btn btn-primary ">Guardar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @push('js')
     <script>
@@ -197,18 +233,8 @@
                         },
                         success: json =>{
                             $("#controlOCModal").modal('hide');
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: json.data.icon,
-                                title: json.data.msg,
-                                background:'#E6F4EA',
-                                toast:true,
-                                color: '#333',
-                                showConfirmButton: false,
-                                timer: 4000,
-                                timerProgressBar: true,
-                            })
-                            console.log(json)
+                            swalSuccess(json.data.icon,json.data.msg)
+                            //console.log(json)
                             cargarStepsDate();
                         },
                         error:err=>{
@@ -252,9 +278,13 @@
             //----------------------------------------------------------------------------------------
             if(e.target.matches('.btn-add-file-oc')){
                 e.preventDefault();
-                const $inputFile = d.getElementById('file-OC');
-                let $errorFile = d.querySelector('.validate-file'),
-                $descripFile = d.querySelector('.descrip-file-oc');
+                let $formAddFile = d.getElementById('form-add-file');
+                let $inputFile = $formAddFile.file_OC,
+                $descripFile = $formAddFile.descrip_file_OC,
+                $errorFile = d.querySelector('#addFileModal .validate-file');
+                /* const $inputFile = d.querySelector('#addFileModal #file-OC');
+                let $errorFile = d.querySelector('#addFileModal .validate-file'),
+                $descripFile = d.querySelector('#addFileModal .descrip-file-oc'); */
                 $inputFile.value= '';
                 $errorFile.textContent = '';$descripFile.value='';
                 d.querySelector('.add-file-oc').removeAttribute('disabled');
@@ -264,33 +294,14 @@
             if(e.target.matches('.add-file-oc')){
                 e.preventDefault();
                 e.target.setAttribute('disabled');
-                const $inputFile = d.getElementById('file-OC');
-                let $errorFile = d.querySelector('.validate-file'),
-                $formAddFile = d.getElementById('form-add-file');
-                let bandera =false;
-                if($inputFile.value !=''){
-                    let ext = $inputFile.value.split('.').pop();
-                    if(ext == "pdf" || ext=="png" || ext=="jpg" || ext=="jpeg"){
-                        let sizeMegaBytes = $inputFile.files[0].size/1024;//lo pasamos de bytes a kilobytes
-                        if(ext == "pdf"){
-                            if(sizeMegaBytes < 1024){//en kilobytes
-                                bandera = true;
-                            }else{
-                                $errorFile.textContent = "El archivo excede los 1mb";
-                            }
-                        }else{
-                            if(sizeMegaBytes < 3072){//menor a 3 mb
-                                bandera = true;
-                            }else{
-                                $errorFile.textContent = "La imagen excede los 3mb";
-                            }
-                        }
-                    }else{
-                        $errorFile.textContent = "Solo se aceptan formatos pdf o imagenes";
-                    }
-                }else{
-                    $errorFile.textContent = "El campo file es necesario";
-                }
+                /* const $inputFile = d.querySelector('#addFileModal #file-OC');
+                let $errorFile = d.querySelector('#addFileModal .validate-file'),
+                $formAddFile = d.getElementById('form-add-file'); */
+                let $formAddFile = d.getElementById('form-add-file');
+                let $inputFile = $formAddFile.file_OC,
+                $errorFile = d.querySelector('#addFileModal .validate-file');
+
+                let bandera = validateFile($inputFile,$errorFile);
                 if(bandera){
                     let url = '{{ route('admin.ordenCompra.addFilesOC') }}';
                     ajax({
@@ -305,15 +316,127 @@
                         success: json =>{
                             $("#addFileModal").modal("hide");
                             cargarFilesOC();
-                            //console.log(json)
+                            swalSuccess(json.data.icon,json.data.msg);
                         },
                         error:err=>{
                             console.log(err)
                         }
                     });
+                }else{
+                    e.target.removeAttribute('disabled');
                 }
             }
+            //------------------------------------------------------------------------------------
+            if(e.target.matches(['.btn-edit-file','.btn-edit-file *'])){
+                const $inputFile = d.querySelector('#updateFileModal #file-update-OC');
+                let $errorFile = d.querySelector('#updateFileModal .validate-file'),
+                $descripFile = d.querySelector('#updateFileModal .descrip-file-oc');
+                $inputFile.value= '';
+                $errorFile.textContent = '';$descripFile.value='';
+                d.querySelector('.btn-update-file-oc').removeAttribute('disabled');
+                $("#updateFileModal").find('.modal-body #id_file').val(e.target.dataset.file);
+                $("#updateFileModal").find('.modal-body .descrip-file-oc').val(e.target.dataset.descrip);
+                $("#updateFileModal").modal('show');
+            }
+            //-----------------------------------
+            if(e.target.matches('.btn-update-file-oc')){
+                e.preventDefault();
+                e.target.setAttribute('disabled');
+                const $inputFile = d.querySelector('#updateFileModal #file-update-OC');
+                let $errorFile = d.querySelector('#updateFileModal .validate-file'),
+                $formUpdateFile = d.getElementById('form-edit-file');
+                let bandera = validateFile($inputFile,$errorFile,'paraUpdate');
+                if(bandera){
+                    let url = '{{ route('admin.ordenCompra.updateFilesOC') }}';
+                    ajax({
+                        url:url,
+                        ops:{
+                            method:"POST",
+                            headers: {
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                            },
+                            body: new FormData($formUpdateFile),
+                        },
+                        success: json =>{
+                            $("#updateFileModal").modal("hide");
+                            cargarFilesOC();
+                            swalSuccess(json.data.icon,json.data.msg);
+
+                        },
+                        error:err=>{
+                            console.log(err)
+                        }
+                    });
+                }else{
+                    e.target.removeAttribute('disabled');
+                }
+            }
+            //-----------------------------------------------------------------------------------
+            if(e.target.matches(['.btn-delete-file','.btn-delete-file *'])){
+                Swal.fire({
+                    title: 'Esta seguro?',
+                    text: "Se eliminara el archivo",
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    cancelButtonText:'Cancelar',
+                    confirmButtonText: 'Eliminar'
+                }).then((result) => {
+                    if(result.value) {
+                        let url = '{{ route('admin.ordenCompra.deleteFilesOC', ':id') }}';
+                        url = url.replace(':id', e.target.dataset.file);
+                        ajax({
+                            url:url,
+                            ops:{
+                                method:"DELETE",
+                                headers: {
+                                    "Content-type": "application/json; charset=utf-8",
+                                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                }
+                            },
+                            success: json =>{
+                                cargarFilesOC();
+                                swalSuccess(json.data.icon,json.data.msg);
+                            },
+                            error:err=>{
+                                console.log(err)
+                            }
+                        });
+                    }
+                })
+            }
         })
+        function validateFile($inputFile,$errorFile,data = ''){
+            let bandera =false;
+            if($inputFile.value !=''){
+                let ext = $inputFile.value.split('.').pop();
+                if(ext == "pdf" || ext=="png" || ext=="jpg" || ext=="jpeg"){
+                    let sizeMegaBytes = $inputFile.files[0].size/1024;//lo pasamos de bytes a kilobytes
+                    if(ext == "pdf"){
+                        if(sizeMegaBytes < 1024){//en kilobytes
+                            bandera = true;
+                        }else{
+                            $errorFile.textContent = "El archivo excede los 1mb";
+                        }
+                    }else{
+                        if(sizeMegaBytes < 3072){//menor a 3 mb
+                            bandera = true;
+                        }else{
+                            $errorFile.textContent = "La imagen excede los 3mb";
+                        }
+                    }
+                }else{
+                    $errorFile.textContent = "Solo se aceptan formatos pdf o imagenes";
+                }
+            }else{
+                if(data == 'paraUpdate'){
+                    bandera = true;
+                }else{
+                  $errorFile.textContent = "El campo file es necesario";
+                }
+            }
+            return bandera;
+        }
         function cargarFilesOC(){
             let url = '{{ route('admin.ordenCompra.getFilesOC', ':id') }}';
             url = url.replace(':id', idOC);
@@ -333,8 +456,10 @@
                             row.insertCell(0).innerHTML = el.url?`<a href="" class='link-file' data-file='${el.url}' data-type='${el.tipo_archivo}'>${el.url.split('/').pop()}</a>`:'--';
                             row.insertCell(1).innerHTML = el.tipo_archivo?el.tipo_archivo:'--';
                             row.insertCell(2).innerHTML = el.descripcion?el.descripcion:'--';
-                            row.insertCell(3).innerHTML = `<a class='btn btn-sm btn-sfibras2'><i class='fas fa-pen'></i></a>
-                            <a class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></a>`;
+                            row.insertCell(3).innerHTML = `<a class='btn-edit-file btn btn-sm btn-sfibras2'
+                            data-file='${el.id}' data-descrip='${el.descripcion?el.descripcion:''}'>
+                            <i class='fas fa-pen' data-file='${el.id}' data-descrip='${el.descripcion?el.descripcion:''}'></i></a>
+                            <a class='btn-delete-file btn btn-sm btn-danger' data-file='${el.id}'><i class='fas fa-trash' data-file='${el.id}'></i></a>`;
                         });
                     }else{
                         $tableFiles.innerHTML= `<tr><td colspan='4'>Ningun Archivo relacionado</td></tr>`;
@@ -389,6 +514,20 @@
                     console.log(err)
                 }
             });
+        }
+
+        function swalSuccess(icon,msg){
+            Swal.fire({
+                position: 'top-end',
+                icon: icon,
+                title: msg,
+                background:'#E6F4EA',
+                toast:true,
+                color: '#333',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+            })
         }
 
         async function ajax(obj){

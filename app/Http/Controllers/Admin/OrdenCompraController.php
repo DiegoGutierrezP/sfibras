@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CategoriaProducto;
 use App\Models\Cotizacion;
 use App\Models\Cliente;
+use App\Models\File;
 use App\Models\OrdenCompra;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -272,8 +273,37 @@ class OrdenCompraController extends Controller
                 'error'=>'ocurrio un error '.$err
             ]);
         }
+    }
+    public function updateFilesOC(Request $request){
+        $file = File::find($request->id_file);
+        $fileUpdate = ["descripcion"=>$request->descrip_file_OC];
 
+        if($request->hasFile('file_OC')){
+            Storage::delete($file->url);
 
+            $fileNew = $request->file('file_OC');
+            $nombreFile = $file->fileable->codigoOC.'-'.time().'.'.$fileNew->guessExtension();
+            $url = Storage::putFileAs('admin/filesOC',$request->file('file_OC'),$nombreFile);
+
+            $fileUpdate = array_merge($fileUpdate,["url"=>$url,"tipo_archivo"=>$fileNew->getMimeType()]);
+
+        }
+
+        $file->update($fileUpdate);
+
+        return response()->json([
+            'res'=>true,
+            'data'=>['icon'=>'success','msg'=>'El archivo se actualizo']
+        ]);
+    }
+    public function deleteFilesOC($id){
+        $file = File::find($id);
+        Storage::delete($file->url);
+        $file->delete();
+        return response()->json([
+            'res'=>true,
+            'data'=>['icon'=>'success','msg'=>'El archivo se elimino']
+        ]);
     }
 
 }

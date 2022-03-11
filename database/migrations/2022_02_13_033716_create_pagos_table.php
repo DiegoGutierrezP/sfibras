@@ -18,7 +18,8 @@ class CreatePagosTable extends Migration
 
             $table->decimal('monto',10,2);
             $table->date('fecha_pago');
-            $table->enum('moneda',['soles','dolares']);
+            $table->enum('moneda',['soles','dolares'])->nullable();
+            $table->string('tipo_pago')->nullable();
 
             $table->unsignedBigInteger('orden_compra_id');
             $table->foreign('orden_compra_id')->references('id')->on('orden_compras')->onDelete('cascade');

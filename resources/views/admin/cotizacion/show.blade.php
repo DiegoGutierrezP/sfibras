@@ -202,7 +202,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary btn-guardar-estado-coti">Guardar</button>
+                    <button type="button" class="btn btn-primary btn-guardar-estado-coti">Continuar</button>
                 </div>
 
             </div>
