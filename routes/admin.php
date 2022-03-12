@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CotizacionController;
 use App\Http\Controllers\Admin\MiEmpresaController;
 use App\Http\Controllers\Admin\OrdenCompraController;
+use App\Http\Controllers\Admin\PagosController;
 use App\Models\OrdenCompra;
 
 Route::get('/',function(){
@@ -40,6 +41,9 @@ Route::get('ordenCompra/files/{id}',[OrdenCompraController::class,'getFilesOC'])
 Route::post('ordenCompra/files/add',[OrdenCompraController::class,'addFilesOC'])->name('admin.ordenCompra.addFilesOC');
 Route::post('ordenCompra/files/update',[OrdenCompraController::class,'updateFilesOC'])->name('admin.ordenCompra.updateFilesOC');
 Route::delete('ordenCompra/files/{id}',[OrdenCompraController::class,'deleteFilesOC'])->name('admin.ordenCompra.deleteFilesOC');
+
+Route::get('pagos/oc/{id}',[PagosController::class,'getPagosOC'])->name('admin.pagos.getPagosOC');
+Route::post('pagos/oc',[PagosController::class,'addPagoOC'])->name('admin.pagos.addPagosOC');
 
 Route::resource('miEmpresa',MiEmpresaController::class)->only(['index','edit','update'])->names('admin.miEmpresa');
 

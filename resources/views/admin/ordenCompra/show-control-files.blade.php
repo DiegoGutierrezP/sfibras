@@ -1,6 +1,6 @@
 <div class="card-body mt-2">
-
-    <div class="content-fechas my-5">
+    <p><em>Control de la duracion hasta el proceso de entrega del pedido</em></p>
+    <div class="content-fechas my-5 ">
         <div class="stepper-wrapper">
             <div class="stepper-item step-inicio">
               <div class="step-action step-counter" data-step="inicio">1</div>
@@ -77,25 +77,7 @@
             </div>
         </div>
     </div>
-    {{-- Modal Files --}}
-    <div class="modal fade bd-example-modal-lg" id="filesOCModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-            <div class="modal-header py-2">
-                <a href="" id="descargar-fileOC" download>Descargar</a>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true close-btn">×</span>
-                </button>
-            </div>
-                <object class="d-none"  id="fileshow-oc" data="" type="" width="100%" style="min-height: 80vh;"  >
-                    No support
-                  </object>
-                <div class="d-none content-img-file p-2 bg-secondary text-center">
-                    <img src="" alt="" style="max-width:100%;max-height: 800px;">
-                </div>
-          </div>
-        </div>
-      </div>
+
       {{-- Modal Agregar FIle --}}
       <div  class="modal fade" id="addFileModal" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -171,14 +153,9 @@
 
 @push('js')
     <script>
-        const d = document;
-        let idOC = d.querySelector(".id-oc").value;
-        const $tableFiles = d.querySelector('.table-files-oc tbody');
+        let d = document;
 
-        d.addEventListener("DOMContentLoaded",()=>{
-            cargarStepsDate();
-            cargarFilesOC();
-        })
+        const $tableFiles = d.querySelector('.table-files-oc tbody');
 
         d.addEventListener("click",e=>{
             if(e.target.matches('.step-action')){
@@ -234,7 +211,7 @@
                         success: json =>{
                             $("#controlOCModal").modal('hide');
                             swalSuccess(json.data.icon,json.data.msg)
-                            //console.log(json)
+                            //console.log(json,idOC);
                             cargarStepsDate();
                         },
                         error:err=>{
@@ -256,7 +233,7 @@
             //---------------------------------------------------------------------------------
             if(e.target.matches('.link-file')){
                 e.preventDefault();
-                let $objectTag = d.querySelector("#filesOCModal #fileshow-oc"),
+                /* let $objectTag = d.querySelector("#filesOCModal #fileshow-oc"),
                 $imgFile = d.querySelector("#filesOCModal .content-img-file"),
                 $descarga = d.querySelector("#filesOCModal #descargar-fileOC");
                 $objectTag.classList.add('d-none');
@@ -273,7 +250,8 @@
                     $imgFile.classList.remove('d-none');
                 }
                 $descarga.href=`/storage/${e.target.dataset.file}`;
-                $("#filesOCModal").modal("show");
+                $("#filesOCModal").modal("show"); */
+                showFileModal(e.target.dataset.type,e.target.dataset.file);
             }
             //----------------------------------------------------------------------------------------
             if(e.target.matches('.btn-add-file-oc')){
@@ -345,7 +323,7 @@
                 const $inputFile = d.querySelector('#updateFileModal #file-update-OC');
                 let $errorFile = d.querySelector('#updateFileModal .validate-file'),
                 $formUpdateFile = d.getElementById('form-edit-file');
-                let bandera = validateFile($inputFile,$errorFile,'paraUpdate');
+                let bandera = validateFile($inputFile,$errorFile,'noNecesary');
                 if(bandera){
                     let url = '{{ route('admin.ordenCompra.updateFilesOC') }}';
                     ajax({
@@ -406,37 +384,7 @@
                 })
             }
         })
-        function validateFile($inputFile,$errorFile,data = ''){
-            let bandera =false;
-            if($inputFile.value !=''){
-                let ext = $inputFile.value.split('.').pop();
-                if(ext == "pdf" || ext=="png" || ext=="jpg" || ext=="jpeg"){
-                    let sizeMegaBytes = $inputFile.files[0].size/1024;//lo pasamos de bytes a kilobytes
-                    if(ext == "pdf"){
-                        if(sizeMegaBytes < 1024){//en kilobytes
-                            bandera = true;
-                        }else{
-                            $errorFile.textContent = "El archivo excede los 1mb";
-                        }
-                    }else{
-                        if(sizeMegaBytes < 3072){//menor a 3 mb
-                            bandera = true;
-                        }else{
-                            $errorFile.textContent = "La imagen excede los 3mb";
-                        }
-                    }
-                }else{
-                    $errorFile.textContent = "Solo se aceptan formatos pdf o imagenes";
-                }
-            }else{
-                if(data == 'paraUpdate'){
-                    bandera = true;
-                }else{
-                  $errorFile.textContent = "El campo file es necesario";
-                }
-            }
-            return bandera;
-        }
+
         function cargarFilesOC(){
             let url = '{{ route('admin.ordenCompra.getFilesOC', ':id') }}';
             url = url.replace(':id', idOC);
@@ -516,34 +464,5 @@
             });
         }
 
-        function swalSuccess(icon,msg){
-            Swal.fire({
-                position: 'top-end',
-                icon: icon,
-                title: msg,
-                background:'#E6F4EA',
-                toast:true,
-                color: '#333',
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-            })
-        }
-
-        async function ajax(obj){
-            let {url,ops,success,error} = obj;
-            try{
-                let res = await fetch(url,ops);
-                let json = await res.json();
-                if (!res.ok) throw {
-                    status: res.status,
-                    statusText: res.statusText
-                };
-                success(json);
-            }catch(err){
-                console.log(err);
-                error(err);
-            }
-        }
     </script>
 @endpush

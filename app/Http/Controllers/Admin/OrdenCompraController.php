@@ -234,6 +234,7 @@ class OrdenCompraController extends Controller
         }
 
     }
+    //PARA FILES EN OC ----------------------------------------------------------------------
     public function getFilesOC($id){
         try{
             $oc = OrdenCompra::find($id);
