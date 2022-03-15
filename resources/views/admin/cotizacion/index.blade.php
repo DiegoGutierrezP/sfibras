@@ -100,57 +100,57 @@
                 columns: [{
                         data: 'codigoCoti',
                         name: 'codigoCoti',
-                    },
-                    {
-                        data: 'referenciaCoti',
-                        name: 'referenciaCoti',
-                        orderable: false
-                    },
-                    {
-                        data: 'clienteNombre',
-                        name: 'clienteNombre',
-                        orderable: false
-                    },
-                    {
-                        data: 'fechaEmision',
-                        name: 'fechaEmision',
-                    },
-                    {
-                        data: 'precioConMoneda',
-                        name: 'precioConMoneda',
-                        searchable: false,
-                        orderable: false
-                    },
-                    {
-                        data: 'estado',
-                        render: function (data, type, row) {
-                            if (data == 1) {
-                                return '<h5 ><span class=" badge badge-warning ">Pendiente</span></h5>';
-                            }
-                            if (data == 2) {
-                                return '<h5><span class=" badge badge-success" >Aceptado</span></h5>';
-                            }
-                            if (data == 3) {
-                                return '<h5><span class=" badge badge-primary" >Aceptado/Modificado</span></h5>';
-                            }
-                            if (data == 4) {
-                                return '<h5><span class=" badge badge-secondary" >Expirado</span></h5>';
-                            }
-                            if (data == 5) {
-                                return '<h5><span class=" badge badge-danger" >Rechazado</span></h5>';
-                            }
                         },
-                        searchable: false,
-                        orderable: false
-                    },
-                    {
-                        data: 'actions',
-                        name: 'actions',
-                        searchable: false,
-                        orderable: false
-                    },
-                ],
-            });
+                        {
+                            data: 'referenciaCoti',
+                            name: 'referenciaCoti',
+                            orderable: false
+                        },
+                        {
+                            data: 'clienteNombre',
+                            name: 'clienteNombre',
+                            orderable: false
+                        },
+                        {
+                            data: 'fechaEmision',
+                            name: 'fechaEmision',
+                        },
+                        {
+                            data: 'precioConMoneda',
+                            name: 'precioConMoneda',
+                            searchable: false,
+                            orderable: false
+                        },
+                        {
+                            data: 'estado',
+                            render: function (data, type, row) {
+                                if (data == 1) {
+                                    return '<h5 ><span class=" badge badge-warning ">Pendiente</span></h5>';
+                                }
+                                if (data == 2) {
+                                    return '<h5><span class=" badge badge-success" >Aceptado</span></h5>';
+                                }
+                                if (data == 3) {
+                                    return '<h5><span class=" badge badge-primary" >Aceptado/Modificado</span></h5>';
+                                }
+                                if (data == 4) {
+                                    return '<h5><span class=" badge badge-secondary" >Expirado</span></h5>';
+                                }
+                                if (data == 5) {
+                                    return '<h5><span class=" badge badge-danger" >Rechazado</span></h5>';
+                                }
+                            },
+                            searchable: false,
+                            orderable: false
+                        },
+                        {
+                            data: 'actions',
+                            name: 'actions',
+                            searchable: false,
+                            orderable: false
+                        },
+                    ],
+                });
 
         })
 
@@ -182,18 +182,32 @@
                                 }
                             },
                             success: json => {
-                                Livewire.emitTo('admin.cotizacion-index', 'render');
-                                Swal.fire({
-                                    position: 'top-end',
-                                    icon: json.data.icon,
-                                    title: json.data.msg,
-                                    background: '#E6F4EA',
-                                    toast: true,
-                                    color: '#333',
-                                    showConfirmButton: false,
-                                    timer: 4000,
-                                    timerProgressBar: true,
-                                })
+                                if(json.type == 1){
+                                    $('#cotizaciones').DataTable().ajax.reload();
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: json.data.icon,
+                                        title: json.data.msg,
+                                        background: '#E6F4EA',
+                                        toast: true,
+                                        color: '#333',
+                                        showConfirmButton: false,
+                                        timer: 4000,
+                                        timerProgressBar: true,
+                                    })
+                                }else if(json.type == 2){
+                                    Swal.fire({
+                                        position: 'top',
+                                        icon: json.data.icon,
+                                        text: json.data.msg,
+                                        toast: true,
+                                        color: '#333',
+                                        showConfirmButton: false,
+                                        timer: 5000,
+                                        timerProgressBar: true,
+                                    })
+                                }
+                                //console.log(json);
                             },
                             error: err => {
                                 Swal.fire({
@@ -216,6 +230,8 @@
             }
 
         })
+
+
 
         async function ajax(obj) {
             let {

@@ -175,8 +175,10 @@
             let moneda = $cellTotalPagar.querySelector('input[name="hidden_total_pagar"]').dataset.moneda == 'soles'? 'S/.' : '$.';
              let totalPagar = parseFloat($cellTotalPagar.querySelector('input[name="hidden_total_pagar"]').value);
             let totalAbonado = 0,montoRestante = 0;
-            for(let i=0; i<$tablePagosOC.rows.length; i++){
-                totalAbonado += parseFloat($tablePagosOC.rows[i].querySelector('.monto-abonado').value)
+            if($tablePagosOC.rows[0].querySelector('.monto-abonado') != null){
+                for(let i=0; i<$tablePagosOC.rows.length; i++){
+                    totalAbonado += parseFloat($tablePagosOC.rows[i].querySelector('.monto-abonado').value)
+                }
             }
             montoRestante = totalPagar - totalAbonado;
             //console.log($cellTotalPagar.querySelector('input[name="hidden_total_pagar"]').dataset.moneda);

@@ -68,7 +68,7 @@
             await cargarStepsDate();
             await cargarFilesOC();
             let res1 = await cargarPagosOC();
-            //let res2 = await calcularInfoPagos();//espera la respuesta de cargarPagosOC
+            //await calcularInfoPagos();//espera la respuesta de cargarPagosOC
 
         })
 
@@ -99,7 +99,7 @@
                     $imgFile.classList.remove('d-none');
                 }
                 $descarga.href=`/storage/${url}`;
-                console.log($objectTag);
+                //console.log($objectTag);
                 $("#filesOCModal").modal("show");
         }
         function validateFile($inputFile,$errorFile,data = ''){

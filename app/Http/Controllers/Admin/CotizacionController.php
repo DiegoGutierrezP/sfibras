@@ -283,12 +283,27 @@ class CotizacionController extends Controller
         try{
             $coti = Cotizacion::find($id);
 
-            $coti->delete();
+            //$coti->delete();
 
-            return response()->json([
+            /* return response()->json([
                 'res'=>true,
                 'data'=>['icon'=>'success','msg'=>'La cotizacion se elimino correctamente']
-            ]);
+            ]); */
+            if($coti->orden_compra == null){
+                $coti->delete();
+                return response()->json([
+                    'res'=>true,
+                    'type'=>1,
+                    'data'=>['icon'=>'success','msg'=>'La cotizacion se elimino correctamente','position'=>'top-end']
+                ]);
+            }else{
+                return response()->json([
+                    'res'=>true,
+                    'type'=>2,
+                    'data'=>['icon'=>'warning','msg'=>'No se puede eliminar la cotizacion porque esta relacionada a una orden de compra','position'=>'center']
+                ]);
+            }
+
         }catch(Exception $e){
             return response()->json([
                 'res'=>false,
