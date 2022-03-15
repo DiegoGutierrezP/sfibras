@@ -39,12 +39,16 @@
                     <span aria-hidden="true close-btn">×</span>
                 </button>
             </div>
-                <object class="d-none"  id="fileshow-oc" data="" type="" width="100%" style="min-height: 80vh;"  >
-                    No support
-                  </object>
+            <div class="body">
+                <div class="content-object d-none">
+                    <object  id="fileshow-oc" data="" type="" width="100%" style="min-height: 80vh;"  >
+                        No support
+                      </object>
+                </div>
                 <div class="d-none content-img-file p-2 bg-secondary text-center">
                     <img src="" alt="" style="max-width:100%;max-height: 800px;">
                 </div>
+            </div>
           </div>
         </div>
       </div>
@@ -72,20 +76,30 @@
             let $objectTag = d.querySelector("#filesOCModal #fileshow-oc"),
                 $imgFile = d.querySelector("#filesOCModal .content-img-file"),
                 $descarga = d.querySelector("#filesOCModal #descargar-fileOC");
-                $objectTag.classList.add('d-none');
+                //$objectTag.classList.add('d-none');
+                d.querySelector("#filesOCModal .content-object").classList.add('d-none');
                 $imgFile.classList.add('d-none');
                 let ext = tipo_archivo.split('/').pop();
-                //console.log(ext);
+                $objectTag.innerHTML = '';
                 if(ext=="pdf"){
-                    $objectTag.setAttribute('data', `/storage/${url}`);
+                    /* $objectTag.setAttribute('data', `/storage/${url}`);
                     $objectTag.setAttribute('type', tipo_archivo);
-                    $objectTag.classList.remove('d-none');
+                    $objectTag.classList.remove('d-none'); */
+                    var object = document.querySelector('#filesOCModal #fileshow-oc');
+                    object.setAttribute('data', `/storage/${url}`);
+                    var clone = object.cloneNode(true);
+                    var parent = object.parentNode;
+                    parent.removeChild(object );
+                    parent.appendChild(clone );
+                    d.querySelector("#filesOCModal .content-object").classList.remove('d-none');
+
                 }else if(ext == "pdf" || ext=="png" || ext=="jpg" || ext=="jpeg"){
                     $imgFile.querySelector('img').src=`/storage/${url}`;
                     $imgFile.querySelector('img').alt=url;
                     $imgFile.classList.remove('d-none');
                 }
                 $descarga.href=`/storage/${url}`;
+                console.log($objectTag);
                 $("#filesOCModal").modal("show");
         }
         function validateFile($inputFile,$errorFile,data = ''){

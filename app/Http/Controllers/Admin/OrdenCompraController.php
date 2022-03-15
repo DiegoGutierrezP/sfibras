@@ -235,7 +235,7 @@ class OrdenCompraController extends Controller
 
     }
     //PARA FILES EN OC ----------------------------------------------------------------------
-    public function getFilesOC($id){
+    /* public function getFilesOC($id){
         try{
             $oc = OrdenCompra::find($id);
             return response()->json([
@@ -305,6 +305,6 @@ class OrdenCompraController extends Controller
             'res'=>true,
             'data'=>['icon'=>'success','msg'=>'El archivo se elimino']
         ]);
-    }
+    } */
 
 }

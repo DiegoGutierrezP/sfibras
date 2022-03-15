@@ -233,24 +233,7 @@
             //---------------------------------------------------------------------------------
             if(e.target.matches('.link-file')){
                 e.preventDefault();
-                /* let $objectTag = d.querySelector("#filesOCModal #fileshow-oc"),
-                $imgFile = d.querySelector("#filesOCModal .content-img-file"),
-                $descarga = d.querySelector("#filesOCModal #descargar-fileOC");
-                $objectTag.classList.add('d-none');
-                $imgFile.classList.add('d-none');
-                let ext = e.target.dataset.type.split('/').pop();
-                //console.log(ext);
-                if(ext=="pdf"){
-                    $objectTag.setAttribute('data', `/storage/${e.target.dataset.file}`);
-                    $objectTag.setAttribute('type', e.target.dataset.type);
-                    $objectTag.classList.remove('d-none');
-                }else if(ext == "pdf" || ext=="png" || ext=="jpg" || ext=="jpeg"){
-                    $imgFile.querySelector('img').src=`/storage/${e.target.dataset.file}`;
-                    $imgFile.querySelector('img').alt=e.target.dataset.file;
-                    $imgFile.classList.remove('d-none');
-                }
-                $descarga.href=`/storage/${e.target.dataset.file}`;
-                $("#filesOCModal").modal("show"); */
+
                 showFileModal(e.target.dataset.type,e.target.dataset.file);
             }
             //----------------------------------------------------------------------------------------
@@ -260,9 +243,7 @@
                 let $inputFile = $formAddFile.file_OC,
                 $descripFile = $formAddFile.descrip_file_OC,
                 $errorFile = d.querySelector('#addFileModal .validate-file');
-                /* const $inputFile = d.querySelector('#addFileModal #file-OC');
-                let $errorFile = d.querySelector('#addFileModal .validate-file'),
-                $descripFile = d.querySelector('#addFileModal .descrip-file-oc'); */
+
                 $inputFile.value= '';
                 $errorFile.textContent = '';$descripFile.value='';
                 d.querySelector('.add-file-oc').removeAttribute('disabled');
@@ -272,16 +253,14 @@
             if(e.target.matches('.add-file-oc')){
                 e.preventDefault();
                 e.target.setAttribute('disabled');
-                /* const $inputFile = d.querySelector('#addFileModal #file-OC');
-                let $errorFile = d.querySelector('#addFileModal .validate-file'),
-                $formAddFile = d.getElementById('form-add-file'); */
+
                 let $formAddFile = d.getElementById('form-add-file');
                 let $inputFile = $formAddFile.file_OC,
                 $errorFile = d.querySelector('#addFileModal .validate-file');
 
                 let bandera = validateFile($inputFile,$errorFile);
                 if(bandera){
-                    let url = '{{ route('admin.ordenCompra.addFilesOC') }}';
+                    let url = '{{ route('admin.files.addFilesOC') }}';
                     ajax({
                         url:url,
                         ops:{
@@ -325,7 +304,7 @@
                 $formUpdateFile = d.getElementById('form-edit-file');
                 let bandera = validateFile($inputFile,$errorFile,'noNecesary');
                 if(bandera){
-                    let url = '{{ route('admin.ordenCompra.updateFilesOC') }}';
+                    let url = '{{ route('admin.files.updateFilesOC') }}';
                     ajax({
                         url:url,
                         ops:{
@@ -361,7 +340,7 @@
                     confirmButtonText: 'Eliminar'
                 }).then((result) => {
                     if(result.value) {
-                        let url = '{{ route('admin.ordenCompra.deleteFilesOC', ':id') }}';
+                        let url = '{{ route('admin.files.deleteFilesOC', ':id') }}';
                         url = url.replace(':id', e.target.dataset.file);
                         ajax({
                             url:url,
@@ -386,7 +365,7 @@
         })
 
         function cargarFilesOC(){
-            let url = '{{ route('admin.ordenCompra.getFilesOC', ':id') }}';
+            let url = '{{ route('admin.files.getFilesOC', ':id') }}';
             url = url.replace(':id', idOC);
             ajax({
                 url:url,
