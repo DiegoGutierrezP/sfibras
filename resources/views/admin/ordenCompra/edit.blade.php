@@ -1,105 +1,99 @@
-<div>
-<form action="{{route('admin.ordenCompra.store')}}" id="form-ordenCompra-crear" method="POST" enctype="multipart/form-data">
-    @csrf
-    <div class="card">
-        <div class="card-header">
-            <h5>Cotizacion relacionada : {{ $cotizacion->codigoCoti }}</h5>
-            <input type="hidden" name="cotizacion_id" value="{{$cotizacion->id}}">
-        </div>
-        <div class="card-body">
-            <div class="form-group row">
-                <label for="file-OC" class="col-sm-3 col-form-label">Archivo: (Imagen o Pdf)</label>
-                <div class="col-sm-9">
-                  <input type="file" class="form-control-file" name="file_OC" id="file-OC" placeholder="col-form-label" accept="image/jpeg,image/gif,image/png,image/jpg,application/pdf">
-                    <small class="error-file text-danger"></small>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="emision-OC" class="col-sm-3 col-form-label">Fecha Emision:</label>
-                <div class="col-sm-9">
-                  <input type="date" class="form-control col-lg-6 col-md-6 col-sm-12" name="emision_OC" id="emision-OC" placeholder="col-form-label">
-                </div>
-            </div>
 
-            <div class="row mb-3">
+@extends('adminlte::page')
+
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Editar Orden de Compra</h1>
+@stop
+
+@section('content')
+    <div class="card">
+        <form action="{{route('admin.ordenCompra.update',$oc->id)}}" id="form-ordenCompra-update" method="POST">
+            @csrf
+        <div class="card-body mt-2">
+            <div class="row mb-2">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <h6 class="mt-1"><b>Fecha de Emisión: </b>&nbsp; {{$fechaEmisionOC}}</h6>
+                    <h6 class="mt-3"><b>Cotizacion Relacionada: </b>&nbsp;
+                        @if (!is_null($oc->cotizacion))
+                            <a href="{{route('admin.cotizacion.show',$oc->cotizacion->id)}}">{{$oc->cotizacion->codigoCoti}}</a>
+                        @else
+                            --
+                        @endif
+                    </h6>
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+
+                </div>
+             </div>
+            <div class="row mt-3 mb-4">
                 <div class="col-lg-6 col-md-6 col-12 p-2">
-                    <h5>Datos del Cliente</h5>
-                    <table class="table">
-                        <tr>
-                            <th>Cliente:</th>
-                            <td>{{ $cotizacion->cliente->nombre }}</td>
-                        </tr>
-                        <tr>
-                            <th>ruc:</th>
-                            <td>{{ $cotizacion->cliente->ruc }}</td>
-                        </tr>
-                        <tr>
-                            <th>dni:</th>
-                            <td>{{ $cotizacion->cliente->dni }}</td>
-                        </tr>
-                        <tr>
-                            <th>telefono:</th>
-                            <td>{{ $cotizacion->cliente->telefono }}</td>
-                        </tr>
-                        <tr>
-                            <th>Email:</th>
-                            <td>{{ $cotizacion->cliente->email }}</td>
-                        </tr>
-                        <tr>
-                            <th>Direccion:</th>
-                            <td>{{ $cotizacion->cliente->direccion }}</td>
-                        </tr>
-                    </table>
+                    <h5 >Datos del Cliente</h5>
+                        <table class="table table-sm table-borderless">
+                            <tr>
+                                <th>Cliente:</th>
+                                <td>{{$oc->cliente->nombre}}</td>
+                            </tr>
+                            <tr>
+                                <th>ruc:</th>
+                                <td>{{$oc->cliente->ruc}}</td>
+                            </tr>
+                            <tr>
+                                <th>dni:</th>
+                                <td>{{$oc->cliente->dni}}</td>
+                            </tr>
+                            <tr>
+                                <th>telefono:</th>
+                                <td>{{$oc->cliente->telefono}}</td>
+                            </tr>
+                        </table>
                 </div>
                 <div class="col-lg-6 col-md-6 col-12 p-2">
-                    <h5>Condiciones Generales</h5>
-                    <table class="table">
+                    <h5 >Condiciones Generales</h5>
+                    <table class="table table-sm table-borderless">
                         <tr>
                             <th>Precios:</th>
                             <td><input type="hidden" name="incluye_igv"
-                                    value="{{ $cotizacion->precioIgvCoti == 0 ? 0 : 1 }}">{{ $cotizacion->precioIgvCoti == 0 ? 'No Incluye IGV' : 'Incluye IGV' }}
+                                    value="{{ $oc->precioIgvOC == 0 ? 0 : 1 }}">{{ $oc->precioIgvOC == 0 ? 'No Incluye IGV' : 'Incluye IGV' }}
                             </td>
                         </tr>
                         <tr>
                             <th>Forma de Pago:</th>
-                            <td>{{ $cotizacion->formaPago }}</td>
+                            <td>{{ $oc->formaPago }}</td>
                         </tr>
                         <tr>
                             <th>Tiempo Entrega:</th>
-                            <td>{{ $cotizacion->tiempoEntrega }}</td>
+                            <td>{{ $oc->entregaEstimada }}</td>
                         </tr>
                         <tr>
                             <th>Moneda:</th>
                             <td><input type="hidden" name="tipo_moneda"
-                                    value="{{ $cotizacion->tipoMoneda }}">{{ $cotizacion->tipoMoneda }}</td>
+                                    value="{{ $oc->tipoMoneda }}">{{ $oc->tipoMoneda }}</td>
                         </tr>
-                        @if ($cotizacion->tipoMoneda == 'dolares')
+                        @if ($oc->tipoMoneda == 'dolares')
                             <tr>
                                 <th>Valor Dolar:</th>
                                 <td><input type="hidden" name="valor_dolar"
-                                        value="{{ $cotizacion->valorDolar }}">{{ $cotizacion->valorDolar }}</td>
+                                        value="{{ $oc->valorDolar }}">{{ $oc->valorDolar }}</td>
                             </tr>
                         @endif
-                        @if ($cotizacion->precioEnvioCoti > 0)
+                        {{-- @if ($oc->precioEnvioOC > 0) --}}
                            <tr>
                                 <th>Envio</th>
-                                <td><input type="number" class="precio-envio form-control" value="{{round($cotizacion->precioEnvioCoti)}}"></td>
+                                <td><input type="number" class="precio-envio form-control"  value="{{round($oc->precioEnvioOC)}}"></td>
                             </tr>
-                        @endif
+                       {{--  @endif --}}
 
                     </table>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="">Observaciones:</label>
-                <textarea cols="3" class="form-control" name="observaciones_oc"></textarea>
+            <div class="form-group row mb-4">
+                <label for="" class="col-sm-3 col-form-label">Observaciones:</label>
+                <div class="col-sm-9">
+                   <textarea name="observaciones_oc" rows="3" class="form-control">{{$oc->observaciones}}</textarea>
+                </div>
             </div>
-
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
             <div class="form-group">
                 <label>Elija una categoria</label>
                 <div class="row">
@@ -131,9 +125,8 @@
                 </div>
 
             </div>
-
             <hr>
-            <div class="table-responsive">
+            <div class="table-responsive mt-2">
                 <table class="table-items-oc table table-sm table-bordered">
                     <thead>
                         <tr>
@@ -147,7 +140,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($cotizacion->items as $i => $item)
+                        @foreach ($oc->orden_detalles as $i => $item)
                             <tr>
                                 <td><span class="nro-item">{{ $i + 1 }}</span></td>
                                 <td>
@@ -179,7 +172,6 @@
                     </tbody>
                 </table>
             </div>
-
             <div class="row position-relative my-4 ">
                 <div class="w-100">
                     <table class="table-oc-totales table table-sm table-bordered">
@@ -237,14 +229,18 @@
         <div class="card-footer">
             <div class="float-right">
                 <a href="{{route('admin.ordenCompra.index')}}" class="btn btn-secondary">Cancelar</a>
-                <button class="btn-orden-compra-registrar btn btn-primary">Generar</button>
+                <button class="btn-orden-compra-update btn btn-primary">Modificar</button>
             </div>
         </div>
+        </form>
     </div>
-</form>
-</div>
+@stop
 
-@push('js')
+@section('css')
+    <link rel="stylesheet" href="/css/admin.css">
+@stop
+
+@section('js')
     <script>
         const d = document,
             $selectProds = d.getElementById("select-prods"),
@@ -254,24 +250,10 @@
             $tableItems = d.querySelector(".table-items-oc tbody"),
             $tableTotales = d.querySelector(".table-oc-totales"),
             $inputDescuento = d.querySelector('.input-descuento'),
-            $inputFechaEmision = d.getElementById('emision-OC'),
-            $checkClientNew = d.getElementById('check-cliente-nuevo'),
-            $incluyeIgv = d.querySelector('input[name="incluye_igv"]').value,
-            $checkEnvio = d.getElementById('check-envio'),
-            $inputFile = d.getElementById('file-OC');
-
+            $incluyeIgv = d.querySelector('input[name="incluye_igv"]').value;
         var selectCategoriaValue = 0;
 
         d.addEventListener("DOMContentLoaded", e => {
-            let today = new Date(),
-            mes = today.getMonth()+1,
-            dia = today.getDate(),
-            anio = today.getFullYear();
-            if(dia<10) dia='0'+dia; //agrega cero si el menor de 10
-            if(mes<10) mes='0'+mes //agrega cero si el menor de 10
-            $inputFechaEmision.value = anio+"-"+mes+"-"+dia;
-
-
             setTimeout(() => {
                 calcularTotales();
             }, 300);
@@ -279,7 +261,7 @@
 
         //evento para validar solo entrada de numeros enteros positivos
         d.addEventListener("input", e => {
-            if (e.target.matches(['.cantidad-item', '.input-descuento', '.input-medidas', '.precio-envio'])) {
+            if (e.target.matches(['.cantidad-item', '.input-descuento', '.input-medidas'])) {
                 let val = e.target.value;
                 e.target.value = val.replace(/\D|\-/, '');
             }
@@ -450,11 +432,12 @@
 
                 calcularTotales($inputDescuento.value);
             }
-            if(e.target.matches('.btn-orden-compra-registrar')){
+            if(e.target.matches('.btn-orden-compra-update')){
                 e.preventDefault();
                 e.target.setAttribute('disabled');
-                validacionOrdenCompra();
+                validacionOrdenCompraUpdate();
             }
+
         })
 
         d.addEventListener("change", e => {
@@ -500,7 +483,6 @@
                 }
 
             }
-
             if (e.target.matches("#select-prods")) {
 
                 if (e.target.value != 0) {
@@ -521,34 +503,6 @@
                     })
                 }
             }
-            if(e.target.matches("#file-OC")){
-                let ext = e.target.value.split('.').pop();
-                console.log(ext);
-                let $errorFile = d.querySelector(".error-file");
-                $errorFile.textContent = "";
-                if(e.target.value != ''){
-                    if(ext == "pdf" || ext=="png" || ext=="jpg" || ext=="jpeg"){
-
-                        let sizeMegaBytes = e.target.files[0].size/1024;//lo pasamos de bytes a kilobytes
-                       if(ext == "pdf"){
-                           if(sizeMegaBytes < 1024){//en kilobytes
-                               console.log("ok pdf")
-                           }else{
-                                $errorFile.textContent = "El archivo excede los 1mb";
-                           }
-                       }else{
-                            if(sizeMegaBytes < 3072){//menor a 3 mb
-                                console.log("ok img")
-                            }else{
-                                $errorFile.textContent = "La imagen excede los 3mb";
-                            }
-                       }
-                    }else{
-                        $errorFile.textContent = "Solo se aceptan formatos pdf o imagenes";
-                    }
-                }
-            }
-
         })
 
         function calcularTotales(descuento = 0) {
@@ -602,33 +556,8 @@
                 `${(total).toFixed(2)}`;
         }
 
-        function validacionOrdenCompra() {
-            let errorTablaItems,errorFile;
-            if($inputFile.value !=''){
-                let $errorFile = d.querySelector(".error-file");
-                let ext = $inputFile.value.split('.').pop();
-                if(ext == "pdf" || ext=="png" || ext=="jpg" || ext=="jpeg"){
-                    let sizeMegaBytes = $inputFile.files[0].size/1024;//lo pasamos de bytes a kilobytes
-                    if(ext == "pdf"){
-                        if(sizeMegaBytes < 1024){//en kilobytes
-                            console.log("ok pdf")
-                        }else{
-                            $errorFile.textContent = "El archivo excede los 1mb";
-                            errorFile = "El archivo excede los 1mb";
-                        }
-                    }else{
-                        if(sizeMegaBytes < 3072){//menor a 3 mb
-                            console.log("ok img")
-                        }else{
-                            $errorFile.textContent = "La imagen excede los 3mb";
-                            errorFile = "La imagen excede los 3mbs";
-                        }
-                    }
-                }else{
-                    $errorFile.textContent = "Solo se aceptan formatos pdf o imagenes";
-                    errorFile = "Solo se aceptan formatos pdf o imagenes";
-                }
-            }
+        function validacionOrdenCompraUpdate() {
+            let errorTablaItems;
 
             if (!$tableItems.rows.length) { //si la tabla de items no tiene filas
                 errorTablaItems = "Debe agregar almenos un item";
@@ -647,19 +576,11 @@
                 }
             }
 
-            if (errorTablaItems || errorFile) {
-                d.querySelector('.btn-orden-compra-registrar').removeAttribute('disabled');
+            if (errorTablaItems ) {
+                d.querySelector('.btn-orden-compra-update').removeAttribute('disabled');
                 let listaErrors = '<ul>';
-                listaErrors += errorFile? `<li>${errorFile}</li>`:'' ;
                 listaErrors += errorTablaItems? `<li>${errorTablaItems}</li>`: '';
                 listaErrors += '</ul>';
-                if(errorFile){
-                    const topPos = $inputFile.getBoundingClientRect().top + window.pageYOffset
-                    window.scrollTo({
-                        behavior:"smooth",
-                        top:topPos-150,
-                    })
-                }
                 Swal.fire({
                     position: 'top-end',
                     icon: 'warning',
@@ -673,9 +594,9 @@
                     timerProgressBar: true,
 
                 })
-            } else if (!errorTablaItems && !errorFile) {
+            } else if (!errorTablaItems) {
                 console.log('todo ok');
-                d.getElementById('form-ordenCompra-crear').submit();
+                d.getElementById('form-ordenCompra-update').submit();
             }
         }
 
@@ -702,4 +623,4 @@
             }
         }
     </script>
-@endpush
+@stop

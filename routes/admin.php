@@ -33,8 +33,10 @@ Route::post('cotizacion/informationAceptada',[CotizacionController::class,'infor
 
 //Orden de Compra
 Route::get('ordenCompra',[OrdenCompraController::class,'index'])->name('admin.ordenCompra.index');
+Route::get('ordenCompra/{id}/edit',[OrdenCompraController::class,'edit'])->name('admin.ordenCompra.edit');
 Route::get('ordenCompra/create/{coti?}',[OrdenCompraController::class,'create'])->name('admin.ordenCompra.create');
 Route::post('ordenCompra/store',[OrdenCompraController::class,'store'])->name('admin.ordenCompra.store');
+Route::post('ordenCompra/{id}/update',[OrdenCompraController::class,'update'])->name('admin.ordenCompra.update');
 Route::get('ordenCompra/{id}',[OrdenCompraController::class,'show'])->name('admin.ordenCompra.show');
 Route::get('ordenCompra/dates/{id}',[OrdenCompraController::class,'getdatesOC'])->name('admin.ordenCompra.getDatesOC');
 Route::put('updateDatesOC',[OrdenCompraController::class,'updateDatesOC'])->name('admin.ordenCompra.updateDatesOC');

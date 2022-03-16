@@ -325,7 +325,9 @@
                     contentModal.querySelector('.info').textContent = msg;
                     const tableInfo = contentModal.querySelector('.table-information');
                     let fechaAprobacion = new Date(json.data.oc.created_at);
-                    tableInfo.rows[0].cells[1].innerHTML = `<a href="">${json.data.oc.codigoOC}</a>`
+                    let urlshow ='{{route('admin.ordenCompra.show', ':id')}}'
+                    urlshow = urlshow.replace(':id', json.data.oc.id);
+                    tableInfo.rows[0].cells[1].innerHTML = `<a href="${urlshow}">${json.data.oc.codigoOC}</a>`
                     tableInfo.rows[1].cells[1].textContent = fechaAprobacion.toLocaleString();
                     tableInfo.rows[2].cells[1].textContent = json.data.oc.estadoPedido;
                     $('#cotiAceptadaModal').modal('show');

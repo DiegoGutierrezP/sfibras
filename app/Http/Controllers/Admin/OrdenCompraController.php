@@ -48,6 +48,13 @@ class OrdenCompraController extends Controller
         return view('admin.ordenCompra.create',compact('cotizacion','catesprod','clientes'));
     }
 
+    public function edit($id){
+        $oc = OrdenCompra::find($id);
+        $fechaEmisionOC = Carbon::createFromFormat('Y-m-d',$oc->fechaEmisionOC)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
+        $catesprod = CategoriaProducto::all();
+        return view('admin.ordenCompra.edit',compact('oc','fechaEmisionOC','catesprod'));
+    }
+
     public function store(Request $request){
 
         //dd($request->file('file_OC')->guessExtension());
@@ -169,6 +176,65 @@ class OrdenCompraController extends Controller
         }
 
         return redirect()->route('admin.ordenCompra.index')->with('msg-sweet','Se registro la Orden de Compra correctamente');
+    }
+
+    public function update(Request $request,$id){
+        $oc = OrdenCompra::find($id);
+        $oc->update([
+            'observaciones'=>$request->observaciones_oc,
+            'precioNetoOC'=>$request->oc_precio_neto,
+            'descuentOC'=>$request->oc_descuento?$request->oc_descuento:0,
+            'precioSubTotalOC'=>$request->oc_precio_subtotal,
+            'precioIgvOC'=>$request->oc_precio_igv,
+            'precioEnvioOC'=>$request->oc_precio_envio?$request->oc_precio_envio:0,
+            'precioTotalOC'=>$request->oc_precio_total,
+        ]);
+        $arrayItemsOC = [];
+        foreach($oc->orden_detalles as $item){//lo convertimos a array para comparar
+            $arrayItemsOC[]= [
+            'nombre'=>$item->nombre,
+            'descrip'=>$item->descripcion,
+            'cantidad'=>$item->cantidad,
+            'precioUnit'=>$item->precioUnit,
+            'precioTotal'=>$item->precioTotal
+            ];
+        }
+        $crearNewItems = false;
+        $difNombreItem = 0;$difDescripItem = 0;$difCantItem=0;$difPrecUnitItem=0;$difPrecTotal=0;
+        if(count($request->items) != count($arrayItemsOC)){//hacemos esto para ver si es aceptado tal cual o acpetado /modificado
+                $oc->orden_detalles()->delete();
+                $crearNewItems = true;
+        }else{
+            for($i=0; $i<count($request->items); $i++){
+                $arrayItemsOC[$i]['nombre']==$request->items[$i]['nombre']? false : $difNombreItem++;
+                $arrayItemsOC[$i]['descrip']==$request->items[$i]['descrip']? false : $difDescripItem++;
+                $arrayItemsOC[$i]['cantidad']==$request->items[$i]['cantidad']? false : $difCantItem++;
+                $arrayItemsOC[$i]['precioUnit']==$request->items[$i]['precioUnit']? false : $difPrecUnitItem++;
+                $arrayItemsOC[$i]['precioTotal']==$request->items[$i]['precioTotal']? false : $difPrecTotal++;
+            }
+            if($difNombreItem != 0 || $difDescripItem != 0 || $difCantItem != 0|| $difPrecUnitItem != 0 || $difPrecTotal != 0){
+                $oc->orden_detalles()->delete();
+                $crearNewItems = true;
+            }
+        }
+        if($crearNewItems){
+            $oc->cotizacion->update(['estado'=>3]);
+            $items = [];
+            foreach($request->items as $item){
+               $items[] = [
+                          'nombre'=>$item['nombre'],
+                          'descripcion'=>$item['descrip'],
+                          'cantidad'=>$item['cantidad'],
+                          'precioUnit'=>$item['precioUnit'],
+                          'precioTotal'=>$item['precioTotal']
+               ];
+            }
+            if(!empty($items)){
+                $oc->orden_detalles()->createMany($items);
+            }
+        }
+
+        return redirect()->route('admin.ordenCompra.show',$oc->id)->with('msg-sweet','Se modifico la Orden de Compra correctamente');
     }
 
     public function show($id){
