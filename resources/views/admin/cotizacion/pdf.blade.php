@@ -426,8 +426,8 @@
                             <td>:&nbsp;{{$miEmp->email}}</td>
                         </tr>
                         <tr>
-                            <th>Web</th>
-                            <td>:</td>
+                            <th>Direccion</th>
+                            <td>:&nbsp;{{$miEmp->direccion}}</td>
                         </tr>
                     </table>
                 </div>

@@ -20,7 +20,7 @@ class OrdenCompraController extends Controller
 {
     public function index(Request $request){
         if($request->ajax()){
-            $ordenCompras = DB::select('select oc.id , oc.codigoOC , oc.tipoMoneda, oc.estadoPedido, oc.estadoPago ,oc.precioTotalOC, c.nombre as clienteNombre from orden_compras as oc inner join clientes as c on oc.cliente_id = c.id ');
+            $ordenCompras = DB::select('select oc.id , oc.codigoOC , oc.tipoMoneda, oc.estadoPedido, oc.estadoPago ,oc.precioTotalOC, c.nombre as clienteNombre from orden_compras as oc inner join clientes as c on oc.cliente_id = c.id');
             collect($ordenCompras)->map(function($item ,$key){
                 $item->precioConMoneda = $item->tipoMoneda == 'dolares'? '$. '.$item->precioTotalOC:'S/. '.$item->precioTotalOC;
                 return $item;
@@ -60,8 +60,10 @@ class OrdenCompraController extends Controller
         //dd($request->file('file_OC')->guessExtension());
 
         $coti=null;$tiempoEntrega=null;$tipoMoneda=null;$valorDolar=null;$formaPago=null;$cotiID=null;$clienteID=null;
+        $cotiEnvio = null;
         if($request->cotizacion_id){
             $coti=Cotizacion::find($request->cotizacion_id);
+            $cotiEnvio = $coti->precioEnvioCoti;//-Para comparar luego
             $tiempoEntrega = $coti->tiempoEntrega;
             $tipoMoneda=$coti->tipoMoneda;
             $valorDolar=$coti->valorDolar;
@@ -111,7 +113,7 @@ class OrdenCompraController extends Controller
         $oc->update([
             'codigoOC'=>'SFOC'.$codigoOC,
         ]);
-
+        //creamos las fechas
         $fechasOC  = [['referencia'=>'inicioTrabajo'],['referencia'=>'finalTrabajo'],['referencia'=>'entrega']];
         $oc->fechas()->createMany($fechasOC);
 
@@ -154,7 +156,11 @@ class OrdenCompraController extends Controller
                 if($difNombreItem != 0 || $difDescripItem != 0 || $difCantItem != 0|| $difPrecUnitItem != 0 || $difPrecTotal != 0){
                     $coti->update(['estado'=>3]);
                 }else{
-                    $coti->update(['estado'=>2]);
+                    if($cotiEnvio != $request->oc_precio_envio){
+                        $coti->update(['estado'=>3]);
+                    }else{
+                        $coti->update(['estado'=>2]);
+                    }
                 }
             }
          //
@@ -180,6 +186,7 @@ class OrdenCompraController extends Controller
 
     public function update(Request $request,$id){
         $oc = OrdenCompra::find($id);
+        $precioEnvioOC = $oc->precioEnvioOC;
         $oc->update([
             'observaciones'=>$request->observaciones_oc,
             'precioNetoOC'=>$request->oc_precio_neto,
@@ -217,6 +224,7 @@ class OrdenCompraController extends Controller
                 $crearNewItems = true;
             }
         }
+        //si se modifico algun item o se agrego
         if($crearNewItems){
             $oc->cotizacion->update(['estado'=>3]);
             $items = [];
@@ -232,6 +240,9 @@ class OrdenCompraController extends Controller
             if(!empty($items)){
                 $oc->orden_detalles()->createMany($items);
             }
+        }
+        if($precioEnvioOC != $request->oc_precio_envio){
+            $oc->cotizacion->update(['estado'=>3]);
         }
 
         return redirect()->route('admin.ordenCompra.show',$oc->id)->with('msg-sweet','Se modifico la Orden de Compra correctamente');

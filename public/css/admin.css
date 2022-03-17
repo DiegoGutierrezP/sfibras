@@ -175,6 +175,23 @@
     content: none;
   }
 
+  /* DASHBOARD ------------------------------------*/
+  .content-cards-dash{
+    display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(20rem,1fr));
+	gap: 1.5rem;
+  }
+  .content-cards-dash .card-dash{
+    height: 170px;
+	border-radius:10px;
+	display: flex;
+	justify-content: space-between;
+	background: #fff;
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  }
+  /*------------------------------------------------  */
+
+
 @media (max-width:500px){
     .table-items-cotizacion tbody tr td:nth-child(2) input,
     .table-items-cotizacion tbody tr td:nth-child(3) input{

@@ -15,7 +15,9 @@ Route::get('/',function(){
 });
 
 Route::get('clientes',[ClienteController::class,'index'])->name('admin.clientes.index');
-Route::get('clientes/{cliente}',[ClienteController::class,'show'])->name('admin.clientes.show');
+Route::get('clientes/{id}',[ClienteController::class,'show'])->name('admin.clientes.show');
+Route::get('clientes/{id}/oc',[ClienteController::class,'getOCxCliente'])->name('admin.clientes.getOCxCliente');
+Route::get('clientes/deudas/oc/{id}',[ClienteController::class,'getDeudas'])->name('admin.clientes.getDeudas');
 
 //Cotizaciones
 Route::get('cotizacion',[CotizacionController::class,'index'])->name('admin.cotizacion.index');

@@ -80,12 +80,12 @@
                                         value="{{ $cotizacion->valorDolar }}">{{ $cotizacion->valorDolar }}</td>
                             </tr>
                         @endif
-                        @if ($cotizacion->precioEnvioCoti > 0)
+                        {{-- @if ($cotizacion->precioEnvioCoti > 0) --}}
                            <tr>
                                 <th>Envio</th>
                                 <td><input type="number" class="precio-envio form-control" value="{{round($cotizacion->precioEnvioCoti)}}"></td>
                             </tr>
-                        @endif
+                        {{-- @endif --}}
 
                     </table>
                 </div>

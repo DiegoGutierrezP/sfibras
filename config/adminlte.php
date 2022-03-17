@@ -273,11 +273,6 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'Productos',
-            'url'  => 'admin.productos.index',
-            'icon' => 'fas fa-box',
-        ],
-        [
             'text' => 'Ordenes de Compra',
             'route'  => 'admin.ordenCompra.index',
             'active'=>['admin/ordenCompra/*',],

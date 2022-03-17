@@ -8,7 +8,17 @@
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+   <div class="content-cards-dash ">
+        <div class="card-dash">Pedidos Pendientes</div>
+        <div class="card-dash">Pendientes de Pago</div>
+        <div class="card-dash">Cotizaciones generadas</div>
+        <div class="card-dash">Pedidos Entregados</div>
+   </div>
+   <div class="card mt-3">
+       <div class="card-body">
+
+       </div>
+   </div>
 @stop
 
 @section('css')
@@ -16,5 +26,5 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+
 @stop
