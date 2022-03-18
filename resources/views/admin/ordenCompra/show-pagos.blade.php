@@ -154,7 +154,7 @@
 
     <script>
         //document d ya esta definido en show control files
-        let $formAddPago = d.querySelector('#addPagoModal #form-add-pago-oc'),
+        /* let $formAddPago = d.querySelector('#addPagoModal #form-add-pago-oc'),
         $formUpdatePago = d.querySelector('#updatePagoModal #form-update-pago-oc');
                 let $errorDatePagoAdd = $formAddPago.querySelector('.validate-date'),
                 $errorMontoPagoAdd = $formAddPago.querySelector('.validate-pago'),
@@ -186,9 +186,9 @@
             $cellTotalAbonado.querySelector('span').textContent = moneda + totalAbonado.toFixed(2);
             $cellRestante.querySelector('input[name="hidden_monto_restante"]').value = montoRestante.toFixed(2);
             $cellRestante.querySelector('span').textContent = moneda +  montoRestante.toFixed(2);
-        }
+        } */
 
-        d.addEventListener("click",e=>{
+        /* d.addEventListener("click",e=>{
             if(e.target.matches('.btn-add-pago-oc')){
                 $errorDatePagoAdd.textContent = '';
                 $errorMontoPagoAdd.textContent = '';
@@ -332,9 +332,9 @@
                     e.target.removeAttribute('disabled');
                 }
             }
-        })
+        }) */
 
-        function cargarPagosOC(){
+        /* function cargarPagosOC(){
             let url = '{{ route('admin.pagos.getPagosOC', ':id') }}';
             url = url.replace(':id', idOC);
             return ajax({
@@ -369,7 +369,7 @@
                 }
             });
 
-        }
+        } */
 
 
     </script>

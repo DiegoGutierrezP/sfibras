@@ -59,7 +59,11 @@
             })
         @endif
 
-        const d = document;
+        let urlCotiIndex = "{{route('admin.cotizacion.index')}}";
+        let urlCotiDelete = '{{ route('cotizacion.delete', ':id') }}';
+        let token = "{{ csrf_token() }}";
+
+        /* const d = document;
 
         d.addEventListener("DOMContentLoaded",e=>{
 
@@ -86,9 +90,9 @@
                     //"url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json",
 
                 },
-                /* "drawCallback": function( settings ) {
-                    $('ul.pagination').addClass("pagination-sm");
-                }, */
+                //"drawCallback": function( settings ) {
+                //    $('ul.pagination').addClass("pagination-sm");
+                //},
                 processing: true,
                 serverSide: true,
                 responsive: true,
@@ -231,8 +235,6 @@
 
         })
 
-
-
         async function ajax(obj) {
             let {
                 url,
@@ -252,7 +254,7 @@
                 console.log(err);
                 error(err);
             }
-        }
+        } */
     </script>
-
+    <script type="module" src="{{ asset('js/admin/cotizacionIndex.js') }}"></script>
 @stop

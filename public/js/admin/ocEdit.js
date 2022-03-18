@@ -1,251 +1,6 @@
+import ajaxFetch from "../../helpers/ajaxFetch.js";
 
-@extends('adminlte::page')
-
-@section('title', 'Dashboard')
-
-@section('content_header')
-    <h1>Editar Orden de Compra</h1>
-@stop
-
-@section('content')
-    <div class="card">
-        <form action="{{route('admin.ordenCompra.update',$oc->id)}}" id="form-ordenCompra-update" method="POST">
-            @csrf
-        <div class="card-body mt-2">
-            <div class="row mb-2">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <h6 class="mt-1"><b>Fecha de Emisión: </b>&nbsp; {{$fechaEmisionOC}}</h6>
-                    <h6 class="mt-3"><b>Cotizacion Relacionada: </b>&nbsp;
-                        @if (!is_null($oc->cotizacion))
-                            <a href="{{route('admin.cotizacion.show',$oc->cotizacion->id)}}">{{$oc->cotizacion->codigoCoti}}</a>
-                        @else
-                            --
-                        @endif
-                    </h6>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-
-                </div>
-             </div>
-            <div class="row mt-3 mb-4">
-                <div class="col-lg-6 col-md-6 col-12 p-2">
-                    <h5 >Datos del Cliente</h5>
-                        <table class="table table-sm table-borderless">
-                            <tr>
-                                <th>Cliente:</th>
-                                <td>{{$oc->cliente->nombre}}</td>
-                            </tr>
-                            <tr>
-                                <th>ruc:</th>
-                                <td>{{$oc->cliente->ruc}}</td>
-                            </tr>
-                            <tr>
-                                <th>dni:</th>
-                                <td>{{$oc->cliente->dni}}</td>
-                            </tr>
-                            <tr>
-                                <th>telefono:</th>
-                                <td>{{$oc->cliente->telefono}}</td>
-                            </tr>
-                        </table>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12 p-2">
-                    <h5 >Condiciones Generales</h5>
-                    <table class="table table-sm table-borderless">
-                        <tr>
-                            <th>Precios:</th>
-                            <td><input type="hidden" name="incluye_igv"
-                                    value="{{ $oc->precioIgvOC == 0 ? 0 : 1 }}">{{ $oc->precioIgvOC == 0 ? 'No Incluye IGV' : 'Incluye IGV' }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Forma de Pago:</th>
-                            <td>{{ $oc->formaPago }}</td>
-                        </tr>
-                        <tr>
-                            <th>Tiempo Entrega:</th>
-                            <td>{{ $oc->entregaEstimada }}</td>
-                        </tr>
-                        <tr>
-                            <th>Moneda:</th>
-                            <td><input type="hidden" name="tipo_moneda"
-                                    value="{{ $oc->tipoMoneda }}">{{ $oc->tipoMoneda }}</td>
-                        </tr>
-                        @if ($oc->tipoMoneda == 'dolares')
-                            <tr>
-                                <th>Valor Dolar:</th>
-                                <td><input type="hidden" name="valor_dolar"
-                                        value="{{ $oc->valorDolar }}">{{ $oc->valorDolar }}</td>
-                            </tr>
-                        @endif
-                        {{-- @if ($oc->precioEnvioOC > 0) --}}
-                           <tr>
-                                <th>Envio</th>
-                                <td><input type="number" class="precio-envio form-control"  value="{{round($oc->precioEnvioOC)}}"></td>
-                            </tr>
-                       {{--  @endif --}}
-
-                    </table>
-                </div>
-            </div>
-            <div class="form-group row mb-4">
-                <label for="" class="col-sm-3 col-form-label">Observaciones:</label>
-                <div class="col-sm-9">
-                   <textarea name="observaciones_oc" rows="3" class="form-control">{{$oc->observaciones}}</textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Elija una categoria</label>
-                <div class="row">
-                    <div class="col-8">
-                        <select name="" id="select-cates-prods" class="form-control">
-                            <option value="0" selected>--Eliga una Categoria--</option>
-                            @foreach ($catesprod as $cate)
-                                <option value="{{ $cate->id }}">{{ $cate->nombre }}</option>
-                            @endforeach
-                        </select>
-                        <select id="select-prods" class="form-control my-3">
-                            <option value="0">--Eliga un item--</option>
-                        </select>
-                        <div class="form-group d-none" id="content-medidas-señales">
-                            <label>Medidas</label>
-                            <table>
-                                <tr>
-                                    <td><input type="number" disabled class="input-medidas form-control"></td>
-                                    <td class="px-3">X</td>
-                                    <td><input type="number" disabled class="input-medidas form-control"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column align-items-center justify-content-center col-4">
-                        <button class="btn-agregar-item btn btn-sfibras mb-3" disabled>Agregar Item</button>
-                        <a href="" class="btn-agregar-fila-vacia">Agregar Fila Vacia</a>
-                    </div>
-                </div>
-
-            </div>
-            <hr>
-            <div class="table-responsive mt-2">
-                <table class="table-items-oc table table-sm table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Item</th>
-                            <th>Descripción</th>
-                            <th>Cantidad</th>
-                            <th>Precio/u</th>
-                            <th>Total</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($oc->orden_detalles as $i => $item)
-                            <tr>
-                                <td><span class="nro-item">{{ $i + 1 }}</span></td>
-                                <td>
-                                    <input type='text' name="items[{{ $i }}][nombre]"
-                                        class='nombre-item form-control' value='{{ $item->nombre }}'>
-                                </td>
-                                <td>
-                                    <textarea rows="1" name="items[{{ $i }}][descrip]"
-                                        class='descrip-item form-control'
-                                        placeholder=''>{{ $item->descripcion }}</textarea>
-                                </td>
-                                <td>
-                                    <input type='number' name='items[{{ $i }}][cantidad]' min='1'
-                                        class='cantidad-item cantidad-item form-control'
-                                        value='{{ $item->cantidad }}'>
-                                </td>
-                                <td>
-                                    <input type='number' name='items[{{ $i }}][precioUnit]'
-                                        class='precio-unit-item form-control' value='{{ $item->precioUnit }}'>
-                                </td>
-                                <td>
-                                    <input type='number' name='items[{{ $i }}][precioTotal]'
-                                        class='precio-total-item form-control' readonly
-                                        value='{{ $item->precioTotal }}'>
-                                </td>
-                                <td></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="row position-relative my-4 ">
-                <div class="w-100">
-                    <table class="table-oc-totales table table-sm table-bordered">
-                        <tr>
-                            <td>Neto</td>
-                            <td>
-                                <input type="hidden" name="oc_precio_neto" value="">
-                                <span>S/ 0.00</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Descuento</td>
-                            <td>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">%</div>
-                                    </div>
-                                    <input type="number" name="oc_descuento" class="input-descuento form-control"
-                                        value="0">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Sub Total</td>
-                            <td>
-                                <input type="hidden" name="oc_precio_subtotal" value="">
-                                <span>S/ 0.00</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>IGV</td>
-                            <td>
-                                <input type="hidden" name="oc_precio_igv" value="">
-                                <span>S/ 0.00</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Envio</td>
-                            <td>
-                                <input type="hidden" name="oc_precio_envio" value="">
-                                <span>S/ 0.00</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Total</td>
-                            <td>
-                                <input type="hidden" name="oc_precio_total" value="">
-                                <span>S/ 0.00</span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <a href="{{route('admin.ordenCompra.index')}}" class="btn btn-secondary">Cancelar</a>
-                <button class="btn-orden-compra-update btn btn-primary">Modificar</button>
-            </div>
-        </div>
-        </form>
-    </div>
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="/css/admin.css">
-@stop
-
-@section('js')
-    <script>
-        let urlGetProducts = '{{ route('cotizacion.getProduct', ':id') }}';
-        let urlGetProductsxCate = '{{ route('cotizacion.getProductsxCate', ':id') }}';
-
-        /* const d = document,
+const d = document,
             $selectProds = d.getElementById("select-prods"),
             $contentMedidasSen = d.getElementById("content-medidas-señales"),
             $btnAddItem = d.querySelector(".btn-agregar-item"),
@@ -327,11 +82,10 @@
             if (e.target.matches('.btn-agregar-item')) {
                 //console.log($selectProds.value);
                 e.preventDefault();
-                let uri = '{{ route('cotizacion.getProduct', ':id') }}';
-                uri = uri.replace(':id', $selectProds.value);
+                let urlGetProducts2 = urlGetProducts.replace(':id', $selectProds.value);
                 //console.log(uri);
-                peticiones({
-                    url: uri,
+                ajaxFetch({
+                    url: urlGetProducts2,
                     ops: {
                         method: "GET",
                         headers: {
@@ -372,7 +126,7 @@
                             cell5 = row.insertCell(4),
                             cell6 = row.insertCell(5),
                             cell7 = row.insertCell(6);
-                        cell1.innerHTML = `<span class='nro-item'>${$tableItems.rows.length++}</span>`;
+                        cell1.innerHTML = `<span class='nro-item'>${index + 1}</span>`;
                         cell2.innerHTML =
                             `<input type='text' name='items[${index}][nombre]' class='nombre-item form-control' value='${descrip}'>`;
                         cell3.innerHTML =
@@ -402,7 +156,7 @@
                     cell5 = row.insertCell(4),
                     cell6 = row.insertCell(5),
                     cell7 = row.insertCell(6);
-                cell1.innerHTML = `<span class='nro-item'>${$tableItems.rows.length++}</span>`;
+                cell1.innerHTML = `<span class='nro-item'>${index + 1}</span>`;
                 cell2.innerHTML =
                     `<input type='text' name='items[${index}][nombre]' class='nombre-item form-control' value=''>`;
                 cell3.innerHTML =
@@ -453,12 +207,10 @@
                     el.setAttribute("disabled");
                 })
                 if (e.target.value != 0) {
-
-                    let uri = '{{ route('cotizacion.getProductsxCate', ':id') }}';
-                    uri = uri.replace(':id', e.target.value);
+                    let urlGetProductsxCate2 = urlGetProductsxCate.replace(':id', e.target.value);
                     //console.log(uri);
-                    peticiones({
-                        url: uri,
+                    ajaxFetch({
+                        url: urlGetProductsxCate2,
                         ops: {
                             method: "GET",
                             headers: {
@@ -602,29 +354,3 @@
                 d.getElementById('form-ordenCompra-update').submit();
             }
         }
-
-        async function peticiones(options) {
-            let {
-                url,
-                ops,
-                success,
-                error
-            } = options;
-            try {
-                let res = await fetch(url, ops),
-                    json = await res.json();
-
-                if (!res.ok) throw {
-                    status: res.status,
-                    statusText: res.statusText
-                };
-                //console.log(json);
-                success(json);
-            } catch (err) {
-                console.log(err);
-                error(err);
-            }
-        } */
-    </script>
-    <script type="module" src="{{asset('js/admin/ocEdit.js')}}"></script>
-@stop

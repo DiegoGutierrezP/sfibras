@@ -210,7 +210,7 @@
 
 @section('js')
     <script>
-        const d = document,
+        /* const d = document,
             $checkCliente = d.getElementById('check-cliente-nuevo'),
             $formClonar = d.getElementById('form-clonar-coti');
 
@@ -264,6 +264,7 @@
                     $formClonar.submit();
                 }
             }
-        })
+        }) */
     </script>
+    <script src="{{ asset('js/admin/cotizacionClonar.js') }}"></script>
 @stop

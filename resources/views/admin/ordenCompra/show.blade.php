@@ -76,7 +76,18 @@
             })
         @endif
 
-        var idOC = d.querySelector(".id-oc").value;
+        let urlUpdateDatesOC = '{{ route('admin.ordenCompra.updateDatesOC') }}';
+        let urlAddFilesOC = '{{ route('admin.files.addFilesOC') }}';
+        let urlUpdateFilesOC = '{{ route('admin.files.updateFilesOC') }}';
+        let urlDeleteFilesOC = '{{ route('admin.files.deleteFilesOC', ':id') }}';
+        let urlGetFilesOC = '{{ route('admin.files.getFilesOC', ':id') }}';
+        let urlGetDatesOC = '{{ route('admin.ordenCompra.getDatesOC', ':id') }}';
+        let urlAddPagosOC = '{{ route('admin.pagos.addPagosOC') }}';
+        let urlUpdatePagosOC = '{{ route('admin.pagos.updatePagosOC') }}';
+        let urlGetPagosOC = '{{ route('admin.pagos.getPagosOC', ':id') }}';
+        let token = "{{ csrf_token() }}";
+
+        /* var idOC = d.querySelector(".id-oc").value;
 
         document.addEventListener("DOMContentLoaded",async ()=>{
             await cargarStepsDate();
@@ -96,9 +107,9 @@
                 let ext = tipo_archivo.split('/').pop();
                 $objectTag.innerHTML = '';
                 if(ext=="pdf"){
-                    /* $objectTag.setAttribute('data', `/storage/${url}`);
-                    $objectTag.setAttribute('type', tipo_archivo);
-                    $objectTag.classList.remove('d-none'); */
+                    //$objectTag.setAttribute('data', `/storage/${url}`);
+                    //$objectTag.setAttribute('type', tipo_archivo);
+                    //$objectTag.classList.remove('d-none');
                     var object = document.querySelector('#filesOCModal #fileshow-oc');
                     object.setAttribute('data', `/storage/${url}`);
                     var clone = object.cloneNode(true);
@@ -176,6 +187,7 @@
                 error(err);
                 return false;
             }
-        }
+        } */
     </script>
+    <script type="module" src="{{asset('js/admin/ocShow.js')}}"></script>
 @stop

@@ -267,7 +267,11 @@
         })
     @endif
 
-    const d= document;
+    let urlOcCreate = '{{ route('admin.ordenCompra.create', ':codigo') }}';
+    let urlInfoAceptada = '{{ route('cotizacion.informationAceptada') }}';
+    let urlOcShow ='{{route('admin.ordenCompra.show', ':id')}}';
+    let token = "{{ csrf_token() }}";
+    /* const d= document;
 
     d.addEventListener("click",e=>{
         if (e.target.matches('.btn-estado-coti')) {
@@ -340,60 +344,6 @@
             peticiones(obj);
         }
 
-                /* if(d.querySelector('input[name="estadosCoti"]:checked')){
-                    $('#estadosCotiModal').modal('hide');
-                    let estado = d.querySelector('input[name="estadosCoti"]:checked').value;
-                    if(estado == 1 || estado == 5){
-                        let codigoCoti = d.querySelector('#estadosCotiModal input[name="codigo_coti"]').value;
-                        let url = '{{ route('admin.cotizacion.cambiarEstado') }}';
-                        let obj = {
-                            url : url,
-                            ops: {
-                                method: "POST",
-                                headers: {
-                                    "Content-type": "application/json; charset=utf-8",
-                                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                                },
-                                body: JSON.stringify({
-                                    codigoCoti: codigoCoti,
-                                    estadoCoti:estado
-                                })
-                            },
-                            success: json => {
-                                //Livewire.emitTo('admin.cotizacion-index', 'render');
-                                window.location.href
-                                Swal.fire({
-                                    position: 'top-end',
-                                    icon: json.data.icon,
-                                    title: json.data.msg,
-                                    background: '#E6F4EA',
-                                    toast: true,
-                                    color: '#333',
-                                    showConfirmButton: false,
-                                    timer: 4000,
-                                    timerProgressBar: true,
-                                })
-                            },
-                            error: err=>{
-                                Swal.fire({
-                                    position: 'top-end',
-                                    icon: err.data.icon,
-                                    title: err.data.msg,
-                                    background: '#FFD2D2',
-                                    toast: true,
-                                    color: '#D8000C',
-                                    showConfirmButton: false,
-                                    timer: 4000,
-                                    timerProgressBar: true,
-                                })
-                            }
-                        }
-
-                        ajax(obj);
-                    }
-                } */
-
-
     })
     async function peticiones(options) {
             let {url,ops,success,error} = options;
@@ -411,7 +361,8 @@
                 console.log(err);
                 error(err);
             }
-        }
+        } */
 
     </script>
+    <script type="module" src="{{asset('js/admin/cotizacionShow.js')}}"></script>
 @stop

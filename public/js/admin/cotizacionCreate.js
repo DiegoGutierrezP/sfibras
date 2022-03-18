@@ -1,330 +1,6 @@
-@extends('adminlte::page')
+import ajaxFetch from "../../helpers/ajaxFetch.js";
 
-@section('title', 'Cotizacion')
-
-@section('content_header')
-    <h1>Generar Cotizacion</h1>
-@stop
-
-@section('content')
-    <div class="card">
-        <form action="{{route('admin.cotizacion.generar')}}" id="form-cotizacion" method="POST">
-            @csrf
-        <div class="card-header">
-            <div class="content-valor-dolar float-right d-flex align-items-center ">
-                <h5 class="pr-2" >Valor del dolar hoy:</h5>
-                <div class="input-group" style="width: 120px">
-                    <div class="input-group-prepend">
-                    <div class="input-group-text">$</div>
-                    </div>
-                    <input type="number" name="valor_dolar"  class="form-control" readonly value="0">
-                </div>
-            </div>
-
-        </div>
-        <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-lg-7 col-md-7 col-sm-12">
-                    <div class="form-group">
-                        <label>Empresa</label>
-                        <select name="empresa_id" class="select-miEmpresa form-control">
-                            @foreach ($empresas as $emp)
-                                <option value="{{ $emp->id }}">{{ $emp->razon_social }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <div class="content-select-clientes ">
-                            <label>Cliente</label>
-                            <select name="cliente_id" id="select-clientes" class="form-control">
-                                @foreach ($clientes as $cli)
-                                    <option value="{{ $cli->id }}">{{ $cli->nombre }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                    </div>
-                    <div class="content-form-nuevo-cliente d-none p-1">
-                        <label>Nuevo Cliente</label>
-
-                        <div id="form-nuevo-cliente">
-                            <div class="form-group">
-                                <label class="form-check-label">Nombre</label>
-                                <input type="text" class="form-control" name="nombreCliente" value=""  placeholder="Nombre del Cliente">
-                                <small class="error-nombre text-danger"></small>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-check-label">Dni</label>
-                                <input type="text" class="form-control" name="dniCliente" placeholder="Dni del cliente">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-check-label">Ruc</label>
-                                <input type="text" class="form-control" name="rucCliente" placeholder="Ruc del cliente">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-check-label">Telefono</label>
-                                <input type="text" class="form-control" name="telefonoCliente" placeholder="Telefono del cliente">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-check-label">Email</label>
-                                <input type="text" class="form-control" name="emailCliente" placeholder="Email del cliente">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-check-label">Dirección</label>
-                                <input type="text" class="form-control" name="direccionCliente" placeholder="Direccion del cliente">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5 col-md-5 col-sm-12">
-                    <table class="table table-borderless mb-0">
-                        <tr>
-                            <th>Fecha Emision</th>
-                            <td>
-                                <input type="date" name="fecha_emision" class="input-fecha-emision form-control ">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Expiración</th>
-                            <td>
-                                <input type="number" name="dias_expiracion" class="dias-expiracion form-control" value="10">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Tiempo entrega</th>
-                            <td>
-                                <input type="number" name="tiempo_entrega" class="tiempo-entrega form-control" placeholder="en dias" value="5">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th colspan="2">Tipo de moneda</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="py-0">
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input type="radio" name="tipo_moneda" value="soles" checked class="tipo-moneda form-check-input">
-                                        <span>Soles</span>
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input type="radio" name="tipo_moneda" value="dolares" class="tipo-moneda radio-dolar form-check-input">
-                                        <span>Dolares</span>
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th colspan="2">Opcionales</th>
-                        </tr>
-                        <tr>
-                            <td  colspan="2" class="py-0">
-                                <div class="d-flex flex-column">
-                                    <label class="form-check-label mb-1">
-                                        <input type="checkbox" name="cliente_nuevo" id="check-cliente-nuevo">
-                                    <span>Cliente nuevo</span>
-                                    </label>
-                                    <label class="form-check-label mb-1">
-                                        <input type="checkbox" id="check-sin-igv">
-                                        <span>Sin IGV</span>
-                                    </label>
-                                    <label class="form-check-label mb-1">
-                                        <input type="checkbox" id="check-envio">
-                                        <span>Envio</span>
-                                    </label>
-                                </div>
-                                <div class="content-envio-precio my-0 d-none">
-                                    <small class="py-0 px-1">Tenga en cuenta el tipo de moneda seleccionado*</small>
-                                    <table class="table p-0 m-0">
-                                        <tr>
-                                            <td width="50%"><label>Envio:</label></td>
-                                            <td width="50%"><input type="number" class="precio-envio form-control" placeholder="precio"></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th colspan="2" class="pt-2">Forma de Pago</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="pt-0">
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input type="radio" name="formaPago" value="contado" checked class="forma-pago form-check-input">
-                                        <span>Contado</span>
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input type="radio" name="formaPago" value="50adelanto" class="forma-pago form-check-input">
-                                        <span>Adelanto 50%</span>
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input type="radio" name="formaPago" value="otro"
-                                            class="forma-pago form-check-input">
-                                        <span>Otro</span>
-                                    </label>
-                                </div>
-
-                                <div class="content-otro-formaPago form-group row mt-2 p-2 d-none">
-                                    <label class="col-sm-4 col-form-label">Forma Pago:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="otra_forma_pago" class="text-forma-pago form-control" placeholder="otra forma de pago">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                    </table>
-                    <div class="form-group mt-2">
-                        <label>Referencia</label>
-                        <input type="text" name="referencia_cotizacion" class="referencia-cotizacion form-control" placeholder="referencia de busqueda(opcional)">
-                    </div>
-
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Introducción</label>
-                <textarea rows="3" name="intro_cotizacion" class="intro-cotizacion form-control">La presente es para saludarlo y a su vez enviarle la cotización solicitada
-                </textarea>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label>Elija una categoria</label>
-                <div class="row">
-                    <div class="col-8">
-                        <select name="" id="select-cates-prods" class="form-control">
-                            <option value="0" selected>--Eliga una Categoria--</option>
-                            @foreach ($catesprod as $cate)
-                                <option value="{{ $cate->id }}">{{ $cate->nombre }}</option>
-                            @endforeach
-                        </select>
-                        <select  id="select-prods" class="form-control my-3">
-                            <option value="0">--Eliga un item--</option>
-                        </select>
-                        <div class="form-group d-none" id="content-medidas-señales">
-                            <label>Medidas</label>
-                            <table>
-                                <tr>
-                                    <td ><input type="number" disabled class="input-medidas form-control"></td>
-                                    <td class="px-3">X</td>
-                                    <td ><input type="number" disabled class="input-medidas form-control"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column align-items-center justify-content-center col-4">
-                        <button class="btn-agregar-item btn btn-sfibras mb-3" disabled>Agregar Item</button>
-                        <a href="" class="btn-agregar-fila-vacia">Agregar Fila Vacia</a>
-                    </div>
-                </div>
-
-            </div>
-
-            <hr>
-
-            <div class="table-responsive">
-                <table class="table-items-cotizacion table table-sm table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Item</th>
-                            <th>Descripción</th>
-                            <th>Cantidad</th>
-                            <th>Precio/u</th>
-                            <th>Total</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="row position-relative my-4 ">
-                    <div class="w-100">
-                    <table class="table-cotizacion-totales table table-sm table-bordered">
-                        <tr>
-                            <td>Neto</td>
-                            <td>
-                                <input type="hidden" name="coti_precio_neto" value="">
-                                <span>S/ 0.00</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Descuento</td>
-                            <td>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                    <div class="input-group-text">%</div>
-                                    </div>
-                                    <input type="number" name="coti_descuento" class="input-descuento form-control" value="0">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Sub Total</td>
-                            <td>
-                                <input type="hidden" name="coti_precio_subtotal" value="">
-                                <span>S/ 0.00</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>IGV</td>
-                            <td>
-                                <input type="hidden" name="coti_precio_igv" value="">
-                                <span>S/ 0.00</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Envio</td>
-                            <td>
-                                <input type="hidden" name="coti_precio_envio" value="">
-                                <span>S/ 0.00</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Total</td>
-                            <td>
-                                <input type="hidden" name="coti_precio_total" value="">
-                                <span>S/ 0.00</span>
-                            </td>
-                        </tr>
-                    </table>
-                    </div>
-            </div>
-
-            <div class="position relative">
-                <label >Conclusión</label>
-                <textarea  rows="3" name="conclusion_cotizacion" class="conclusion-cotizacion form-control">Sin otro particular, quedamos de Ustedes.</textarea>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="float-right">
-                <a href="{{route('admin.cotizacion.index')}}" class="btn btn-secondary">Cancelar</a>
-               {{--  <button class="btn-cotizacion-pdf btn btn-success">Generar</button> --}}
-                <button class="btn-cotizacion-guardar btn btn-primary">Generar</button>
-            </div>
-        </div>
-        </form>
-
-    </div>
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="/css/admin.css">
-@stop
-
-@section('js')
-    <script>
-        let urlGetProduct = '{{ route('cotizacion.getProduct', ':id') }}';
-        let urlGetProductxCate = '{{ route('cotizacion.getProductsxCate', ':id') }}';
-        /* const d = document,
+const d = document,
             $selectProds = d.getElementById("select-prods"),
             $contentMedidasSen = d.getElementById("content-medidas-señales"),
             $btnAddItem = d.querySelector(".btn-agregar-item"),
@@ -352,7 +28,7 @@
             $('#select-clientes').select2();
 
             //api dolar
-            peticiones({
+            ajaxFetch({
                 url:'https://deperu.com/api/rest/cotizaciondolar.json',
                 ops: {
                     method: "GET",
@@ -424,8 +100,7 @@
 
                 let medida1 = parseFloat(d.getElementsByClassName('input-medidas')[0].value),
                 medida2 = parseFloat(d.getElementsByClassName('input-medidas')[1].value);
-
-                console.log(typeof(medida1),medida1,typeof(medida2),medida2);
+                //console.log(typeof(medida1),medida1,typeof(medida2),medida2);
                 if(medida1 && medida2){
                     $btnAddItem.removeAttribute("disabled");
                 }else{
@@ -442,11 +117,9 @@
             if(e.target.matches('.btn-agregar-item')){
                 //console.log($selectProds.value);
                 e.preventDefault();
-                let uri = '{{ route('cotizacion.getProduct', ':id') }}';
-                    uri = uri.replace(':id', $selectProds.value);
-               //console.log(uri);
-                peticiones({
-                        url: uri,
+                let urlGetProduct2 = urlGetProduct.replace(':id', $selectProds.value);
+                ajaxFetch({
+                        url: urlGetProduct2,
                         ops: {
                             method: "GET",
                             headers: {
@@ -463,22 +136,20 @@
                                     precioMedida *= parseFloat(el.value)/100;
 
                                 })
-                                console.log(precioMedida);
                                 precioUnit = (precioUnit * precioMedida).toFixed(2);
                             }
                             //TIPO MONEDA
                             let tipoMoneda = d.querySelector('input[name="tipo_moneda"]:checked').value;
                             if(tipoMoneda == 'dolares'){
                                 let dolar = d.querySelector('input[name="valor_dolar"]').value;
-                               //console.log((precioUnit / dolar).toFixed(2)) ;
                                precioUnit = (precioUnit / dolar).toFixed(2);
                             }
 
                             let precioTotal = precioUnit;
 
                             let index = $tableItems.rows.length,
-                            row = $tableItems.insertRow($tableItems.rows.length);
 
+                            row = $tableItems.insertRow($tableItems.rows.length);
                             let cell1 = row.insertCell(0),
                                 cell2 = row.insertCell(1),
                                 cell3 = row.insertCell(2),
@@ -486,7 +157,7 @@
                                 cell5 = row.insertCell(4),
                                 cell6 = row.insertCell(5),
                                 cell7 = row.insertCell(6);
-                            cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
+                            cell1.innerHTML = `<span>${index+1}</span>`;
                             cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='form-control' placeholder='nombre del item' value='${descrip}'>`;
                             cell3.innerHTML = `<textarea rows="1" name='items[${index}][descrip]' class='form-control' placeholder='descripcion (opcional)'></textarea>`;
                             cell4.innerHTML = `<input type='number' name='items[${index}][cantidad]' min='1' class='cantidad-item form-control' value='1'>`;
@@ -510,7 +181,7 @@
                                 cell5 = row.insertCell(4),
                                 cell6 = row.insertCell(5),
                                 cell7 = row.insertCell(6);
-                            cell1.innerHTML = `<span>${$tableItems.rows.length++}</span>`;
+                            cell1.innerHTML = `<span>${index+1}</span>`;
                             cell2.innerHTML = `<input type='text' name='items[${index}][nombre]' class='form-control' placeholder='nombre del item'  value=''>`;
                             cell3.innerHTML = `<textarea rows="1" name='items[${index}][descrip]' class='form-control' placeholder='descripcion (opcional)'></textarea>`;
                             cell4.innerHTML = `<input type='number' name='items[${index}][cantidad]' min='1' class='cantidad-item form-control' value='1'>`;
@@ -556,12 +227,10 @@
                     el.setAttribute("disabled");
                 })
                 if (e.target.value != 0) {
+                    let urlGetProductxCate2 =  urlGetProductxCate.replace(':id', e.target.value);
+                    ajaxFetch({
 
-                    let uri = '{{ route('cotizacion.getProductsxCate', ':id') }}';
-                    uri = uri.replace(':id', e.target.value);
-                   //console.log(uri);
-                    peticiones({
-                        url: uri,
+                        url: urlGetProductxCate2,
                         ops: {
                             method: "GET",
                             headers: {
@@ -804,23 +473,3 @@
             }
         }
 
-        async function peticiones(options) {
-            let {url,ops,success,error} = options;
-            try {
-                let res = await fetch(url, ops),
-                    json = await res.json();
-
-                if (!res.ok) throw {
-                    status: res.status,
-                    statusText: res.statusText
-                };
-                //console.log(json);
-                success(json);
-            } catch (err) {
-                console.log(err);
-                error(err);
-            }
-        } */
-    </script>
-    <script type="module" src="{{ asset('js/admin/cotizacionCreate.js') }}" ></script>
-@stop

@@ -153,11 +153,11 @@
 
 @push('js')
     <script>
-        let d = document;
+        //let d = document;
 
-        const $tableFiles = d.querySelector('.table-files-oc tbody');
+        //const $tableFiles = d.querySelector('.table-files-oc tbody');
 
-        d.addEventListener("click",e=>{
+        /* d.addEventListener("click",e=>{
             if(e.target.matches('.step-action')){
                 let date = e.target.parentNode.querySelector('.step-date').textContent;
                 let obs = e.target.parentNode.querySelector('.step-date').dataset.obs;
@@ -362,9 +362,9 @@
                     }
                 })
             }
-        })
+        }) */
 
-        function cargarFilesOC(){
+        /* function cargarFilesOC(){
             let url = '{{ route('admin.files.getFilesOC', ':id') }}';
             url = url.replace(':id', idOC);
             ajax({
@@ -441,7 +441,7 @@
                     console.log(err)
                 }
             });
-        }
+        } */
 
     </script>
 @endpush

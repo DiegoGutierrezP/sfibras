@@ -55,7 +55,10 @@
             timerProgressBar: true,
             })
         @endif
-        const d = document;
+
+        let urlOcIndex = "{{ route('admin.ordenCompra.index') }}";
+
+        /* const d = document;
 
         d.addEventListener("DOMContentLoaded", e => {
 
@@ -82,9 +85,9 @@
                     //"url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json",
 
                 },
-                /* "drawCallback": function( settings ) {
-                    $('ul.pagination').addClass("pagination-sm");
-                }, */
+                //"drawCallback": function( settings ) {
+                //    $('ul.pagination').addClass("pagination-sm");
+                //},
                 processing: true,
                 serverSide: true,
                 responsive: true,
@@ -148,6 +151,7 @@
                 ],
             });
 
-        })
+        }) */
     </script>
+    <script src="{{asset('js/admin/ocIndex.js')}}"></script>
 @stop
