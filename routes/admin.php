@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AgendaController;
 use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,7 @@ Route::get('/',function(){
 Route::get('clientes',[ClienteController::class,'index'])->name('admin.clientes.index');
 Route::get('clientes/{id}',[ClienteController::class,'show'])->name('admin.clientes.show');
 Route::get('clientes/{id}/oc',[ClienteController::class,'getOCxCliente'])->name('admin.clientes.getOCxCliente');
-Route::get('clientes/deudas/oc/{id}',[ClienteController::class,'getDeudas'])->name('admin.clientes.getDeudas');
+Route::get('clientes/{id}/deudas/oc',[ClienteController::class,'getDeudas'])->name('admin.clientes.getDeudas');
 
 //Cotizaciones
 Route::get('cotizacion',[CotizacionController::class,'index'])->name('admin.cotizacion.index');
@@ -58,5 +59,7 @@ Route::post('pagos/oc',[PagosController::class,'addPagoOC'])->name('admin.pagos.
 Route::post('pagos/update/oc',[PagosController::class,'updatePagoOC'])->name('admin.pagos.updatePagosOC');
 
 Route::resource('miEmpresa',MiEmpresaController::class)->only(['index','edit','update'])->names('admin.miEmpresa');
+
+Route::get('agenda',[AgendaController::class,'index'])->name('admin.agenda.index');
 
 

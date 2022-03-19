@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
 use App\Models\OrdenCompra;
+use App\Models\Pago;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 
@@ -37,11 +38,25 @@ class ClienteController extends Controller
         }
     }
 
-    public function getDeudas(Request $request,$id){
-        if($request->ajax()){
-            $ocs = OrdenCompra::where('cliente_id',$id);
-            return Datatables::of($ocs)->make(true);
+    public function getDeudas($id){
+        $ocs = OrdenCompra::where('cliente_id',$id)->where('estadoPago',1)->get();
+
+        $dataDeuda=[];
+        foreach($ocs as $oc){
+            //$deudas[] = $oc->pagos->sum('monto');
+            $deuda = (float)$oc->precioTotalOC - $oc->pagos->sum('monto');
+            $mon = $oc->moneda == 'dolares'? '$.':'S/.';
+            $dataDeuda[] = ["idOC"=>$oc->id,"codigoOC"=>$oc->codigoOC,"deudaOC"=>$mon." ".number_format($deuda,2)];
         }
+
+        return Datatables::of($dataDeuda)
+        ->addColumn('actions',function($dataDeuda){
+            return '<a href="'.route('admin.ordenCompra.show',$dataDeuda["idOC"]).'"
+            class="btn btn-sm btn-sfibras2"><i class="fas fa-eye"></i></a>';
+        })
+        ->rawColumns(['actions'])
+        ->make(true);
+        //dd($dataDeuda);
     }
 
 }

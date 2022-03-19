@@ -58,7 +58,6 @@
                             <thead>
                                 <tr>
                                     <th>Codigo</th>
-                                    <th>Cliente</th>
                                     <th>Total</th>
                                     <th>Estado Pedido</th>
                                     <th>Estado Pago</th>

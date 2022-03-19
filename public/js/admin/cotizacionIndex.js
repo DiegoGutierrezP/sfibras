@@ -68,11 +68,9 @@ d.addEventListener("DOMContentLoaded", (e) => {
                     if (data == 1) {
                         return '<h5 ><span class=" badge badge-warning ">Pendiente</span></h5>';
                     }
-                    if (data == 2) {
-                        return '<h5><span class=" badge badge-success" >Aceptado</span></h5>';
-                    }
-                    if (data == 3) {
-                        return '<h5><span class=" badge badge-primary" >Aceptado/Modificado</span></h5>';
+                    if (data == 2 || data == 3) {
+                        let esta = data == 2? 'Aceptado' : 'Aceptado/Modificado';
+                        return `<h5><span class=" badge badge-primary" >${esta}</span></h5>`;
                     }
                     if (data == 4) {
                         return '<h5><span class=" badge badge-secondary" >Expirado</span></h5>';

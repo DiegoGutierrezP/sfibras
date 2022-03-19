@@ -38,11 +38,6 @@ d.addEventListener("DOMContentLoaded", e => {
                 name: 'codigoOC',
             },
             {
-                data: 'clienteNombre',
-                name: 'clienteNombre',
-                orderable: false
-            },
-            {
                 data: 'precioConMoneda',
                 name: 'precioConMoneda',
             },
@@ -122,8 +117,14 @@ d.addEventListener("DOMContentLoaded", e => {
                 name: 'codigoOC',
             },
             {
-                data: 'precioTotalOC',
-                name: 'precioTotalOC',
+                data: 'deudaOC',
+                name: 'deudaOC',
+                orderable: false
+            },
+            {
+                data: 'actions',
+                name: 'actions',
+                searchable: false,
                 orderable: false
             },
         ],

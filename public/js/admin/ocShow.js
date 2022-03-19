@@ -235,10 +235,7 @@ d.addEventListener("click", e=>{
         $errorMontoPagoAdd.textContent = '';
         $errorFormaPagoAdd.textContent = '';
         $errorFilePagoAdd.textContent = '';
-        $formAddPago.fecha_pago_oc.value ='';
-        $formAddPago.pago_oc.value = '';
-        $formAddPago.forma_pago_oc.value = '';
-        $formAddPago.file_pago_oc.value = '';
+        $formAddPago.reset();
         d.querySelector('.btn-registrar-pago-oc').removeAttribute('disabled');
         $("#addPagoModal").modal('show');
     }
@@ -304,10 +301,11 @@ d.addEventListener("click", e=>{
         $errorMontoPagoEdit.textContent = '';
         $errorFormaPagoEdit.textContent = '';
         $errorFilePagoEdit.textContent = '';
-        $formUpdatePago.fecha_pago_oc.value ='';
+        /* $formUpdatePago.fecha_pago_oc.value ='';
         $formUpdatePago.pago_oc.value = '';
         $formUpdatePago.forma_pago_oc.value = '';
-        $formUpdatePago.file_pago_oc.value = '';
+        $formUpdatePago.file_pago_oc.value = ''; */
+        $formUpdatePago.reset();
         d.querySelector('#updatePagoModal .btn-update-pago-oc').removeAttribute('disabled');
         $formUpdatePago.id_pago_oc.value = e.target.dataset.idpago;
         $formUpdatePago.fecha_pago_oc.value = e.target.dataset.fechapago;

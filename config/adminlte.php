@@ -239,12 +239,6 @@ return [
             'type'         => 'fullscreen-widget',
             'topnav_right' => false,
         ],
-
-        // Sidebar items:
-        /* [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ], */
         [
             'text' => 'Dashboard',
             'url'  => 'admin',
@@ -265,6 +259,12 @@ return [
             'label'       => 4,
             'label_color' => 'success',
         ], */
+        [
+            'text' => 'Agenda',
+            'route'  => 'admin.agenda.index',
+            'icon'=>'fas fa-calendar'
+            /* 'can'  => 'manage-blog', */
+        ],
         ['header' => 'ADMINISTRADOR'],
         [
             'text' => 'Clientes',
@@ -383,35 +383,20 @@ return [
         'FullCalendar' => [
             'active' => true,
             'files' => [
-                /* [
+                [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js',
-                ], */
-                /* [
+                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js',
+                ],
+                [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js',
+                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.2/locales-all.js',
                 ],
                 [
                     'type' => 'css',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css',
-                ], */
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js',
-                ],
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js',
-                ],
-                [
-                    'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css',
+                    'location' => '//cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.css',
                 ],
             ],
         ],
