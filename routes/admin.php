@@ -61,5 +61,7 @@ Route::post('pagos/update/oc',[PagosController::class,'updatePagoOC'])->name('ad
 Route::resource('miEmpresa',MiEmpresaController::class)->only(['index','edit','update'])->names('admin.miEmpresa');
 
 Route::get('agenda',[AgendaController::class,'index'])->name('admin.agenda.index');
+Route::get('agenda/evento',[AgendaController::class,'getEvents'])->name('admin.agenda.getEvents');
+Route::post('agenda/evento/store',[AgendaController::class,'storeEvent'])->name('admin.agenda.storeEvent');
 
 

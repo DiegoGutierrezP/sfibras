@@ -25,6 +25,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="form-agenda">
+                        @csrf
                         <div class="form-group">
                             <label for="title">Titulo</label>
                             <input type="text" class="form-control" name="title" id="title">
@@ -35,17 +36,17 @@
                         </div>
                         <div class="form-group">
                             <label for="start">Fecha de Inicio</label>
-                            <input type="date" name="start" class="form-control" id="start">
+                            <input type="datetime-local" name="start" class="form-control" id="start">
                         </div>
                         <div class="form-group">
                             <label for="end">Fecha de Final</label>
-                            <input type="date" name="end" class="form-control" id="end">
+                            <input type="datetime-local" name="end" class="form-control" id="end">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary close-btn" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn-update-pago-oc btn btn-primary" data-row="">Actualizar</button>
+                    <button type="button" class="btn-registrar-event btn btn-primary" data-row="">Registrar</button>
                 </div>
 
             </div>
@@ -58,5 +59,9 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/admin/agenda.js') }}"></script>
+    <script>
+        let urlGetEvents = '{{route('admin.agenda.getEvents')}}';
+        let urlStoreEvent = '{{route('admin.agenda.storeEvent')}}';
+    </script>
+    <script type="module" src="{{ asset('js/admin/agenda.js') }}"></script>
 @stop
