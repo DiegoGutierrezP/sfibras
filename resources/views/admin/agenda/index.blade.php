@@ -29,18 +29,21 @@
                         <div class="form-group">
                             <label for="title">Titulo</label>
                             <input type="text" class="form-control" name="title" id="title">
+                            <small class="text-danger error-title"></small>
                         </div>
                         <div class="form-group">
                             <label for="descrip">Descripcion</label>
-                            <textarea name="descrip" id="descrip" class="form-control" rows="2"></textarea>
+                            <textarea name="descripcion" id="descrip" class="form-control" rows="2"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="start">Fecha de Inicio</label>
                             <input type="datetime-local" name="start" class="form-control" id="start">
+                            <small class="text-danger error-start"></small>
                         </div>
                         <div class="form-group">
                             <label for="end">Fecha de Final</label>
                             <input type="datetime-local" name="end" class="form-control" id="end">
+                            <small class="text-danger error-end"></small>
                         </div>
                     </form>
                 </div>

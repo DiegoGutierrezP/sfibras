@@ -33,9 +33,12 @@ class AgendaController extends Controller
                 'errors'  => $validator->errors()
             ]);
         }
+
+        Evento::create($request->all());
+
         return response()->json([
             'res'=>true,
-            'data'=>$request->all()
+            'data'=>['icon'=>'success','msg'=>'Evento registrado correctamente']
         ]);
     }
 }
