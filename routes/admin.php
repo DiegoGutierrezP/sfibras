@@ -63,5 +63,7 @@ Route::resource('miEmpresa',MiEmpresaController::class)->only(['index','edit','u
 Route::get('agenda',[AgendaController::class,'index'])->name('admin.agenda.index');
 Route::get('agenda/evento',[AgendaController::class,'getEvents'])->name('admin.agenda.getEvents');
 Route::post('agenda/evento/store',[AgendaController::class,'storeEvent'])->name('admin.agenda.storeEvent');
+Route::post('agenda/evento/update',[AgendaController::class,'updateEvent'])->name('admin.agenda.updateEvent');
+Route::delete('agenda/evento/{id}',[AgendaController::class,'deleteEvent'])->name('admin.agenda.deleteEvent');
 
 

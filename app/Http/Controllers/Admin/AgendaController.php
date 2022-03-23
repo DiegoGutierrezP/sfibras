@@ -41,4 +41,38 @@ class AgendaController extends Controller
             'data'=>['icon'=>'success','msg'=>'Evento registrado correctamente']
         ]);
     }
+
+    public function updateEvent(Request $request){
+        $rules = [
+            'title'=>'required',
+            'start'=>'required|date',
+            'end'=>'required'
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'res' => false,
+                'errors'  => $validator->errors()
+            ]);
+        }
+
+        $event = Evento::find($request->id_event);
+        $event->update($request->all());
+
+        return response()->json([
+            'res'=>true,
+            'data'=>['icon'=>'success','msg'=>'Evento actualizado correctamente']
+
+        ]);
+    }
+
+    public function deleteEvent($id){
+        $event = Evento::find($id);
+        $event->delete();
+
+        return response()->json([
+            'res'=>true,
+            'data'=>['icon'=>'success','msg'=>'Evento eliminado']
+        ]);
+    }
 }
