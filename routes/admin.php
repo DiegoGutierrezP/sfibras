@@ -5,11 +5,13 @@ use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CotizacionController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\MiEmpresaController;
 use App\Http\Controllers\Admin\OrdenCompraController;
 use App\Http\Controllers\Admin\PagosController;
 use App\Models\OrdenCompra;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/',function(){
     return view('admin.index');
@@ -65,5 +67,9 @@ Route::get('agenda/evento',[AgendaController::class,'getEvents'])->name('admin.a
 Route::post('agenda/evento/store',[AgendaController::class,'storeEvent'])->name('admin.agenda.storeEvent');
 Route::post('agenda/evento/update',[AgendaController::class,'updateEvent'])->name('admin.agenda.updateEvent');
 Route::delete('agenda/evento/{id}',[AgendaController::class,'deleteEvent'])->name('admin.agenda.deleteEvent');
+
+//Dashboard
+Route::get('dashboard/infoCards',[DashboardController::class,'getInfoCards'])->name('admin.dashboard.getInfoCards');
+Route::get('dashboard/ingresosChart',[DashboardController::class,'getIngresosUltimos4Meses'])->name('admin.dashboard.getIngresosUltimos4Meses');
 
 
