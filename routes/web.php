@@ -24,6 +24,8 @@ Route::view('nosotros','nosotros')->name('nosotros');
 
 Route::get('servicios/{servicio?}',Servicios::class)->name('servicios');
 
+Route::view('contacto','contacto')->name('contacto');
+
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/dashboard', function () {
         return view('dashboard');
