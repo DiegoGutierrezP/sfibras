@@ -71,5 +71,6 @@ Route::delete('agenda/evento/{id}',[AgendaController::class,'deleteEvent'])->nam
 //Dashboard
 Route::get('dashboard/infoCards',[DashboardController::class,'getInfoCards'])->name('admin.dashboard.getInfoCards');
 Route::get('dashboard/ingresosChart',[DashboardController::class,'getIngresosUltimos4Meses'])->name('admin.dashboard.getIngresosUltimos4Meses');
+Route::get('dashboard/pedidosChart',[DashboardController::class,'getPedidosUltimos4Meses'])->name('admin.dashboard.getPedidosUltimos4Meses');
 
 

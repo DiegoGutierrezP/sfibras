@@ -243,14 +243,13 @@ return [
             'text' => 'Dashboard',
             'url'  => 'admin',
             'icon'=>'fas fa-tachometer-alt fa-fw'
-            /* 'can'  => 'manage-blog', */
         ],
         [
+            'key'=>'miEmpresa',
             'text' => 'Mi Empresa',
             'route'  => 'admin.miEmpresa.index',
             'active'=>['admin/miEmpresa/*'],
             'icon'=>'fas fa-building'
-            /* 'can'  => 'manage-blog', */
         ],
         /* [
             'text'        => 'pages',
@@ -259,12 +258,12 @@ return [
             'label'       => 4,
             'label_color' => 'success',
         ], */
-        [
+        /* [
+            'key' => 'agenda',
             'text' => 'Agenda',
             'route'  => 'admin.agenda.index',
-            'icon'=>'fas fa-calendar'
-            /* 'can'  => 'manage-blog', */
-        ],
+            'icon'=>'fas fa-calendar',
+        ], */
         ['header' => 'ADMINISTRADOR'],
         [
             'text' => 'Clientes',

@@ -47,7 +47,7 @@
     </div>
     <div class="content-cards-chart row justify-content-around mt-4">
         <div class="col-lg-6 col-md-6 col-12">
-           <div class="card" id="card-chatIngresos">
+           <div class="card" id="card-chartIngresos">
                 <div class="card-body">
                     <h4 class="text-center mb-3">Ingresos ultimos 4 meses</h4>
                     <div class="loader text-center">
@@ -57,7 +57,7 @@
             </div>
         </div>
         <div class="col-lg-6 col-md-6 col-12">
-            <div class="card" id="card-chatPedidos">
+            <div class="card" id="card-chartPedidos">
                 <div class="card-body">
                     <h4 class="text-center mb-3">Pedidos ultimos 4 meses</h4>
                     <div class="loader text-center">
@@ -78,6 +78,7 @@
     <script>
         let urlInfoCards = '{{route('admin.dashboard.getInfoCards')}}';
         let urlIngresosMeses = '{{route('admin.dashboard.getIngresosUltimos4Meses')}}';
+        let urlPedidosMeses = '{{route('admin.dashboard.getPedidosUltimos4Meses')}}';
     </script>
     <script type="module" src="{{asset('js/admin/dashboard.js')}}"></script>
 @stop

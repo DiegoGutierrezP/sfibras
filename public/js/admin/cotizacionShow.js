@@ -46,6 +46,7 @@ const d= document;
                     })
                 },
                 success: json => {
+                    //console.log(json);
                     const contentModal = d.querySelector("#cotiAceptadaModal .modal-body");
                     let msg = "";
                     if(estadoCoti == 2){
@@ -61,7 +62,7 @@ const d= document;
                     tableInfo.rows[1].cells[1].textContent = fechaAprobacion.toLocaleString();
                     tableInfo.rows[2].cells[1].textContent = json.data.oc.estadoPedido;
                     $('#cotiAceptadaModal').modal('show');
-                    //console.log(json)
+
                 },
                 error:err => {
                     console.log(err)

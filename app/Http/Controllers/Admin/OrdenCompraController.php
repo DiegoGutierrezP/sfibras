@@ -38,11 +38,14 @@ class OrdenCompraController extends Controller
     }
 
     public function create($coti = null){
+
         if($coti != null){
             $cotizacion = Cotizacion::where('codigoCoti',$coti)->firstOrFail();
+            $this->authorize('createAsOC',$cotizacion);
         }else{
             $cotizacion = null;
         }
+
         $catesprod = CategoriaProducto::all();
         $clientes = Cliente::all();
         return view('admin.ordenCompra.create',compact('cotizacion','catesprod','clientes'));

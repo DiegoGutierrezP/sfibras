@@ -28,6 +28,7 @@ d.addEventListener('DOMContentLoaded', function() {
             right:'dayGridMonth,timeGridWeek,listWeek'
         },
         events:urlGetEvents,
+        eventColor: '#20c997',
         eventClick: function(info){
             $formEditEvent.id_event.value = info.event.id
             $formEditEvent.title.value = info.event.title
