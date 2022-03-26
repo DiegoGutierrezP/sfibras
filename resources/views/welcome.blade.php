@@ -177,18 +177,26 @@
              allowfullscreen="" loading="lazy">
             </iframe>
 
-            <form action="">
+            <form action="" id="form-contact" autocomplete="off">
                 <h3>Contáctenos</h3>
-                <input type="text" placeholder="nombre" class="box">
+                {{-- <input type="text" placeholder="nombre" class="box">
                 <input type="email" placeholder="correo electrónico" class="box">
                 <input type="number" placeholder="teléfono" class="box">
                 <textarea name="" placeholder="Ingrese su mensaje" cols="30" rows="10" class="box"></textarea>
-                <x-button class="text-xl px-6 py-4">Enviar Mensaje</x-button>
+                <x-button class="text-xl px-6 py-4">Enviar Mensaje</x-button> --}}
+                <input type="text" name="nombre" placeholder="Nombre" class="box">
+                <small class="form-error error-nombre"></small>
+                <input type="email" name="email" placeholder="Correo electrónico" class="box">
+                <small class="form-error error-email"></small>
+                <input type="number" name="telefono" placeholder="Teléfono" class="box">
+                <input type="text" name="asunto" placeholder="Asunto" class="box">
+                <small class="form-error error-asunto"></small>
+                <textarea name="mensaje" placeholder="Ingrese su mensaje" cols="30" rows="10" class="box"></textarea>
+                <small class="form-error error-mensaje"></small>
+                <br>
+                <x-button class="btn-form-contact text-xl px-6 py-4 my-4">Enviar Mensaje</x-button>
             </form>
-            <div>
-
-            </div>
-        </div>
+        </div><br>
     </section>
 
     {{-- Section clientes logo--}}
@@ -206,4 +214,8 @@
         </div>
     </section>
 
+    {{-- Javascript --}}
+    @push('js')
+        <script src="{{ asset('js/formContact.js') }}" ></script>
+    @endpush
 </x-app-layout>

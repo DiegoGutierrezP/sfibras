@@ -31,7 +31,10 @@ class ClienteController extends Controller
             });
             return Datatables::of($ordenCompras)
             ->addColumn('actions',function($ordenCompras){
-                return view('admin.ordenCompra.actions-index',compact('ordenCompras'));
+               /*  return view('admin.ordenCompra.actions-index',compact('ordenCompras')); */
+               return '<a href="'.route('admin.ordenCompra.show',$ordenCompras->id).'"
+                class="btn btn-sm btn-sfibras2"><i class="fas fa-eye"></i></a>
+                <a href="" class="btn btn-sm btn-sfibras2"><i class="fas fa-file-pdf"></i></a>';
             })
             ->rawColumns(['actions'])
             ->make(true);

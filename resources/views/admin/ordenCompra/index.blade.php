@@ -21,7 +21,7 @@
                             <th>Codigo</th>
                             <th>Cliente</th>
                             <th>Total</th>
-                            <th>Estado Pedido</th>
+                            <th>Estado</th>
                             <th>Estado Pago</th>
                             <th></th>
                         </tr>
@@ -57,6 +57,8 @@
         @endif
 
         let urlOcIndex = "{{ route('admin.ordenCompra.index') }}";
+        let urlOcCancel = "{{ route('admin.ordenCompra.cancel',':id') }}";
+        let token = "{{ csrf_token() }}";
 
         /* const d = document;
 
@@ -153,5 +155,5 @@
 
         }) */
     </script>
-    <script src="{{asset('js/admin/ocIndex.js')}}"></script>
+    <script type="module" src="{{asset('js/admin/ocIndex.js')}}"></script>
 @stop

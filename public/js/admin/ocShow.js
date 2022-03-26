@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     await cargarFilesOC();
     let res1 = await cargarPagosOC();
     //await calcularInfoPagos();//espera la respuesta de cargarPagosOC
+
+
 });
 
 d.addEventListener("click", e=>{

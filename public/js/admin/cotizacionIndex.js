@@ -80,7 +80,7 @@ d.addEventListener("DOMContentLoaded", (e) => {
                     }
                 },
                 searchable: false,
-                orderable: false,
+                orderable: true,
             },
             {
                 data: "actions",

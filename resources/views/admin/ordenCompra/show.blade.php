@@ -11,8 +11,10 @@
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
               <a class="nav-item nav-link active" id="info-oc-tab" data-toggle="tab" href="#info-oc" role="tab" aria-controls="info-oc" aria-selected="true">Informacion</a>
-              <a class="nav-item nav-link" id="files-oc-tab" data-toggle="tab" href="#files-oc" role="tab" aria-controls="files-oc" aria-selected="false">Control y Documentos</a>
-              <a class="nav-item nav-link" id="pagos-oc-tab" data-toggle="tab" href="#pagos-oc" role="tab" aria-controls="pagos-oc" aria-selected="false">Pagos</a>
+              @if ($oc->estadoPedido != 4)
+                <a class="nav-item nav-link" id="files-oc-tab" data-toggle="tab" href="#files-oc" role="tab" aria-controls="files-oc" aria-selected="false">Control y Documentos</a>
+                <a class="nav-item nav-link" id="pagos-oc-tab" data-toggle="tab" href="#pagos-oc" role="tab" aria-controls="pagos-oc" aria-selected="false">Pagos</a>
+              @endif
             </div>
           </nav>
           <input type="hidden" value="{{$oc->id}}" class="id-oc">

@@ -1,3 +1,4 @@
+import ajaxFetch from "../../helpers/ajaxFetch.js";
 const d = document;
 
 d.addEventListener("DOMContentLoaded", (e) => {
@@ -63,7 +64,7 @@ d.addEventListener("DOMContentLoaded", (e) => {
                     }
                 },
                 searchable: false,
-                orderable: false,
+                orderable: true,
             },
             {
                 data: "estadoPago",
@@ -87,3 +88,51 @@ d.addEventListener("DOMContentLoaded", (e) => {
         ],
     });
 });
+
+d.addEventListener("click",e=>{
+    if(e.target.matches('.btn-cancel-oc')){
+        e.preventDefault();
+
+        Swal.fire({
+            title: "Esta seguro?",
+            text: `La orden de compra ${e.target.dataset.codigo} sera cancelada.`,
+            showCancelButton: true,
+            confirmButtonColor: "#dc3545",
+            cancelButtonColor: "#6c757d",
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Eliminar",
+        }).then((result) => {
+            if(result.value){
+                let urlOcCancel2 = urlOcCancel.replace(':id', e.target.dataset.oc);
+                ajaxFetch({
+                    url:urlOcCancel2,
+                    ops:{
+                        method:"DELETE",
+                        headers:{
+                            "Content-type": "application/json; charset=utf-8",
+                            "X-CSRF-TOKEN": token
+                        }
+                    },
+                    success:json=>{
+                        $("#orden-compra").DataTable().ajax.reload();
+                        Swal.fire({
+                            position: "top-end",
+                            icon: json.data.icon,
+                            title: json.data.msg,
+                            background: "#E6F4EA",
+                            toast: true,
+                            color: "#333",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                        });
+                    },
+                    error:err=>{
+                        alert(err);
+                        console.log(err);
+                    }
+                })
+            }
+        });
+    }
+})

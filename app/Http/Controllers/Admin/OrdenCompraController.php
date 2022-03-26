@@ -257,6 +257,16 @@ class OrdenCompraController extends Controller
         $fechaEmisionOC = Carbon::createFromFormat('Y-m-d',$oc->fechaEmisionOC)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
         return view('admin.ordenCompra.show',compact('oc','fechaEmisionOC','moneda'));
     }
+
+    public function cancel($id){
+        $oc = OrdenCompra::find($id);
+        $oc->update(['estadoPedido'=>4]);
+        return response()->json([
+            'res'=>true,
+            'data'=>['icon'=>'warning','msg'=>'la orden de compra '.$oc->codigoOC . ' fue cancelada']
+        ]);
+    }
+
     public function getdatesOC($id){
         $oc = OrdenCompra::find($id);
 

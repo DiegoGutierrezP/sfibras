@@ -106,7 +106,7 @@
         <a href="{{route('nosotros')}}" class="@if(request()->routeIs('nosotros'))  active-navbar-link @endif">Nosotros</a>
         <a href="{{route('servicios')}}" class="@if(request()->routeIs('servicios'))  active-navbar-link @endif">Servicios</a>
         <a href="">Trabajos</a>
-        <a href="{{route('contacto')}}" >Contacto</a>
+        <a href="{{route('contacto')}}" class="@if(request()->routeIs('contacto'))  active-navbar-link @endif">Contacto</a>
     </nav>
     <div class="icons">
         <div id="menu-btn" class="btn fas fa-bars"></div>

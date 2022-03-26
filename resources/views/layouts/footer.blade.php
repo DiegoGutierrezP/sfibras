@@ -18,8 +18,8 @@
         </ul>
         <ul class="contacto">
             <h3>Contacto</h3>
-            <li>94687199</li>
-            <li><a href="">sfibrasje@gmail.com</a></li>
+            <li>+51 994 881 486</li>
+            <li><a href="">sfibras@gmail.com</a></li>
         </ul>
     </section>
     <div class="footer2">
