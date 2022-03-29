@@ -1,4 +1,8 @@
 <div class="card-body mt-2">
+    <div class="mb-3">
+        <a href="{{route('admin.ordenCompra.edit',$oc->id)}}" class="btn btn-sm btn-sfibras2"><i class="fas fa-pen"></i></a>
+        <a href="" class="btn btn-sm btn-sfibras2"><i class="fas fa-file-pdf"></i></a>
+    </div>
     <div class="row mb-2">
         <div class="col-lg-6 col-md-6 col-12">
             <h6 class="mt-1"><b>Fecha de Emisión: </b>&nbsp; {{$fechaEmisionOC}}</h6>
