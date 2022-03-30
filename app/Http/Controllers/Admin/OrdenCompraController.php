@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CategoriaProducto;
 use App\Models\Cotizacion;
 use App\Models\Cliente;
+use App\Models\Empresa;
 use App\Models\File;
 use App\Models\OrdenCompra;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Exception;
 use DataTables;
 use stdClass;
+use PDF;
 
 class OrdenCompraController extends Controller
 {
@@ -252,7 +254,7 @@ class OrdenCompraController extends Controller
     }
 
     public function show($id){
-        $oc = OrdenCompra::find($id);
+        $oc = OrdenCompra::FindOrFail($id);
         $moneda = $oc->tipoMoneda=='soles'? 'S/. ':'$. ';
         $fechaEmisionOC = Carbon::createFromFormat('Y-m-d',$oc->fechaEmisionOC)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
         return view('admin.ordenCompra.show',compact('oc','fechaEmisionOC','moneda'));
@@ -268,7 +270,7 @@ class OrdenCompraController extends Controller
     }
 
     public function getdatesOC($id){
-        $oc = OrdenCompra::find($id);
+        $oc = OrdenCompra::FindOrFail($id);
 
         return response()->json([
             'res'=>true,
@@ -324,77 +326,16 @@ class OrdenCompraController extends Controller
         }
 
     }
-    //PARA FILES EN OC ----------------------------------------------------------------------
-    /* public function getFilesOC($id){
-        try{
-            $oc = OrdenCompra::find($id);
-            return response()->json([
-                'res'=>true,
-                'data'=>$oc->files
-            ]);
-        }catch(Exception $err){
-            return response()->json([
-                'res'=>false,
-                'error'=>'ocurrio un error '.$err
-            ]);
-        }
+    /* Para pdf orden de compra */
+    public function createPdf($id){
+        $oc = OrdenCompra::findOrFail($id);
+        $miEmp = Empresa::find(1);
+        $moneda = $oc->tipoMoneda=='soles'? 'S/. ':'$. ';
+        $fechaEmision = Carbon::createFromFormat('Y-m-d',$oc->fechaEmisionOC)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
+
+        $pdf = PDF::loadView('admin.ordenCompra.pdf',['oc'=>$oc,"miEmp"=>$miEmp,'fechaEmision'=>$fechaEmision,'moneda'=>$moneda]);
+        $pdf->setPaper('A4');
+        return $pdf->stream('admin.cotizacion.pdf');
+        //return $pdf->download($coti->codigoCoti.'.pdf');
     }
-    public function addFilesOC (Request $request){
-
-        try{
-            $oc = OrdenCompra::find($request->id_OC);
-
-            $file = $request->file('file_OC');
-            $nombreFile = $oc->codigoOC.'-'.time().'.'.$file->guessExtension();
-            $url = Storage::putFileAs('admin/filesOC',$request->file('file_OC'),$nombreFile);
-
-            $oc->files()->create([
-                'url'=>$url,
-                'descripcion'=>$request->descrip_file_OC,
-                'tipo_archivo'=>$file->getMimeType()
-            ]);
-
-            return response()->json([
-                'res'=>true,
-                'data'=>['icon'=>'success','msg'=>'File subido correctamente']
-            ]);
-        }catch(Exception $err){
-            return response()->json([
-                'res'=>false,
-                'error'=>'ocurrio un error '.$err
-            ]);
-        }
-    }
-    public function updateFilesOC(Request $request){
-        $file = File::find($request->id_file);
-        $fileUpdate = ["descripcion"=>$request->descrip_file_OC];
-
-        if($request->hasFile('file_OC')){
-            Storage::delete($file->url);
-
-            $fileNew = $request->file('file_OC');
-            $nombreFile = $file->fileable->codigoOC.'-'.time().'.'.$fileNew->guessExtension();
-            $url = Storage::putFileAs('admin/filesOC',$request->file('file_OC'),$nombreFile);
-
-            $fileUpdate = array_merge($fileUpdate,["url"=>$url,"tipo_archivo"=>$fileNew->getMimeType()]);
-
-        }
-
-        $file->update($fileUpdate);
-
-        return response()->json([
-            'res'=>true,
-            'data'=>['icon'=>'success','msg'=>'El archivo se actualizo']
-        ]);
-    }
-    public function deleteFilesOC($id){
-        $file = File::find($id);
-        Storage::delete($file->url);
-        $file->delete();
-        return response()->json([
-            'res'=>true,
-            'data'=>['icon'=>'success','msg'=>'El archivo se elimino']
-        ]);
-    } */
-
 }

@@ -17,7 +17,7 @@ class ClienteController extends Controller
     }
 
     public function show($id){
-        $cliente = Cliente::find($id);
+        $cliente = Cliente::FindOrFail($id);
         return view('admin.clientes.show',compact('cliente'));
 
     }

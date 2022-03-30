@@ -57,7 +57,7 @@ d.addEventListener("DOMContentLoaded", (e) => {
                         return '<h5><span class=" badge badge-primary" >Terminado</span></h5>';
                     }
                     if (data == 3) {
-                        return '<h5><span class=" badge badge-success" >Entregado</span></h5>';
+                        return '<h5><span class=" badge badge-primary">Terminado/<br>Entregado</span></h5>';
                     }
                     if (data == 4) {
                         return '<h5><span class=" badge badge-danger" >Cancelado</span></h5>';

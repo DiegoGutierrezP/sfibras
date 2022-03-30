@@ -129,11 +129,10 @@ class CotizacionController extends Controller
     }
 
     public function pdfCotizacion($id){
-        $coti = Cotizacion::find($id);
+        $coti = Cotizacion::FindOrFail($id);
         $miEmp = Empresa::find(1);
         $moneda = $coti->tipoMoneda=='soles'? 'S/. ':'$. ';
         //$fechaTrans = date('jS F, Y',strtotime($coti->fechaEmision));
-
         $fechaTrans = Carbon::createFromFormat('Y-m-d',$coti->fechaEmision)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
 
         $pdf = PDF::loadView('admin.cotizacion.pdf',['coti'=>$coti,"miEmp"=>$miEmp,'fechaEmision'=>$fechaTrans,'moneda'=>$moneda]);
@@ -237,7 +236,7 @@ class CotizacionController extends Controller
     }
 
     public function show($id){
-        $cotizacion = Cotizacion::find($id);
+        $cotizacion = Cotizacion::FindOrFail($id);
         $moneda = $cotizacion->tipoMoneda=='soles'? 'S/. ':'$. ';
         $fechaEmision = Carbon::createFromFormat('Y-m-d',$cotizacion->fechaEmision)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
         return view('admin.cotizacion.show',compact('cotizacion','moneda','fechaEmision'));
