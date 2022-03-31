@@ -46,6 +46,7 @@ Route::delete('ordenCompra/{id}',[OrdenCompraController::class,'cancel'])->name(
 Route::get('ordenCompra/{id}',[OrdenCompraController::class,'show'])->name('admin.ordenCompra.show');
 Route::get('ordenCompra/dates/{id}',[OrdenCompraController::class,'getdatesOC'])->name('admin.ordenCompra.getDatesOC');
 Route::put('updateDatesOC',[OrdenCompraController::class,'updateDatesOC'])->name('admin.ordenCompra.updateDatesOC');
+Route::get('ordenCompra/pdf/{id}',[OrdenCompraController::class,'createPdf'])->name('admin.ordenCompra.pdf');
 
 /* Route::get('ordenCompra/files/{id}',[OrdenCompraController::class,'getFilesOC'])->name('admin.ordenCompra.getFilesOC');
 Route::post('ordenCompra/files/add',[OrdenCompraController::class,'addFilesOC'])->name('admin.ordenCompra.addFilesOC');

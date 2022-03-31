@@ -102,8 +102,11 @@
             text-align: left;
             font-size: .9rem;
         }
-        .content-items{
-
+        .content-obs{
+            border: 1px solid #6A6A6A;
+            border-radius: 3px;
+            margin: .5rem 5px;
+            padding: .5rem;
         }
         .content-table-items{
             margin-top: 1rem;
@@ -125,20 +128,21 @@
             vertical-align: bottom;
             border-bottom: 2px solid #dee2e6;
         } */
-        .table-coti{
+        .table{
             border-collapse: collapse;
             width: 100%;
             color: #212529;
             background-color: transparent;
             margin-bottom: .5rem;
+            border: 1px solid #6A6A6A;
         }
-        .table-coti th,
-        .table-coti td{
+        .table th,
+        .table td{
             padding: 0.5rem;
             vertical-align: top;
             border-top: 1px solid #6A6A6A;
         }
-        .table-coti thead th{
+        .table thead th{
             vertical-align: bottom;
             border-bottom: 2px solid #6A6A6A;
         }
@@ -152,6 +156,13 @@
             width: 100%;
             margin-bottom: 2rem;
         }
+        .content-table-totales .table-totales{
+            border-collapse: collapse;
+            width: 100%;
+            color: #212529;
+            background-color: transparent;
+            margin-bottom: .5rem;
+        }
         .content-table-totales .content{
             float: right;
             border: 1px solid #6A6A6A;
@@ -159,13 +170,25 @@
             padding:2px 10px;
 
         }
-        .content-table-totales table{
-        }
+
         .content-table-totales table th,
         .content-table-totales table td{
             border: none;
             padding: 0.3rem 0.5rem;
         }
+        .table-bordered{
+            border: 1px solid #dee2e6;
+        }
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+
+        .table-bordered thead th,
+        .table-bordered thead td {
+        border-bottom-width: 2px;
+        }
+
         .footer{
             /* padding: 0 1.5rem; */
             padding-top: .4rem;
@@ -222,33 +245,34 @@
                 </div>
                 <div class="info-coti" style="">
                     <div class="content">
-                        <h3>COTIZACIÓN - {{$coti->codigoCoti}}</h3>
+                        <h3>INFORMACION</h3>
+                        <h3>ORDEN DE COMPRA - {{$oc->codigoOC}}</h3>
                         <p>{{$miEmp->razon_social}}</p>
                         <p>{{$miEmp->ruc}}</p>
                     </div>
                 </div>
 
         </section>
-        <section class="header-2">
+       <section class="header-2">
                 <div class="datos-cli">
 
                         <h5>DATOS DEL CLIENTE</h5>
                         <table class="table-header">
                             <tr>
                                 <th>Señor</th>
-                                <td>:&nbsp;{{$coti->clienteNombre}}</td>
+                                <td>:&nbsp;{{$oc->cliente->nombre}}</td>
                             </tr>
                             <tr>
                                 <th>Ruc</th>
-                                <td>:&nbsp;{{$coti->clienteRuc}}</td>
+                                <td>:&nbsp;{{$oc->cliente->ruc}}</td>
                             </tr>
                             <tr>
                                 <th>Dni</th>
-                                <td>:&nbsp;{{$coti->clienteDni}}</td>
+                                <td>:&nbsp;{{$oc->cliente->dni}}</td>
                             </tr>
                             <tr>
                                 <th>Telefono</th>
-                                <td>:&nbsp;{{$coti->clienteTelefono}}</td>
+                                <td>:&nbsp;{{$oc->cliente->telefono}}</td>
                             </tr>
                         </table>
 
@@ -261,23 +285,23 @@
                         <table class="table-header">
                             <tr>
                                 <th>PRECIOS</th>
-                                <td>:&nbsp;{{$coti->precioIgvCoti==0? 'No Incluye IGV':'Incluye IGV'}}</td>
+                                <td>:&nbsp;{{$oc->precioIgvOC==0? 'No Incluye IGV':'Incluye IGV'}}</td>
                             </tr>
                             <tr>
                                 <th>FORMA DE PAGO</th>
-                                <td>:&nbsp;{{$coti->formaPago}}</td>
+                                <td>:&nbsp;{{$oc->formaPago}}</td>
                             </tr>
                             <tr>
                                 <th>VALIDEZ</th>
-                                <td>:&nbsp;{{$coti->diasExpiracion}}</td>
+                                <td>:&nbsp;{{$oc->diasExpiracion}}</td>
                             </tr>
                             <tr>
                                 <th>TIEMPO ENTREGA</th>
-                                <td>:&nbsp;{{$coti->tiempoEntrega}}</td>
+                                <td>:&nbsp;{{$oc->entregaEstimada}}</td>
                             </tr>
                             <tr>
                                 <th>MONEDA</th>
-                                <td>:&nbsp;{{$coti->tipoMoneda}}</td>
+                                <td>:&nbsp;{{$oc->tipoMoneda}}</td>
                             </tr>
                         </table>
 
@@ -285,10 +309,13 @@
 
         </section>
 
+        <section class="content-obs">
+            <b>Observaciones:</b><br>{{$oc->observaciones? $oc->observaciones: '--'}}
+        </section>
         <section class="content-items">
-            <p>{{$coti->introCoti}} </p>
+            <h3>Items de la Orden</h3>
             <div class="content-table-items">
-                <table class="table-coti">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -300,7 +327,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($coti->items as $index => $item)
+                        @foreach ($oc->orden_detalles as $index => $item)
                             <tr>
                                 <td>{{$index+1}}</td>
                                 <td>{{$item->nombre}}</td>
@@ -316,39 +343,71 @@
             </div>
             <div class="content-table-totales">
                 <div class="content">
-                   <table class="table-coti">
+                   <table class="table-totales">
                         <tr>
                             <td>Neto</td>
-                            <td> {{$moneda}}{{$coti->precioNetoCoti}}</td>
+                            <td> {{$moneda}}{{$oc->precioNetoOC}}</td>
                         </tr>
-                        @if ($coti->descuentoCoti != 0)
+                        @if ($oc->descuentoOC != 0)
                         <tr>
                                 <td>Descuento</td>
-                                <td>{{$coti->descuentoCoti}} %</td>
+                                <td>{{$oc->descuentoOC}} %</td>
                             </tr>
                         @endif
 
                         <tr>
                             <td>IGV</td>
-                            <td> {{$moneda}}{{$coti->precioIgvCoti}}</td>
+                            <td> {{$moneda}}{{$oc->precioIgvOC}}</td>
                         </tr>
-                        @if ($coti->precioEnvioCoti > 0)
+                        @if ($oc->precioEnvioOC > 0)
                         <tr>
                                 <td>Envio</td>
-                                <td> {{$moneda}}{{$coti->precioEnvioCoti}}</td>
+                                <td> {{$moneda}}{{$oc->precioEnvioOC}}</td>
                             </tr>
                         @endif
 
                         <tr>
                             <td>Total</td>
-                            <td> {{$moneda}}{{$coti->precioTotalCoti}}</td>
+                            <td> {{$moneda}}{{$oc->precioTotalOC}}</td>
                         </tr>
                     </table>
                 </div>
                 <div style="clear: both"></div>
             </div>
         </section>
-        <section class="footer">
+        <section>
+            <h3>Control</h3>
+            <br>
+            <div class="content-table-control">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Fecha</th>
+                            <th>Observacion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Fecha de Inicio</b></td>
+                            <td>{{$fechas[0]}}</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><b>Fecha de Final</b></td>
+                            <td>{{$fechas[1]}}</td>
+                            <td>sddddddddddd</td>
+                        </tr>
+                        <tr>
+                            <td><b>Fecha de Entrega</b></td>
+                            <td>{{$fechas[2]}}</td>
+                            <td>asddddddddddddddddd</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        {{--  <section class="footer">
             <div class="content-1">
                 <div class="content-medios-pagos">
                     <h5>MEDIOS DE PAGO</h5>
@@ -394,6 +453,6 @@
             </div>
             <div style="clear: both"></div>
         </section>
-    </div>
+    </div> --}}
 </body>
 </html>

@@ -328,14 +328,18 @@ class OrdenCompraController extends Controller
     }
     /* Para pdf orden de compra */
     public function createPdf($id){
-        $oc = OrdenCompra::findOrFail($id);
+         $oc = OrdenCompra::findOrFail($id);
         $miEmp = Empresa::find(1);
         $moneda = $oc->tipoMoneda=='soles'? 'S/. ':'$. ';
         $fechaEmision = Carbon::createFromFormat('Y-m-d',$oc->fechaEmisionOC)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
 
-        $pdf = PDF::loadView('admin.ordenCompra.pdf',['oc'=>$oc,"miEmp"=>$miEmp,'fechaEmision'=>$fechaEmision,'moneda'=>$moneda]);
-        $pdf->setPaper('A4');
-        return $pdf->stream('admin.cotizacion.pdf');
+        $fechaInicio = $oc->fechas->where('referencia','inicioTrabajo')[0]->get('fecha');
+        $fechaFinal = $oc->fechas->where('referencia','finalTrabajo')->first()->fecha;
+        $fechaEntrega = $oc->fechas->where('referencia','entrega')->first()->fecha;
+
+        $pdf = PDF::loadView('admin.ordenCompra.pdf',['oc'=>$oc,"miEmp"=>$miEmp,'fechaEmision'=>$fechaEmision,'moneda'=>$moneda,'fechas'=>[$fechaInicio,$fechaFinal,$fechaEntrega]]);
+        //$pdf->setPaper('A4');
+        return $pdf->stream('admin.ordenCompra.pdf');
         //return $pdf->download($coti->codigoCoti.'.pdf');
     }
 }
