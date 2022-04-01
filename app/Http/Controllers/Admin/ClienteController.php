@@ -42,7 +42,7 @@ class ClienteController extends Controller
     }
 
     public function getDeudas($id){
-        $ocs = OrdenCompra::where('cliente_id',$id)->where('estadoPago',1)->get();
+        $ocs = OrdenCompra::where('cliente_id',$id)->where('estadoPago',1)->where('estadoPedido','!=','4')->get();
 
         $dataDeuda=[];
         foreach($ocs as $oc){

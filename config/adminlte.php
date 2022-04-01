@@ -379,6 +379,21 @@ return [
     */
 
     'plugins' => [
+        'ToggleSwitch' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.css',
+                ],
+            ],
+        ],
         'FullCalendar' => [
             'active' => true,
             'files' => [

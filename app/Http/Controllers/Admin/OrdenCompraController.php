@@ -333,9 +333,9 @@ class OrdenCompraController extends Controller
         $moneda = $oc->tipoMoneda=='soles'? 'S/. ':'$. ';
         $fechaEmision = Carbon::createFromFormat('Y-m-d',$oc->fechaEmisionOC)->locale('es')->isoFormat(' D \d\e MMMM \d\e\l Y');
 
-        $fechaInicio = $oc->fechas->where('referencia','inicioTrabajo')[0]->get('fecha');
-        $fechaFinal = $oc->fechas->where('referencia','finalTrabajo')->first()->fecha;
-        $fechaEntrega = $oc->fechas->where('referencia','entrega')->first()->fecha;
+        $fechaInicio = $oc->fechas->where('referencia','inicioTrabajo')->first();
+        $fechaFinal = $oc->fechas->where('referencia','finalTrabajo')->first();
+        $fechaEntrega = $oc->fechas->where('referencia','entrega')->first();
 
         $pdf = PDF::loadView('admin.ordenCompra.pdf',['oc'=>$oc,"miEmp"=>$miEmp,'fechaEmision'=>$fechaEmision,'moneda'=>$moneda,'fechas'=>[$fechaInicio,$fechaFinal,$fechaEntrega]]);
         //$pdf->setPaper('A4');

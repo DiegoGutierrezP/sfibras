@@ -177,11 +177,11 @@
             padding: 0.3rem 0.5rem;
         }
         .table-bordered{
-            border: 1px solid #dee2e6;
+            border: 1px solid #6A6A6A;
         }
         .table-bordered th,
         .table-bordered td {
-            border: 1px solid #dee2e6;
+            border: 1px solid #6A6A6A;
         }
 
         .table-bordered thead th,
@@ -312,8 +312,21 @@
         <section class="content-obs">
             <b>Observaciones:</b><br>{{$oc->observaciones? $oc->observaciones: '--'}}
         </section>
+        <br>
+        <p><b>Estado de la Orden:</b>
+            @if ($oc->estadoPedido == 1)
+                <span>Pendiente</span>
+            @elseif($oc->estadoPedido == 2)
+                <span>Terminado</span>
+            @elseif($oc->estadoPedido == 3)
+                <span>Terminado/Entregado</span>
+            @elseif($oc->estadoPedido == 4)
+                <span>Cancelado</span>
+            @endif
+        </p>
+        <br>
         <section class="content-items">
-            <h3>Items de la Orden</h3>
+            <h3>Items de la Orden:</h3>
             <div class="content-table-items">
                 <table class="table">
                     <thead>
@@ -375,8 +388,35 @@
                 <div style="clear: both"></div>
             </div>
         </section>
+        <br>
         <section>
-            <h3>Control</h3>
+            <h3>Pagos Realizados:</h3>
+            <br>
+            <p><b>Estado de Pago </b>{{$oc->estadoPago==2?'Pagado':'Debe'}}</p>
+            <div class="content-table-control">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Fecha Pago</th>
+                            <th>Tipo Pago</th>
+                            <th>Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($oc->pagos as $pago)
+                            <tr>
+                                <td>{{$pago->fecha_pago}}</td>
+                                <td>{{$pago->tipo_pago}}</td>
+                                <td>{{$pago->moneda=='soles'?'S/. ':'$. '}} {{$pago->monto}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <br><br>
+        <section>
+            <h3>Control del Trabajo: </h3>
             <br>
             <div class="content-table-control">
                 <table class="table table-bordered">
@@ -390,23 +430,24 @@
                     <tbody>
                         <tr>
                             <td><b>Fecha de Inicio</b></td>
-                            <td>{{$fechas[0]}}</td>
-                            <td></td>
+                            <td>{{$fechas[0]->fecha?$fechas[0]->fecha:'--'}}</td>
+                            <td>{{$fechas[0]->observaciones?$fechas[0]->observaciones:'--'}}</td>
                         </tr>
                         <tr>
                             <td><b>Fecha de Final</b></td>
-                            <td>{{$fechas[1]}}</td>
-                            <td>sddddddddddd</td>
+                            <td>{{$fechas[1]->fecha?$fechas[1]->fecha:'--'}}</td>
+                            <td>{{$fechas[1]->observaciones?$fechas[1]->observaciones:'--'}}</td>
                         </tr>
                         <tr>
                             <td><b>Fecha de Entrega</b></td>
-                            <td>{{$fechas[2]}}</td>
-                            <td>asddddddddddddddddd</td>
+                            <td>{{$fechas[2]->fecha?$fechas[2]->fecha:'--'}}</td>
+                            <td>{{$fechas[2]->observaciones?$fechas[2]->observaciones:'--'}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
+
         {{--  <section class="footer">
             <div class="content-1">
                 <div class="content-medios-pagos">

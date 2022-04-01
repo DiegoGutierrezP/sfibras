@@ -3,7 +3,7 @@
         @if ($oc->estadoPedido != 4)
             <a href="{{route('admin.ordenCompra.edit',$oc->id)}}" class="btn  btn-sfibras2"><i class="fas fa-pen"></i></a>
         @endif
-        <a href="" class="btn  btn-sfibras2"><i class="fas fa-file-pdf"></i></a>
+        <a href="{{route('admin.ordenCompra.pdf',$oc->id)}}" class="btn  btn-sfibras2"><i class="fas fa-file-pdf"></i></a>
     </div>
     <div class="row mb-2">
         <div class="col-lg-6 col-md-6 col-12">

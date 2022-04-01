@@ -22,8 +22,8 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>dni</th>
-                            <th>ruc</th>
+                            <th>Dni</th>
+                            <th>Ruc</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -43,8 +43,8 @@
                                             class="btn-editar-cliente btn btn-sfibras2 btn-sm"
                                                 wire:click.prevent="edit({{ $cliente->id }})"><i
                                                     class="fas fa-pen"></i></a>
-                                        <a wire:click="$emit('deleteCliente',{{ $cliente }})"
-                                            class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                                        {{-- <a wire:click="$emit('deleteCliente',{{ $cliente }})"
+                                            class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a> --}}
                                     </td>
                                 </tr>
                             @endforeach
