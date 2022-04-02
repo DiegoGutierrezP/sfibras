@@ -119,6 +119,7 @@
             <div class="menu-profile">
                 {{-- <h3>{{ __('Manage Account') }}<br> <span>{{ Auth::user()->name }}</span></h3> --}}
                 <ul>
+                    <li><a href="{{ route('admin.home') }}">Dashboard</a></li>
                     <li><a href="{{ route('profile') }}">Perfil</a></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">

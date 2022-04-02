@@ -403,13 +403,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($oc->pagos as $pago)
+                        @if (count($oc->pagos))
+                            @foreach ($oc->pagos as $pago)
+                                <tr>
+                                    <td>{{$pago->fecha_pago}}</td>
+                                    <td>{{$pago->tipo_pago}}</td>
+                                    <td>{{$pago->moneda=='soles'?'S/. ':'$. '}} {{$pago->monto}}</td>
+                                </tr>
+                            @endforeach
+                        @else
                             <tr>
-                                <td>{{$pago->fecha_pago}}</td>
-                                <td>{{$pago->tipo_pago}}</td>
-                                <td>{{$pago->moneda=='soles'?'S/. ':'$. '}} {{$pago->monto}}</td>
+                                <td colspan="3">Ningun Pago Realizado</td>
                             </tr>
-                        @endforeach
+                        @endif
+
                     </tbody>
                 </table>
             </div>

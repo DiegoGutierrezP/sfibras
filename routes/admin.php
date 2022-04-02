@@ -11,11 +11,10 @@ use App\Http\Controllers\Admin\MiEmpresaController;
 use App\Http\Controllers\Admin\OrdenCompraController;
 use App\Http\Controllers\Admin\PagosController;
 use App\Models\OrdenCompra;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/',function(){
     return view('admin.index');
-});
+})->name('admin.home');
 
 Route::get('clientes',[ClienteController::class,'index'])->name('admin.clientes.index');
 Route::get('clientes/{id}',[ClienteController::class,'show'])->name('admin.clientes.show');
