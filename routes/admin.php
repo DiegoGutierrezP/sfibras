@@ -14,7 +14,7 @@ use App\Models\OrdenCompra;
 
 Route::get('/',function(){
     return view('admin.index');
-})->name('admin.home');
+})->middleware('can:p.admin.home')->name('admin.home');
 
 Route::get('clientes',[ClienteController::class,'index'])->name('admin.clientes.index');
 Route::get('clientes/{id}',[ClienteController::class,'show'])->name('admin.clientes.show');

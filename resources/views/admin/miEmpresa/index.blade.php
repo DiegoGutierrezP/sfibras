@@ -11,7 +11,10 @@
         <div class="card-header">
             <h4 class="float-left">{{$empresa->razon_social}}</h4>
             <div class="float-right">
-                <a href="{{route('admin.miEmpresa.edit',$empresa)}}" class="btn btn-sfibras2"><i class="fas fa-pen"></i></a>
+                @can('p.admin.miEmpresa.edit')
+                    <a href="{{route('admin.miEmpresa.edit',$empresa)}}" class="btn btn-sfibras2"><i class="fas fa-pen"></i></a>
+                @endcan
+
             </div>
         </div>
         <div class="card-body">

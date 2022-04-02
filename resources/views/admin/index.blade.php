@@ -67,6 +67,7 @@
             </div>
         </div>
     </div>
+    {{auth()->user()->can('p.admin.cotizacion.create')}}
 @stop
 
 @section('css')

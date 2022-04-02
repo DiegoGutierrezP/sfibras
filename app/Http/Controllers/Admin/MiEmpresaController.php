@@ -12,6 +12,12 @@ use Illuminate\Support\Str;
 class MiEmpresaController extends Controller
 {
 
+    public function __construct()
+    {
+         //aplicacion de middleware para proteger rutas
+        $this->middleware('can:p.admin.miEmpresa.edit')->only('edit','update');
+    }
+
     public function index()
     {
         $empresa = Empresa::find(1);
