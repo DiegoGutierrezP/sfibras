@@ -31,11 +31,11 @@
             line-height: 1.3;
         }
         .header-1{
-            height: 140px;
+            height: 130px;
         }
         .header-1 .logo{
             float: left;
-
+            margin-top: 10px;
             width: 50%;
             height: 100%;
             text-align: center;
@@ -67,7 +67,7 @@
         }
         .header-2{
             width: 100%;
-            height: 160px;
+            height: 140px;
             box-sizing: border-box;
             padding: 0;
             text-transform: uppercase;
@@ -80,7 +80,8 @@
             height: 90%;
             border: 1px solid #6A6A6A;
             border-radius: 3px;
-            margin-left: 5px
+            margin-left: 5px;
+            font-size:.5rem;
         }
         .header-2 .datos-cli{
             float: right;
@@ -95,10 +96,16 @@
         .header-2 .condi-generales h5,
         .header-2 .datos-cli h5{
             text-align: center;
-            font-size: .9rem;
+            font-size: .8rem;
+        }
+        .header-2 .condi-generales table td,
+        .header-2 .condi-generales table th,
+        .header-2 .datos-cli table td,
+        .header-2 .datos-cli table th{
+            font-size: .8rem;
         }
         h5{
-            font-size: .9rem;
+            font-size: .8rem;
         }
         .table-header{
             margin-top:5px;
@@ -234,11 +241,12 @@
         }
         .footer .content-1 .content-medios-pagos ul{
             padding-left: 1rem;
+            font-size: .8rem;
         }
         .footer .content-1 .content-contact table th,
         .footer .content-1 .content-contact table td{
             text-align: left;
-            font-size: .9rem;
+            font-size: .8rem;
         }
         .footer .content-2{
             float: right;

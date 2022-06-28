@@ -266,6 +266,12 @@ return [
         ], */
         ['header' => 'ADMINISTRADOR'],
         [
+            'text' => 'Roles',
+            'route'  => 'admin.roles.index',
+            'active'=>['admin/roles/*'],
+            'icon' => 'fas fa-fw fa-user-tag',
+        ],
+        [
             'text' => 'Clientes',
             'route'  => 'admin.clientes.index',
             'active'=>['admin/clientes/*'],

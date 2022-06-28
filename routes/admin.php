@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\MiEmpresaController;
 use App\Http\Controllers\Admin\OrdenCompraController;
 use App\Http\Controllers\Admin\PagosController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Models\OrdenCompra;
 
 Route::get('/',function(){
@@ -74,4 +75,6 @@ Route::get('dashboard/infoCards',[DashboardController::class,'getInfoCards'])->n
 Route::get('dashboard/ingresosChart',[DashboardController::class,'getIngresosUltimos4Meses'])->name('admin.dashboard.getIngresosUltimos4Meses');
 Route::get('dashboard/pedidosChart',[DashboardController::class,'getPedidosUltimos4Meses'])->name('admin.dashboard.getPedidosUltimos4Meses');
 
+//Roles y permisos
+Route::resource('roles',RoleController::class)->names('admin.roles');
 

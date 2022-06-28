@@ -111,7 +111,7 @@ class CotizacionController extends Controller
            foreach($coti->items as $item){
              $items[] = [
                         'nombre'=>$item['nombre'],
-                        'descripcion'=>$item['descrip'],
+                        'descripcion'=>$item['descripcion'],
                         'cantidad'=>$item['cantidad'],
                         'precioUnit'=>$item['precioUnit'],
                         'precioTotal'=>$item['precioTotal']
@@ -137,8 +137,8 @@ class CotizacionController extends Controller
 
         $pdf = PDF::loadView('admin.cotizacion.pdf',['coti'=>$coti,"miEmp"=>$miEmp,'fechaEmision'=>$fechaTrans,'moneda'=>$moneda]);
         $pdf->setPaper('A4');
-        return $pdf->stream('admin.cotizacion.pdf');
-        //return $pdf->download($coti->codigoCoti.'.pdf');
+        //return $pdf->stream('admin.cotizacion.pdf');
+        return $pdf->download($coti->codigoCoti.'.pdf');
     }
 
 
