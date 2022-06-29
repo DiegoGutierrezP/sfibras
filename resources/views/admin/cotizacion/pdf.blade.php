@@ -22,6 +22,7 @@
             box-sizing: border-box;
             padding: 0;
             margin: 0;
+            /*font-size: .9rem;*/
         }
         body{
             padding: 0;
@@ -67,7 +68,7 @@
         }
         .header-2{
             width: 100%;
-            height: 140px;
+            height: 135px;
             box-sizing: border-box;
             padding: 0;
             text-transform: uppercase;
@@ -102,10 +103,14 @@
         .header-2 .condi-generales table th,
         .header-2 .datos-cli table td,
         .header-2 .datos-cli table th{
-            font-size: .8rem;
+            font-size: .75rem;
         }
         h5{
             font-size: .8rem;
+        }
+        table td,
+        table th{
+            font-size: .75rem;
         }
         .table-header{
             margin-top:5px;
@@ -115,12 +120,16 @@
             text-align: left;
             font-size: .9rem;
         }
-        .content-items{
-
+        .content-items .intro-coti{
+            font-size: .8rem;
+            margin-top: .5rem;
+            margin-bottom:.2rem;
+            margin-left: .2rem;
         }
         .content-table-items{
-            margin-top: 1rem;
+           /*  margin-top: 1rem; */
             width: 100%;
+
         }
         /* .content-table-items table{
             border-collapse: collapse;
@@ -144,16 +153,37 @@
             color: #212529;
             background-color: transparent;
             margin-bottom: .5rem;
+            border: 1px solid #6A6A6A;
+            padding: 5px;
         }
         .table-coti th,
         .table-coti td{
             padding: 0.5rem;
             vertical-align: top;
-            border-top: 1px solid #6A6A6A;
+            /* border-top: 1px solid #6A6A6A; */
         }
+        .table-coti td:nth-child(4),
+        .table-coti td:nth-child(5),
+        .table-coti td:nth-child(6)
+        {
+            text-align: right;
+        }
+        .table-coti th:nth-child(4),
+        .table-coti th:nth-child(5),
+        .table-coti th:nth-child(6)
+        {
+            text-align: right;
+        }
+        .table-coti th:nth-child(1),
+        .table-coti th:nth-child(2),
+        .table-coti th:nth-child(3)
+        {
+            text-align: left;
+        }
+
         .table-coti thead th{
             vertical-align: bottom;
-            border-bottom: 2px solid #6A6A6A;
+            /* border-bottom: 2px solid #6A6A6A; */
         }
         /* .content-table-totales{
             float: right;
@@ -164,15 +194,24 @@
         .content-table-totales{
             width: 100%;
             margin-bottom: 2rem;
+            padding: 0;
         }
         .content-table-totales .content{
             float: right;
-            border: 1px solid #6A6A6A;
+            /* border: 1px solid #6A6A6A; */
             border-radius: 3px;
-            padding:2px 10px;
+            width: 160px;
 
         }
-        .content-table-totales table{
+        .content-table-totales .table-coti-totales{
+           margin: 0 !important;
+           width: 100%;
+        }
+        .content-table-totales .table-coti-totales td:nth-child(1){
+            font-weight: bold;
+        }
+        .content-table-totales .table-coti-totales td:nth-child(3){
+            text-align: right;
         }
         .content-table-totales table th,
         .content-table-totales table td{
@@ -247,6 +286,9 @@
         .footer .content-1 .content-contact table td{
             text-align: left;
             font-size: .8rem;
+        }
+        .footer .content-1 .content-contact table th{
+            text-align:start;
         }
         .footer .content-2{
             float: right;
@@ -345,9 +387,9 @@
         </section>
 
         <section class="content-items">
-            <p>{{$coti->introCoti}} </p>
+            <p class="intro-coti">{{$coti->introCoti}} </p>
             <div class="content-table-items">
-                <table class="table-coti">
+                <table class="table-coti ">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -375,10 +417,11 @@
             </div>
             <div class="content-table-totales">
                 <div class="content">
-                   <table class="table-coti">
+                   <table class="table-coti table-coti-totales">
                         <tr>
                             <td>Neto</td>
-                            <td> {{$moneda}}{{$coti->precioNetoCoti}}</td>
+                            <td>{{$moneda}}</td>
+                            <td>{{$coti->precioNetoCoti}}</td>
                         </tr>
                         @if ($coti->descuentoCoti != 0)
                         <tr>
@@ -389,18 +432,21 @@
 
                         <tr>
                             <td>IGV</td>
-                            <td> {{$moneda}}{{$coti->precioIgvCoti}}</td>
+                            <td>{{$moneda}}</td>
+                            <td>{{$coti->precioIgvCoti}}</td>
                         </tr>
                         @if ($coti->precioEnvioCoti > 0)
                         <tr>
                                 <td>Envio</td>
-                                <td> {{$moneda}}{{$coti->precioEnvioCoti}}</td>
+                                <td>{{$moneda}}</td>
+                                <td>{{$coti->precioEnvioCoti}}</td>
                             </tr>
                         @endif
 
                         <tr>
                             <td>Total</td>
-                            <td> {{$moneda}}{{$coti->precioTotalCoti}}</td>
+                            <td>{{$moneda}}</td>
+                            <td>{{$coti->precioTotalCoti}}</td>
                         </tr>
                     </table>
                 </div>
