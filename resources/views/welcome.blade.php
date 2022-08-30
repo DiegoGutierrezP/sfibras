@@ -10,27 +10,17 @@
                         consectetur adipisicing elit.
                         Perferendis quas facere nesciunt,
                          totam numquam soluta!</p>
-                        <x-button-redirect href="ga" class="text-xl px-6 py-4">Saber mas</x-button-redirect>
+                        <x-button-redirect href="#section-about" class="text-xl px-6 py-4">Saber mas</x-button-redirect>
                     </div>
                 </section>
                 <section class="swiper-slide slide" style="background: url(../storage/cliente/banner4.jpg) no-repeat;">
                     <div class="content">
-                        <h3>Cotización Online</h3>
+                        <h3>Solicita una cotización</h3>
                         <p>Lorem ipsum dolor sit amet,
                         consectetur adipisicing elit.
                         Perferendis quas facere nesciunt,
                          totam numquam soluta!</p>
-                         <x-button-redirect href="ga" class="text-xl px-6 py-4">Cotizar Aqui</x-button-redirect>
-                    </div>
-                </section>
-                <section class="swiper-slide slide" style="background: url(../storage/cliente/banner3.jpg) no-repeat;">
-                    <div class="content">
-                        <h3>Señalizacion Vial</h3>
-                        <p>Lorem ipsum dolor sit amet,
-                        consectetur adipisicing elit.
-                        Perferendis quas facere nesciunt,
-                         totam numquam soluta!</p>
-                         <x-button-redirect href="ga" class="text-xl px-6 py-4">Saber mas</x-button-redirect>
+                         <x-button-redirect href="{{route('contacto')}}" class="text-xl px-6 py-4">Cotizar Aqui</x-button-redirect>
                     </div>
                 </section>
             </div>
@@ -41,7 +31,7 @@
 
     {{-- about section --}}
 
-    <section class="about" >
+    <section class="about" id="section-about">
         <h1 class="heading">Nosotros</h1>
         <div class="row">
             <div class="img">
@@ -136,14 +126,14 @@
 
     {{-- Section projects --}}
     <section class="projects" >
-        <h1 class="heading">Nuestros Trabajos <a href="" > <span>Ver Mas</span> </a> </h1>
+        <h1 class="heading">Nuestros Trabajos <a href="{{route('trabajos')}}" > <span>Ver Mas</span> </a> </h1>
 
         <div class="box-container">
             <div class="box">
-                <img src="{{Storage::url('cliente/paneles2.jpeg')}}" alt="" data-img-trabajos>
+                <img src="{{Storage::url('cliente/paneles_grandes.jpeg')}}" alt="paneles_grandes" data-img-trabajos>
             </div>
             <div class="box">
-                <img src="{{Storage::url('cliente/paneles2.jpeg')}}" alt="" data-img-trabajos>
+                <img src="{{Storage::url('cliente/paneles_60x60.jpeg')}}" alt="panel_60x60" data-img-trabajos>
             </div>
             <div class="box">
                 <img src="{{Storage::url('cliente/img1.jpg')}}" alt="" data-img-trabajos>
@@ -152,10 +142,10 @@
                 <img src="{{Storage::url('cliente/hitoskilometricos.jpeg')}}" alt="" data-img-trabajos>
             </div>
             <div class="box">
-                <img src="{{Storage::url('cliente/postes1.jpeg')}}" alt="" data-img-trabajos>
+                <img src="{{Storage::url('cliente/postes.jpeg')}}" alt="postes" data-img-trabajos>
             </div>
             <div class="box">
-                <img src="{{Storage::url('cliente/paneles2.jpeg')}}" alt="" data-img-trabajos>
+                <img src="{{Storage::url('cliente/tachon1.jpeg')}}" alt="tachas" data-img-trabajos>
             </div>
         </div>
 
@@ -170,12 +160,9 @@
     <section class="contact" id="contact">
         <h1 class="heading">Contacto</h1>
         <div class="row">
-            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11038.
-            92695998705!2d-77.01636027381527!3d-11.98487544100549!2m3!1f0!2f0!3f0!3m2!1i102
-            4!2i768!4f13.1!3m3!1m2!1s0x0%3A0x6f9c6741de4bb106!2zMTHCsDU5JzA4LjMiUyA3N8KwMDEnMDEuN
-            SJX!5e0!3m2!1ses-419!2spe!4v1644290813733!5m2!1ses-419!2spe"
-             allowfullscreen="" loading="lazy">
-            </iframe>
+
+
+            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d869.4580616270332!2d-76.95992084627416!3d-11.92352679105024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105db2262d0f25f%3A0x2157837531bf8853!2sAv.%20Huayna%20C%C3%A1pac%2C%20San%20Antonio%20de%20Chaclla!5e0!3m2!1ses!2spe!4v1661882747178!5m2!1ses!2spe" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
             <form action="" id="form-contact" autocomplete="off">
                 <h3>Contáctenos</h3>

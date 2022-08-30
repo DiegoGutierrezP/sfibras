@@ -10,8 +10,8 @@
     <a href="{{Storage::url('cliente/paneles3.jpeg')}}">
         <img src="{{Storage::url('cliente/paneles3.jpeg')}}" alt="">
     </a>
-    <a href="{{Storage::url('cliente/paneles6.jpeg')}}">
-        <img src="{{Storage::url('cliente/paneles6.jpeg')}}" alt="">
+    <a href="{{Storage::url('cliente/paneles_grandes.jpeg')}}">
+        <img src="{{Storage::url('cliente/paneles_grandes.jpeg')}}" alt="">
     </a>
     <a href="{{Storage::url('cliente/reglamentarias3.jpeg')}}">
         <img src="{{Storage::url('cliente/reglamentarias3.jpeg')}}" alt="">
@@ -24,5 +24,8 @@
     </a>
     <a href="{{Storage::url('cliente/paneles.jpeg')}}">
         <img src="{{Storage::url('cliente/paneles.jpeg')}}" alt="">
+    </a>
+    <a href="{{Storage::url('cliente/postes.jpeg')}}">
+        <img src="{{Storage::url('cliente/postes.jpeg')}}" alt="postes">
     </a>
 </div>

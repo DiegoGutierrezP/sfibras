@@ -105,7 +105,7 @@
         <a href="{{route('home')}}" class="@if(request()->routeIs('home'))  active-navbar-link @endif">Inicio</a>
         <a href="{{route('nosotros')}}" class="@if(request()->routeIs('nosotros'))  active-navbar-link @endif">Nosotros</a>
         <a href="{{route('servicios')}}" class="@if(request()->routeIs('servicios'))  active-navbar-link @endif">Servicios</a>
-        <a href="">Trabajos</a>
+        <a href="{{route('trabajos')}}" class="@if(request()->routeIs('trabajos'))  active-navbar-link @endif">Trabajos</a>
         <a href="{{route('contacto')}}" class="@if(request()->routeIs('contacto'))  active-navbar-link @endif">Contacto</a>
     </nav>
     <div class="icons">
@@ -136,8 +136,8 @@
                 </ul>
             </div>
         </div>
-        @else
-        <a href="{{route('login')}}" ><div id="login-btn" class="btn fas fa-user @if(request()->routeIs('login'))  header-icons-active @endif" ></div></a>
+       {{--  @else
+        <a href="{{route('login')}}" ><div id="login-btn" class="btn fas fa-user @if(request()->routeIs('login'))  header-icons-active @endif" ></div></a> --}}
         @endauth
 
     </div>

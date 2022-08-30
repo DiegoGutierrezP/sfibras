@@ -67,7 +67,7 @@
         @stack('js')
 
         <script>
-            lightGallery(document.querySelector('.servicios-page .content .content-service .imgs-servicio'),{
+            lightGallery(document.querySelector(['.servicios-page .content .content-service .imgs-servicio','.trabajos-page .gallery-trabajos']),{
                 download:false,
             });
         </script>
